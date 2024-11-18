@@ -39,7 +39,7 @@ CREATE TABLE Obras (
     imagen VARCHAR(255) NOT NULL,
     popular BOOLEAN NOT NULL,
     medio VARCHAR(50) NOT NULL,
-    categoria ENUM('LIENZO', 'PAPEL', 'TEJIDO', 'METAL', 'ARCILLA/BARRO', 'CERAMICA', 'MADERA', 'PORCELANA', 'MARMOL', 'MURAL'),
+    categoria ENUM('Lienzo', 'Papel', 'Tejido', 'Metal', 'Arcilla/Barro', 'Cerámica', 'Madera', 'Porcelana', 'Mármol', 'Mural'),
     fecha VARCHAR(21),
     descripcion varchar(150) NOT NULL,
     id_autor INT NOT NULL,
