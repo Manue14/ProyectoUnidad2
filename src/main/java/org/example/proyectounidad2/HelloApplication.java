@@ -43,7 +43,7 @@ public class HelloApplication extends Application {
         stage.setOpacity(0);
         scene.setRoot(root);
 
-       // stage.setWidth(700);
+        //stage.setWidth(700);
         //stage.setHeight(650);
 
         stage.centerOnScreen();

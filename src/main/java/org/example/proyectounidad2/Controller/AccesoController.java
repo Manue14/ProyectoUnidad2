@@ -38,6 +38,7 @@ public class AccesoController {
         switch (resultado) {
             case 0:
                 messageLabel.setText("Acceso exitoso");
+                HelloApplication.setRoot("home");
                 break;
             case 1:
                 messageLabel.setText("No hay usuario con ese nombre");

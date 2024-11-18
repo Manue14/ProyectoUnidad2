@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<?import java.net.URL?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.example.proyectounidad2.Controller.HomeController">
+    <stylesheets>
+        <URL value="@styles/home.css" />
+    </stylesheets>
+    <!-- Título -->
+    <Label styleClass="titulo" text="Museo" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <!-- Texto explicativo -->
+    <Label text="En esta aplicación puedes encontrar información sobre obras o artistas" style="-fx-font-size: 14px;" />
+</VBox>
+
