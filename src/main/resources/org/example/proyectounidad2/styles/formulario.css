@@ -65,3 +65,12 @@
     -fx-text-fill: red;
     -fx-font-weight: bold;
 }
+
+.error-placeholder {
+    -fx-prompt-text-fill: red; /* Cambia el color del promptText a rojo */
+}
+
+.error-border {
+    -fx-border-color:#c62401;
+    -fx-border-width: 1px;
+}

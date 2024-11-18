@@ -4,7 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import org.example.proyectounidad2.Model.AccesoModel;
+import org.example.proyectounidad2.HelloApplication;
+import org.example.proyectounidad2.Model.UserModel;
 
 import java.io.IOException;
 import java.security.MessageDigest;
@@ -28,7 +29,7 @@ public class AccesoController {
         String passwordAcceso = passwordField.getText();
         String passwordaAccesoHaseada = hashPassword(passwordAcceso);
 
-        AccesoModel model = new AccesoModel();
+        UserModel model = new UserModel();
 
 
         int resultado = model.validarCredenciales(usernameAcceso, passwordaAccesoHaseada);
@@ -55,7 +56,7 @@ public class AccesoController {
 
 
 
-public static String hashPassword(String password) {
+private static String hashPassword(String password) {
     try {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
@@ -79,6 +80,11 @@ public static String hashPassword(String password) {
     }
 }
 
+public void CrearUsuario() throws IOException {
+
+    HelloApplication.setRoot("crearUser");
+
+}
 
 
 
