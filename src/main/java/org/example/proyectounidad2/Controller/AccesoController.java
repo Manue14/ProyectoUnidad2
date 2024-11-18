@@ -31,16 +31,28 @@ public class AccesoController {
         AccesoModel model = new AccesoModel();
 
 
-        boolean esValido = model.validarCredenciales(usernameAcceso, passwordaAccesoHaseada);
+        int resultado = model.validarCredenciales(usernameAcceso, passwordaAccesoHaseada);
 
         // Mostrar el mensaje de acuerdo al resultado
-        if (esValido) {
-            messageLabel.setText("Acceso exitoso");
-        } else {
-            messageLabel.setText("Usuario o contraseña incorrectos");
+        switch (resultado) {
+            case 0:
+                messageLabel.setText("Acceso exitoso");
+                break;
+            case 1:
+                messageLabel.setText("No hay usuario con ese nombre");
+                break;
+            case 2:
+                messageLabel.setText("Error: Contraseña incorrecta");
+                break;
+            default:
+                messageLabel.setText("Error en la conexión a la base de datos");
+                break;
         }
 
 }
+
+
+
 
 
 public static String hashPassword(String password) {

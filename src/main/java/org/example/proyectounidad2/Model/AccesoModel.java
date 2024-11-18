@@ -7,7 +7,7 @@ public class AccesoModel {
 
 
 
-    public boolean validarCredenciales(String username, String hashedPassword) {
+    public int validarCredenciales(String username, String hashedPassword) {
         // Conexión a la base de datos
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuariosMuseo", "root", "root")) {
 
@@ -21,13 +21,19 @@ public class AccesoModel {
                         String storedPasswordHash = resultSet.getString("contraseña");
 
                         // Comparar la contraseña proporcionada con la almacenada (hasheada)
-                        return hashedPassword.equals(storedPasswordHash);
+                        if (hashedPassword.equals(storedPasswordHash)) {
+                            return 0; // Credenciales válidas
+                        } else {
+                            return 2; // Contraseña incorrecta
+                        }
+                    } else {
+                        return 1; // Usuario no encontrado
                     }
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return -1; // Error en la conexión
         }
-        return false; // Si no se encuentra el usuario o ocurre algún error, devuelve false
     }
 }
