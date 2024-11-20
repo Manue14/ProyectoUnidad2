@@ -11,7 +11,7 @@ public class Obra {
     private Categoria categoria;
     private String fecha;
     private String descripcion;
-    private int id_autor = 0;   //El valor por defecto es 0 ya que se corresponde a un autor anónimo
+    private int id_autor = 1;   //El valor por defecto es 1 ya que se corresponde a un autor anónimo
     private int id_departamento;
     private int id_movimiento;
 
@@ -137,6 +137,10 @@ public class Obra {
 
     public void setId_movimiento(int id_movimiento) {
         this.id_movimiento = id_movimiento;
+    }
+
+    public String getMedidas() {
+        return this.alto + "x" + this.ancho;
     }
 
     @Override
