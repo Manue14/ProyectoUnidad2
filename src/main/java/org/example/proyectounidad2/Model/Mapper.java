@@ -43,6 +43,16 @@ public class Mapper {
         ps.setString(7, autor.getFoto());
         ps.setInt(8, autor.getId());
     }
+
+    public static void bindAutorCreateQuery(PreparedStatement ps, Autor autor) throws SQLException {
+        ps.setString(1, autor.getNombre());
+        ps.setString(2, autor.getApellido1());
+        ps.setString(3, autor.getApellido2());
+        ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
+        ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
+        ps.setString(6, autor.getNacionalidad());
+        ps.setString(7, autor.getFoto());
+    }
     
     public static void bindObraUpdateQuery(PreparedStatement ps, Obra obra) throws SQLException {
         ps.setString(1, obra.getTitulo());
@@ -58,5 +68,20 @@ public class Mapper {
         ps.setInt(11, obra.getId_departamento());
         ps.setInt(12, obra.getId_movimiento());
         ps.setInt(13, obra.getId());
+    }
+
+    public static void bindObraCreateQuery(PreparedStatement ps, Obra obra) throws SQLException {
+        ps.setString(1, obra.getTitulo());
+        ps.setFloat(2, obra.getAlto());
+        ps.setFloat(3, obra.getAncho());
+        ps.setString(4, obra.getImg());
+        ps.setBoolean(5, obra.isPopular());
+        ps.setString(6, obra.getMedio());
+        ps.setObject(7, obra.getCategoria().getValor());
+        ps.setString(8, obra.getFecha());
+        ps.setString(9, obra.getDescripcion());
+        ps.setInt(10, obra.getId_autor());
+        ps.setInt(11, obra.getId_departamento());
+        ps.setInt(12, obra.getId_movimiento());
     }
 }

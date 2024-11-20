@@ -53,4 +53,13 @@ ALTER TABLE Obras ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO
 ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
+DELIMITER $
+create procedure filter_obras(in _titulo VARCHAR(100), in _autor_id INT, in _departamento_id INT, in _movimiento_id INT, in _categoria VARCHAR(50), in in_popular BOOLEAN)
+begin
+	select * FROM Obras
+    set Rua = _rua, Numero_rua = _numero, Piso = _piso, CP = _cp, Localidade = _localidade
+    where NSS = _nss;
+end$
+DELIMITER ;
+
 #drop DATABASE Coleccion;
