@@ -205,7 +205,7 @@ public class DBConnector {
     }
 
     public void filterAutores(QueryFieldsObjectAutor fields) {
-
+        
     }
 
     public ArrayList<Obra> filterObras(QueryFieldsObjectObra fields) {
