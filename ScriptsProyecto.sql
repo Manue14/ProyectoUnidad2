@@ -54,6 +54,14 @@ ALTER TABLE Obras ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO
 ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 
+DELIMITER $
+create procedure filter_obras(in _titulo VARCHAR(100), in _autor_id INT, in _departamento_id INT, in _movimiento_id INT, in _categoria VARCHAR(50), in in_popular BOOLEAN)
+begin
+	select * FROM Obras
+    set Rua = _rua, Numero_rua = _numero, Piso = _piso, CP = _cp, Localidade = _localidade
+    where NSS = _nss;
+end$
+DELIMITER ;
 
 INSERT INTO Autores (id,nombre,nacimiento, nacionalidad)
 VALUES 
@@ -161,6 +169,5 @@ VALUES
  'Obra surrealista de René Magritte que muestra una escena  en el campo que invita a la reflexion.', 12, 2,5),
  ('El hijo del hombre',116,89 ,'https://example.com/elhijodelhombre.jpg',TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
  y bombín de pie delante de un muro. Más allá se ve el mar y un cielo nublado.', 12, 2,5);
-
 
 #drop DATABASE Coleccion;
