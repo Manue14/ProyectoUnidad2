@@ -155,11 +155,12 @@ VALUES
 
 -- Obras de Henri Matisse (Fauvismo)
 ('La danza', 1.72, 1.74, 'https://example.com/dance.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1909-01-01', 'Una obra representativa del Fauvismo, donde el color y la forma juegan un papel fundamental.', 9, 7, 6),
-('La alegría de vivir', 1.65, 1.98, 'https://example.com/joyoflife.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1905-01-01', 'Una obra vibrante que exalta la vitalidad y la exuberancia de la vida.', 9, 7, 6);
-INSERT INTO Obras (titulo, alto, ancho, imagen, popular, medio, categoria, fecha, descripcion, id_autor, id_departamento, id_movimiento)
-VALUES
+('La alegría de vivir', 1.65, 1.98, 'https://example.com/joyoflife.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1905-01-01', 'Una obra vibrante que exalta la vitalidad y la exuberancia de la vida.', 9, 7, 6),
+-- Obras de René Magritte
 ('La clef des champs', 1.10, 1.30, 'https://example.com/laclefdeschamps.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1936-01-01', 
- 'Obra surrealista de René Magritte que muestra una escena  en el campo que invita a la reflexion.', 12, 2,5);
+ 'Obra surrealista de René Magritte que muestra una escena  en el campo que invita a la reflexion.', 12, 2,5),
+ ('El hijo del hombre',116,89 ,'https://example.com/elhijodelhombre.jpg',TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
+ y bombín de pie delante de un muro. Más allá se ve el mar y un cielo nublado.', 12, 2,5);
 
 
 #drop DATABASE Coleccion;
