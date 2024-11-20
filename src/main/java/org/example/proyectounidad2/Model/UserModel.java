@@ -4,6 +4,7 @@ import java.sql.*;
 
 public class UserModel {
     private Connection connection;
+    public static int permisosUser;
 
     public UserModel() {
         try {
@@ -18,7 +19,7 @@ public class UserModel {
             return -1;
         }
 
-        String query = "SELECT contraseña FROM users WHERE nombre = ?";
+        String query = "SELECT contraseña, idPermiso FROM users WHERE nombre = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);
             try (ResultSet resultSet = stmt.executeQuery()) {
@@ -26,7 +27,9 @@ public class UserModel {
                     String storedPasswordHash = resultSet.getString("contraseña");
 
                     if (hashedPassword.equals(storedPasswordHash)) {
-                        return 0; // Credenciales válidas
+                        permisosUser = resultSet.getInt("idPermiso");
+
+                        return 0; // 4 para admin, 3 para usuario base
                     } else {
                         return 2; // Contraseña incorrecta
                     }
