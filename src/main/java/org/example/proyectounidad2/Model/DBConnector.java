@@ -204,13 +204,54 @@ public class DBConnector {
         return null;
     }
 
-    public void filterAutores() {
-
+    public void filterAutores(QueryFieldsObjectAutor fields) {
+        
     }
 
-//    public void filterObras(QueryFieldsObject fields) {
-//        try
-//    }
+    public ArrayList<Obra> filterObras(QueryFieldsObjectObra fields) {
+        ArrayList<Obra> obras = new ArrayList<>();
+        try (PreparedStatement ps = this.conn.prepareStatement(
+                "SELECT * FROM Obras WHERE titulo LIKE ? AND WHERE autor_id LIKE ? " +
+                        "AND WHERE departamento_id LIKE ? AND WHERE movimiento_id LIKE ? " +
+                        "AND WHERE categoria like ? AND WHERE popular LIKE ?");
+        ) {
+            ps.setString(1, "%");
+            ps.setString(2, "%");
+            ps.setString(3, "%");
+            ps.setString(4, "%");
+            ps.setString(5, "%");
+            ps.setString(6, "%");
+
+            if(fields.getTitulo() != null) {
+                ps.setString(1, "%" + fields.getTitulo() + "%");
+            }
+            if(fields.getAutor_id() != 0) {
+                ps.setString(2, Integer.toString(fields.getAutor_id()));
+            }
+            if(fields.getDepartamento_id() != 0) {
+                ps.setString(3, Integer.toString(fields.getDepartamento_id()));
+            }
+            if(fields.getMovimiento_id() != 0) {
+                ps.setString(4, Integer.toString(fields.getMovimiento_id()));
+            }
+            if(fields.getCategoria() != null) {
+                ps.setString(5, fields.getCategoria().getValor());
+            }
+            if(fields.getPopular() != null) {
+                ps.setString(6, Boolean.toString(fields.getPopular()));
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                obras.add(Mapper.mapObra(rs));
+            }
+            rs.close();
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+        return obras;
+    }
     //----End métodos de lectura------------------------------------------------------------------------
 
     //----Métodos de actualización----------------------------------------------------------------------

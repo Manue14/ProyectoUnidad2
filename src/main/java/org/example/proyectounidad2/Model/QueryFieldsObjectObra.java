@@ -1,6 +1,6 @@
 package org.example.proyectounidad2.Model;
 
-public class QueryFieldsObject {
+public class QueryFieldsObjectObra {
     private String titulo = null;
     private int autor_id = 0;
     private int departamento_id = 0;
@@ -8,9 +8,9 @@ public class QueryFieldsObject {
     private Categoria categoria = null;
     private Boolean popular = null;
 
-    public QueryFieldsObject() {}
+    public QueryFieldsObjectObra() {}
 
-    public QueryFieldsObject(String titulo, int autor_id, int departamento_id, int movimiento_id, Categoria categoria, boolean popular) {
+    public QueryFieldsObjectObra(String titulo, int autor_id, int departamento_id, int movimiento_id, Categoria categoria, boolean popular) {
         this.titulo = titulo;
         this.autor_id = autor_id;
         this.departamento_id = departamento_id;
@@ -59,11 +59,11 @@ public class QueryFieldsObject {
         this.categoria = categoria;
     }
 
-    public boolean isPopular() {
+    public Boolean getPopular() {
         return popular;
     }
 
-    public void setPopular(boolean popular) {
+    public void setPopular(Boolean popular) {
         this.popular = popular;
     }
 }
