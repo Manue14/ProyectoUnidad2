@@ -55,6 +55,7 @@
                               <ComboBox fx:id="cmb_categoria" prefWidth="150.0" promptText="Categoria" />
                               <ComboBox fx:id="cmb_movimiento" prefWidth="150.0" promptText="Movimiento" />
                               <CheckBox mnemonicParsing="false" text="Popular" />
+                              <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Button" />
                            </children>
                         </HBox>
                         <TableView layoutX="124.0" layoutY="7.0" prefHeight="205.0" prefWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
@@ -89,28 +90,25 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="31.0" prefWidth="830.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="8.0">
                            <children>
-                              <Button fx:id="btn_addObras1" mnemonicParsing="false" onKeyPressed="#mostrarAddObra" text="Añadir" />
+                              <Button fx:id="btn_addAutores" mnemonicParsing="false" onKeyPressed="#mostrarAddObra" text="Añadir" />
                               <Separator orientation="VERTICAL" prefHeight="31.0" prefWidth="6.0" />
-                              <TextField fx:id="tf_autor1" promptText="Autor" />
-                              <TextField fx:id="tf_titulo1" promptText="Titulo" />
-                              <ComboBox fx:id="cmb_departamento1" prefWidth="150.0" promptText="Departamento" />
-                              <ComboBox fx:id="cmb_categoria1" prefWidth="150.0" promptText="Categoria" />
-                              <ComboBox fx:id="cmb_movimiento1" prefWidth="150.0" promptText="Movimiento" />
-                              <CheckBox mnemonicParsing="false" text="Popular" />
+                              <TextField fx:id="tf_nombre" promptText="Nombre" />
+                              <TextField fx:id="tf_apellido1" promptText="Primer apellido" />
+                              <TextField fx:id="tf_apellido2" promptText="Segundo apellido" />
+                              <ComboBox fx:id="cmb_nacionalidad" prefWidth="150.0" promptText="Nacionalidad" />
+                              <Button fx:id="btn_buscarAutor" mnemonicParsing="false" onMouseClicked="#buscarAutor" text="Button" />
                            </children>
                         </HBox>
                         <TableView prefHeight="432.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="ID" />
-                              <TableColumn prefWidth="75.0" text="Titulo" />
-                              <TableColumn prefWidth="75.0" text="Autor" />
-                              <TableColumn prefWidth="75.0" text="Fecha" />
-                              <TableColumn prefWidth="75.0" text="Medidas" />
-                              <TableColumn prefWidth="75.0" text="Medio" />
-                              <TableColumn prefWidth="75.0" text="Categoría" />
-                              <TableColumn prefWidth="75.0" text="Movimiento" />
-                              <TableColumn prefWidth="75.0" text="Departamento" />
-                              <TableColumn prefWidth="75.0" text="Popular" />
+                              <TableColumn prefWidth="75.0" text="Nombre" />
+                              <TableColumn prefWidth="75.0" text="Apellido 1" />
+                              <TableColumn prefWidth="75.0" text="Apellido 2" />
+                              <TableColumn prefWidth="75.0" text="Fecha nacimiento" />
+                              <TableColumn prefWidth="75.0" text="Fecha muerte" />
+                              <TableColumn prefWidth="75.0" text="Nacionalidad" />
+                              <TableColumn prefWidth="75.0" text="Foto" />
                            </columns>
                            <contextMenu>
                               <ContextMenu>
