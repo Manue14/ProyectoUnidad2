@@ -208,9 +208,9 @@ public class DBConnector {
 
     }
 
-    public void filterObras(QueryFieldsObject fields) {
-        try
-    }
+//    public void filterObras(QueryFieldsObject fields) {
+//        try
+//    }
     //----End métodos de lectura------------------------------------------------------------------------
 
     //----Métodos de actualización----------------------------------------------------------------------

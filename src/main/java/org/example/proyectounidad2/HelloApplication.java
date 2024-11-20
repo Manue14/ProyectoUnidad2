@@ -18,7 +18,7 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         stage = primaryStage;
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("acceso.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("admin.fxml"));
         scene = new Scene(fxmlLoader.load(), 500, 320);
 
         Image icon= new Image(getClass().getResource("/Icon/icon.png").toExternalForm());
