@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 
-public class userController {
+public class UserController {
 
     @FXML
     private Button btn_buscarObra;
