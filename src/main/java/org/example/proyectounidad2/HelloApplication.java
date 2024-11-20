@@ -55,7 +55,15 @@ public class HelloApplication extends Application {
             {
 
             }
+        } else if (fxml.equals("user")) {
+            stage.setWidth(600);
+            stage.setHeight(450);
+
+        } else if (fxml.equals("admin")) {
+            stage.setMaximized(true);
         }
+
+
         stage.setOpacity(0);
         scene.setRoot(root);
 

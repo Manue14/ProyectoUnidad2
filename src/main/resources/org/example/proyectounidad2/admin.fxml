@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="848.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.AdminController">
    <children>
       <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -58,7 +58,7 @@
                               <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Button" />
                            </children>
                         </HBox>
-                        <TableView layoutX="124.0" layoutY="7.0" prefHeight="205.0" prefWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+                        <TableView fx:id="tbl_obras" layoutX="124.0" layoutY="7.0" prefHeight="205.0" prefWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                           <columns>
                             <TableColumn prefWidth="75.0" text="ID" />
                             <TableColumn prefWidth="75.0" text="Titulo" />
@@ -99,7 +99,7 @@
                               <Button fx:id="btn_buscarAutor" mnemonicParsing="false" onMouseClicked="#buscarAutor" text="Button" />
                            </children>
                         </HBox>
-                        <TableView prefHeight="432.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+                        <TableView fx:id="tbl_autores" prefHeight="432.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                            <columns>
                               <TableColumn prefWidth="75.0" text="ID" />
                               <TableColumn prefWidth="75.0" text="Nombre" />

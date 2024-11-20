@@ -43,4 +43,6 @@ public class HomeController {
         HelloApplication.setRoot("admin");
 
     }
+
+    //public void PanelUsuario(A)
 }

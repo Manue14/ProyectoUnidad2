@@ -1,5 +1,6 @@
 package org.example.proyectounidad2.Controller;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -8,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 
 public class UserController {
@@ -68,6 +70,12 @@ public class UserController {
     @FXML
     void mostrarAutor(MouseEvent event) {
 
+    }
+
+    public void initialize() {
+
+        img_imagenObra.fitWidthProperty().bind(((Region) img_imagenObra.getParent()).widthProperty().multiply(0.5));
+        img_imagenObra.setPreserveRatio(true);
     }
 
 }

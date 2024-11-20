@@ -13,16 +13,13 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="421.0" minWidth="-Infinity" prefHeight="449.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="421.0" minWidth="125.0" prefHeight="519.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.UserController">
    <children>
       <MenuBar layoutX="117.0" layoutY="32.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -44,71 +41,62 @@
           </Menu>
         </menus>
       </MenuBar>
-      <FlowPane alignment="CENTER" hgap="10.0" layoutY="95.0" prefHeight="83.0" prefWidth="600.0" vgap="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="95.0">
+      <VBox alignment="TOP_CENTER" layoutY="39.20000076293945" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
-            <TextField fx:id="tf_titulo" promptText="Titulo" />
-            <TextField fx:id="tf_autor" promptText="Autor" />
-            <ComboBox fx:id="cmb_departamento" prefWidth="150.0" promptText="Departamento" />
-            <ComboBox fx:id="cmb_categoria" prefWidth="150.0" promptText="Categoría" />
-            <ComboBox fx:id="cmb_movimiento" prefWidth="150.0" promptText="Movimiento" />
-            <CheckBox fx:id="chk_popular" mnemonicParsing="false" text="Popular" />
-         </children>
-      </FlowPane>
-      <HBox alignment="CENTER" layoutX="155.0" layoutY="39.0" prefHeight="56.0" prefWidth="427.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="39.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="37.0" prefWidth="141.0" text="Colección" textAlignment="CENTER">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-            </Label>
-         </children>
-      </HBox>
-      <Separator layoutX="10.0" layoutY="222.0" prefWidth="200.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" />
-      <GridPane layoutX="273.0" layoutY="475.0" prefHeight="206.0" prefWidth="600.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-        <columnConstraints>
-          <ColumnConstraints maxWidth="242.0" minWidth="121.0" prefWidth="238.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="237.0" minWidth="10.0" prefWidth="142.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="72.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="136.0" minHeight="5.0" prefHeight="36.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="174.0" minHeight="0.0" prefHeight="72.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="174.0" minHeight="0.0" prefHeight="20.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="174.0" minHeight="10.0" prefHeight="39.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <ImageView fx:id="img_imagenObra" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS" GridPane.rowSpan="2147483647" GridPane.vgrow="ALWAYS">
-               <image>
-                  <Image url="@../../../imagenes/Statuette%20group%20-%20The%20Metropolitan%20Museum%20of%20Art.jpg" />
-               </image>
-            </ImageView>
-            <Label fx:id="lbl_tituloObra" text="Titulo" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" />
-            <TextFlow prefHeight="200.0" prefWidth="216.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="142.0" text="Colección" textAlignment="CENTER" />
+            <FlowPane alignment="CENTER" hgap="10.0" prefHeight="63.0" prefWidth="560.0" vgap="10.0">
                <children>
-                  <Text fx:id="txt_descrippcionObra" strokeType="OUTSIDE" strokeWidth="0.0" text="TextFlow is special layout designed to lay out rich text. It can be used to layout several Text nodes in a single text flow. The TextFlow uses the text and the font of each Text node inside of" />
+                  <TextField fx:id="tf_titulo" promptText="Titulo" />
+                  <TextField fx:id="tf_autor" promptText="Autor" />
+                  <ComboBox fx:id="cmb_departamento" prefWidth="150.0" promptText="Departamento" />
+                  <ComboBox fx:id="cmb_categoria" prefWidth="150.0" promptText="Categoría" />
+                  <ComboBox fx:id="cmb_movimiento" prefWidth="150.0" promptText="Movimiento" />
+                  <CheckBox fx:id="chk_popular" mnemonicParsing="false" text="Popular" />
                </children>
-            </TextFlow>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+            </FlowPane>
+            <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Buscar" />
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="20.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <Label fx:id="lbl_departamentoObra" text="Departamento" />
-                  <Label fx:id="lbl_categoriaObra" text="Categoria" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <children>
-                  <Label fx:id="lbl_autorObra" onMouseClicked="#mostrarAutor" text="Autor" />
-                  <Label fx:id="lbl_fechaObra" text="fecha" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="318.0" spacing="20.0" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
-               <children>
-                  <Label fx:id="lbl_medioObra" text="medio" />
-                  <Label fx:id="lbl_dimensionesObra" text="dimensiones" />
+                  <ImageView fx:id="img_imagenObra" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../imagenes/Statuette%20group%20-%20The%20Metropolitan%20Museum%20of%20Art.jpg" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="102.0" prefWidth="323.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="lbl_tituloObra" text="Titulo" />
+                        <TextFlow prefHeight="50.0" prefWidth="323.0">
+                           <children>
+                              <Text fx:id="txt_descrippcionObra" strokeType="OUTSIDE" strokeWidth="0.0" text="TextFlow is special layout designed to lay out rich text. It can be used to layout several Text nodes in a single text flow. The TextFlow uses the text and the font of each Text node inside of" />
+                           </children>
+                        </TextFlow>
+                        <HBox prefHeight="13.0" prefWidth="323.0" spacing="20.0">
+                           <children>
+                              <Label fx:id="lbl_departamentoObra" text="Departamento" />
+                              <Label fx:id="lbl_categoriaObra" text="Categoria" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="5.0" prefWidth="323.0" spacing="20.0">
+                           <children>
+                              <Label fx:id="lbl_autorObra" onMouseClicked="#mostrarAutor" text="Autor" />
+                              <Label fx:id="lbl_fechaObra" text="fecha" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="1.0" prefWidth="323.0" spacing="20.0">
+                           <children>
+                              <Label fx:id="lbl_medioObra" text="medio" />
+                              <Label fx:id="lbl_dimensionesObra" text="dimensiones" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </HBox>
          </children>
-      </GridPane>
-      <Button fx:id="btn_buscarObra" layoutX="275.0" layoutY="185.0" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Buscar" />
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

@@ -38,7 +38,13 @@ public class AccesoController {
         switch (resultado) {
             case 0:
                 messageLabel.setText("Acceso exitoso");
-                HelloApplication.setRoot("home");
+                int permiso = UserModel.permisosUser;
+                if (permiso == 1) {
+                    HelloApplication.setRoot("admin");
+                } else if (permiso == 2) {
+                    HelloApplication.setRoot("user");
+                }
+                //HelloApplication.setRoot("home");
                 break;
             case 1:
                 messageLabel.setText("No hay usuario con ese nombre");
