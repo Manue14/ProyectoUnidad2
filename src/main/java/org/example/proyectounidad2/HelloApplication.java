@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.example.proyectounidad2.Controller.HomeController;
 
 import java.io.IOException;
 
@@ -39,6 +40,16 @@ public class HelloApplication extends Application {
     public static void setRoot(String fxml) throws IOException {
         Parent root = FXMLLoader.load(HelloApplication.class.getResource(fxml + ".fxml"));
         stage.setTitle("Crear usuario");
+
+        if(fxml.equals("home")){
+
+            stage.setMaximized(true);
+
+
+        } else if (fxml.equals("acceso")) {
+            stage.setWidth(500);
+            stage.setHeight(320);
+        }
 
         stage.setOpacity(0);
         scene.setRoot(root);
