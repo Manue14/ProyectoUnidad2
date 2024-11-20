@@ -17,5 +17,8 @@
 
     <!-- Texto explicativo -->
     <Label fx:id="PruebaPermiso" text="En esta aplicación puedes encontrar información sobre obras o artistas" style="-fx-font-size: 14px;" />
+
+    <Button fx:id="btnIrAdmin" onAction="#PanelAdmin" text="Administrar Datos" />
+
 </VBox>
 
