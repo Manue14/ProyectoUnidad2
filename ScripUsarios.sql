@@ -13,7 +13,7 @@ CREATE TABLE users (
     idUser INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     contraseña VARCHAR(255) NOT NULL,
-    idPermiso INT,
+    idPermiso INT default 2,
     FOREIGN KEY (idPermiso) REFERENCES permisos(idPermiso)
 );
 

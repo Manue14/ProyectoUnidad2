@@ -180,7 +180,7 @@ public class DBConnector {
         return false;
     }
     
-    public void filterObras()
+    //public void filterObras()
 
     public int checkIfIdExists(int id, Table table) {
         try (PreparedStatement ps = conn.prepareStatement("select * from ? where id = ?")){
