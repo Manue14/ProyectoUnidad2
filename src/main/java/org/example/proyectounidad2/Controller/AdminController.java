@@ -5,6 +5,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.example.proyectounidad2.Model.Table;
+
+import java.util.ArrayList;
+
+import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
 public class AdminController {
 
@@ -69,8 +74,16 @@ public class AdminController {
     }
 
     public void initialize(){
+        //Poner las columnas para que ocupen toda la tabla
         setupColumnWidths(tbl_autores);
         setupColumnWidths(tbl_obras);
+
+        //Cargar datos en las columnas
+        ArrayList<Object> listaObras = dbConnector.getAllFromTable(Table.valueOf("OBRAS"));
+        ArrayList<Object> listaAutores = dbConnector.getAllFromTable(Table.valueOf("AUTORES"));
+
+        //System.out.println(listaObras.toString());
+        // 🛑Por alguna razón el arraylist esta vacio?
     }
 
     private void setupColumnWidths(TableView<?> tableView) {

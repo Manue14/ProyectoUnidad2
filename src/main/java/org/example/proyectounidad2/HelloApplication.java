@@ -7,13 +7,25 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.proyectounidad2.Controller.HomeController;
+import org.example.proyectounidad2.Model.DBConnector;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class HelloApplication extends Application {
 
     private static Scene scene;
     private static Stage stage;
+
+    public static DBConnector dbConnector;
+
+    static {
+        try {
+            dbConnector = new DBConnector();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 
     @Override
@@ -26,6 +38,11 @@ public class HelloApplication extends Application {
         stage.getIcons().add(icon);
         stage.setTitle("Museo Arte");
         stage.setScene(scene);
+        //Cerral conexion bd
+        stage.setOnCloseRequest(event -> {
+            dbConnector.close();
+
+        });
 
         stage.show();
     }
