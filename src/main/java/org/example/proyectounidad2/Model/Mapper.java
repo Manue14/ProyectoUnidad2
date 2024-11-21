@@ -5,13 +5,21 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.Locale;
 
 public class Mapper {
     public static Autor mapAutor(ResultSet rs) throws SQLException {
-        return new Autor(rs.getInt("id"), rs.getString("nombre"),
+        LocalDate nacimiento = rs.getDate("nacimiento")==null?null:rs.getDate("nacimiento").toLocalDate();
+        LocalDate fallecimiento = rs.getDate("fallecimiento")==null?null:rs.getDate("fallecimiento").toLocalDate();
+        byte[] foto = rs.getBlob("foto")==null?null:rs.getBlob("foto").getBytes(1, (int) rs.getBlob("foto").length());
+
+        Autor aut=new Autor(rs.getInt("id"), rs.getString("nombre"),
                 rs.getString("apellido1"), rs.getString("apellido2"),
-                rs.getDate("nacimiento").toLocalDate(), rs.getDate("fallecimiento").toLocalDate(),
-                rs.getString("nacionalidad"), rs.getBlob("foto").getBytes(1, (int) rs.getBlob("foto").length()));
+                nacimiento, fallecimiento,
+                rs.getString("nacionalidad"), foto);
+
+        return aut;
     }
 
     public static Departamento mapDepartamento(ResultSet rs) throws SQLException {

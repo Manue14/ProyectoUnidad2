@@ -82,7 +82,8 @@ public class AdminController {
         ArrayList<Object> listaObras = dbConnector.getAllFromTable(Table.valueOf("OBRAS"));
         ArrayList<Object> listaAutores = dbConnector.getAllFromTable(Table.valueOf("AUTORES"));
 
-        //System.out.println(listaObras.toString());
+        System.out.println(listaObras.toString());
+        System.out.println(listaAutores.toString());
         // 🛑Por alguna razón el arraylist esta vacio?
     }
 
@@ -105,6 +106,10 @@ public class AdminController {
                 column.setPrefWidth(columnWidth);
             }
         }
+    }
+
+    private void cargarCmbs(){
+
     }
 
 }
