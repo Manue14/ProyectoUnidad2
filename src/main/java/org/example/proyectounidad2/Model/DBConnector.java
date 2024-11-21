@@ -204,8 +204,40 @@ public class DBConnector {
         return null;
     }
 
-    public void filterAutores(QueryFieldsObjectAutor fields) {
-        
+    public ArrayList<Autor> filterAutores(QueryFieldsObjectAutor fields) {
+        ArrayList<Autor> autores = new ArrayList<>();
+        try (PreparedStatement ps = this.conn.prepareStatement(
+                "SELECT * FROM Autores WHERE nombre LIKE ? AND WHERE apellido1 LIKE ? "
+                        + "AND WHERE apellido2 LIKE ? AND WHERE nacionalidad LIKE ?"
+        );) {
+            ps.setString(1, "%");
+            ps.setString(2, "%");
+            ps.setString(3, "%");
+            ps.setString(4, "%");
+            
+            if(fields.getNombre() != null) {
+                ps.setString(1, "%" + fields.getNombre() + "%");
+            }
+            if(fields.getApellido1() != null) {
+                ps.setString(1, "%" + fields.getApellido1() + "%");
+            }
+            if(fields.getApellido2() != null) {
+                ps.setString(1, "%" + fields.getApellido2() + "%");
+            }
+            if(fields.getNacionalidad() != null) {
+                ps.setString(1, "%" + fields.getNacionalidad() + "%");
+            }
+            
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                autores.add(Mapper.mapAutor(rs));
+            }
+            rs.close();
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+        return autores;
     }
 
     public ArrayList<Obra> filterObras(QueryFieldsObjectObra fields) {
@@ -347,7 +379,81 @@ public class DBConnector {
     //----End métodos de actualización------------------------------------------------------------------
 
     //----Métodos de eliminación------------------------------------------------------------------------
-
+    public boolean deleteAutor(int id) {
+        try {
+            try (PreparedStatement ps = this.conn.prepareStatement(
+                    "DELETE FROM Autores WHERE id = ?"
+            );) {
+                this.conn.setAutoCommit(false);
+                
+                if (checkIfIdExists(id, Table.AUTORES) == 0) {
+                    throw new SQLException("El autor con id " + id + " no existe");
+                } else if (checkIfIdExists(id, Table.AUTORES) == -1) {
+                    throw new SQLException("Error al conectar con la base de datos");
+                }
+                
+                ps.setInt(1, id);
+                int affectedRows = ps.executeUpdate();
+                if (affectedRows == 1) {
+                    this.conn.commit();
+                    return true;
+                } else {
+                    throw new SQLException("Error extraño al borrar autor con id " + id);
+                }
+            } catch (SQLException exception) {
+                System.err.println(exception.getMessage());
+                this.conn.rollback();
+            } finally {
+                this.conn.setAutoCommit(true);
+            }
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+        }
+        return false;
+    }
+    
+    public boolean deleteObra(Obra obra) {
+        try {
+            try (PreparedStatement ps = this.conn.prepareStatement(
+                    "DELETE FROM Obras WHERE id = ?");
+                CallableStatement cs = this.conn.prepareCall(
+                        "{CALL del_autor_if_not_obras(?)}");
+                ) {
+                this.conn.setAutoCommit(false);
+                
+                if (checkIfIdExists(obra.getId(), Table.OBRAS) == 0) {
+                    throw new SQLException("La obra con id " + obra.getId() + " no existe");
+                } else if (checkIfIdExists(obra.getId(), Table.OBRAS) == -1) {
+                    throw new SQLException("Error al conectar con la base de datos");
+                }
+                
+                ps.setInt(1, obra.getId());
+                int affectedRows = ps.executeUpdate();
+                if (affectedRows == 1) {
+                    cs.setInt(1, obra.getId_autor());
+                    affectedRows = cs.executeUpdate();
+                    if (affectedRows <= 1) {
+                        this.conn.commit();
+                        return true;
+                    } else {
+                        throw new SQLException("Error extraño al borrar autor sin obras restantes");
+                    }
+                    
+                } else {
+                    throw new SQLException("Error extraño al borrar la obra con id " + obra.getId());
+                }
+            } catch (SQLException exception) {
+                System.err.println(exception.getMessage());
+                this.conn.rollback();
+            } finally {
+                this.conn.setAutoCommit(true);
+            }
+            
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+        }
+        return false;
+    }
     //----End métodos de eliminación--------------------------------------------------------------------
 
     //----Métodos de comprobaciones---------------------------------------------------------------------

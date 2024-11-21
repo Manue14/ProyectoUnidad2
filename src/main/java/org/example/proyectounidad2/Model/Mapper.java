@@ -1,5 +1,6 @@
 package org.example.proyectounidad2.Model;
 
+import java.io.ByteArrayInputStream;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,7 +11,7 @@ public class Mapper {
         return new Autor(rs.getInt("id"), rs.getString("nombre"),
                 rs.getString("apellido1"), rs.getString("apellido2"),
                 rs.getDate("nacimiento").toLocalDate(), rs.getDate("fallecimiento").toLocalDate(),
-                rs.getString("nacionalidad"), rs.getString("foto"));
+                rs.getString("nacionalidad"), rs.getBlob("foto").getBytes(1, (int) rs.getBlob("foto").length()));
     }
 
     public static Departamento mapDepartamento(ResultSet rs) throws SQLException {
@@ -34,13 +35,15 @@ public class Mapper {
     }
     
     public static void bindAutorUpdateQuery(PreparedStatement ps, Autor autor) throws SQLException {
+        ByteArrayInputStream img = new ByteArrayInputStream(autor.getFoto());
+        
         ps.setString(1, autor.getNombre());
         ps.setString(2, autor.getApellido1());
         ps.setString(3, autor.getApellido2());
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
         ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
         ps.setString(6, autor.getNacionalidad());
-        ps.setString(7, autor.getFoto());
+        ps.setBinaryStream(7, img, img.available());
         ps.setInt(8, autor.getId());
     }
 
@@ -51,7 +54,7 @@ public class Mapper {
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
         ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
         ps.setString(6, autor.getNacionalidad());
-        ps.setString(7, autor.getFoto());
+        ps.setBytes(7, autor.getFoto());
     }
     
     public static void bindObraUpdateQuery(PreparedStatement ps, Obra obra) throws SQLException {
