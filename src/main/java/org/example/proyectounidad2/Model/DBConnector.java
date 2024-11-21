@@ -8,7 +8,7 @@ public class DBConnector {
     private Connection conn;
 
     public DBConnector() throws SQLException{
-        this.conn = DriverManager.getConnection(url, "root", "");
+        this.conn = DriverManager.getConnection(url, "root", "root");
     }
 
     public void close() {
@@ -94,7 +94,6 @@ public class DBConnector {
         try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM "+table.getNombre())) {
             ArrayList<Object> list = new ArrayList<>();
 
-            //ps.setString(1, table.getNombre());
 
             ResultSet rs = ps.executeQuery();
             System.out.println("Ejecutado select from "+table.getNombre());
@@ -113,10 +112,11 @@ public class DBConnector {
                     list.add(Mapper.mapDepartamento(rs));
                 }
                 if (table == Table.MOVIMIENTOS) {
-                    list.add(Mapper.mapObra(rs));
+                    list.add(Mapper.mapMovimineto(rs));
                 }
                 if (table == Table.OBRAS) {
                     list.add(Mapper.mapObra(rs));
+
                 }
             }
             rs.close();
@@ -215,6 +215,31 @@ public class DBConnector {
         return null;
     }
 
+    public ArrayList<String> getNacionalidades(){
+        try(PreparedStatement ps = this.conn.prepareStatement("SELECT nacionalidad FROM Autores GROUP BY nacionalidad")) {
+            ArrayList<String> list = new ArrayList<>();
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                /*IMPRIME LOS DATOS DEL RESULT SET
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    System.out.print(rs.getString(i) + "\t"); // Print each column value
+                }
+                System.out.println();
+                */
+                // Add data to the list based on the table type
+                list.add(rs.getString("nacionalidad"));
+
+            }
+            rs.close();
+
+            return list;
+        }catch (SQLException exception){
+            System.err.println(exception.getMessage());
+            return null;
+        }
+    }
+
     public ArrayList<Autor> filterAutores(QueryFieldsObjectAutor fields) {
         ArrayList<Autor> autores = new ArrayList<>();
         try (PreparedStatement ps = this.conn.prepareStatement(
@@ -295,6 +320,7 @@ public class DBConnector {
         }
         return obras;
     }
+
     //----End métodos de lectura------------------------------------------------------------------------
 
     //----Métodos de actualización----------------------------------------------------------------------
