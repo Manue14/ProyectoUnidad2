@@ -10,8 +10,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +17,7 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="421.0" minWidth="125.0" prefHeight="519.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.UserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.UserController">
    <children>
       <MenuBar layoutX="117.0" layoutY="32.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
@@ -41,7 +39,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <VBox alignment="TOP_CENTER" layoutY="39.20000076293945" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+      <VBox alignment="TOP_CENTER" layoutY="39.20000076293945" maxHeight="1.7976931348623157E308" prefWidth="566.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="142.0" text="Colección" textAlignment="CENTER" />
             <FlowPane alignment="CENTER" hgap="10.0" prefHeight="63.0" prefWidth="560.0" vgap="10.0">
@@ -56,16 +54,22 @@
             </FlowPane>
             <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Buscar" />
             <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="20.0" VBox.vgrow="SOMETIMES">
+            <HBox alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="10.0" VBox.vgrow="SOMETIMES">
                <children>
-                  <ImageView fx:id="img_imagenObra" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../imagenes/Statuette%20group%20-%20The%20Metropolitan%20Museum%20of%20Art.jpg" />
-                     </image>
-                  </ImageView>
-                  <VBox prefHeight="102.0" prefWidth="323.0" spacing="10.0">
+                  <AnchorPane fx:id="ap_imgcontainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </AnchorPane>
+                  <VBox alignment="CENTER" prefHeight="102.0" prefWidth="323.0" spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
                         <Label fx:id="lbl_tituloObra" text="Titulo" />
+                        <HBox prefHeight="5.0" prefWidth="323.0" spacing="20.0">
+                           <children>
+                              <Label fx:id="lbl_autorObra" onMouseClicked="#mostrarAutor" text="Autor" />
+                              <Label fx:id="lbl_fechaObra" text="fecha" />
+                           </children>
+                        </HBox>
                         <TextFlow prefHeight="50.0" prefWidth="323.0">
                            <children>
                               <Text fx:id="txt_descrippcionObra" strokeType="OUTSIDE" strokeWidth="0.0" text="TextFlow is special layout designed to lay out rich text. It can be used to layout several Text nodes in a single text flow. The TextFlow uses the text and the font of each Text node inside of" />
@@ -77,12 +81,6 @@
                               <Label fx:id="lbl_categoriaObra" text="Categoria" />
                            </children>
                         </HBox>
-                        <HBox prefHeight="5.0" prefWidth="323.0" spacing="20.0">
-                           <children>
-                              <Label fx:id="lbl_autorObra" onMouseClicked="#mostrarAutor" text="Autor" />
-                              <Label fx:id="lbl_fechaObra" text="fecha" />
-                           </children>
-                        </HBox>
                         <HBox prefHeight="1.0" prefWidth="323.0" spacing="20.0">
                            <children>
                               <Label fx:id="lbl_medioObra" text="medio" />
@@ -90,6 +88,9 @@
                            </children>
                         </HBox>
                      </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
                   </VBox>
                </children>
             </HBox>
