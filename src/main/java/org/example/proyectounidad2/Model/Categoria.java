@@ -1,5 +1,7 @@
 package org.example.proyectounidad2.Model;
 
+import java.util.ArrayList;
+
 public enum Categoria {
     LIENZO("Lienzo"),
     PAPEL("Papel"),
@@ -30,4 +32,11 @@ public enum Categoria {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        return valor;
+    }
+    
+    
 }

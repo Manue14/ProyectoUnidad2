@@ -65,11 +65,7 @@ public class Movimiento {
 
     @Override
     public String toString() {
-        return "Id: " + this.id +
-                "\nNombre: " + this.nombre +
-                "\nInicio: " + this.inicio +
-                "\nFin: " + this.fin +
-                "\nDescripcion: " + this.descripcion;
+        return this.nombre;
     }
 
     //Sobrecarga de constructores

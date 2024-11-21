@@ -112,7 +112,7 @@ public class DBConnector {
                     list.add(Mapper.mapDepartamento(rs));
                 }
                 if (table == Table.MOVIMIENTOS) {
-                    list.add(Mapper.mapMovimineto(rs));
+                    list.add(Mapper.mapMovimiento(rs));
                 }
                 if (table == Table.OBRAS) {
                     list.add(Mapper.mapObra(rs));
@@ -122,6 +122,78 @@ public class DBConnector {
             rs.close();
 
             return list;
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+    }
+    
+    public ArrayList<Autor> getAllAutores() {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM Autores")) {
+            ArrayList<Autor> autores = new ArrayList<>();
+
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                autores.add(Mapper.mapAutor(rs));
+            }
+            rs.close();
+
+            return autores;
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+    }
+    
+    public ArrayList<Departamento> getAllDepartamentos() {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM Departamentos")) {
+            ArrayList<Departamento> departamentos = new ArrayList<>();
+
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                departamentos.add(Mapper.mapDepartamento(rs));
+            }
+            rs.close();
+
+            return departamentos;
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+    }
+    
+    public ArrayList<Movimiento> getAllMovimientos() {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM Movimientos")) {
+            ArrayList<Movimiento> movimientos = new ArrayList<>();
+
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                movimientos.add(Mapper.mapMovimiento(rs));
+            }
+            rs.close();
+
+            return movimientos;
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+    }
+    
+    public ArrayList<Obra> getAllObras() {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM Obras")) {
+            ArrayList<Obra> obras = new ArrayList<>();
+
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                obras.add(Mapper.mapObra(rs));
+            }
+            rs.close();
+
+            return obras;
         } catch (SQLException exception) {
             System.err.println(exception.getMessage());
             return null;
@@ -184,7 +256,7 @@ public class DBConnector {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
-            Movimiento movimiento = Mapper.mapMovimineto(rs);
+            Movimiento movimiento = Mapper.mapMovimiento(rs);
             rs.close();
 
             return movimiento;
@@ -319,6 +391,24 @@ public class DBConnector {
             return null;
         }
         return obras;
+    }
+    
+    public ArrayList<String> getAllNacionalidades() {
+        ArrayList<String> nacionalidades = new ArrayList<>();
+        
+        try (PreparedStatement ps = this.conn.prepareStatement(
+                "SELECT DISTINCT nacionalidad FROM Autores"
+        );){
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()) {
+                nacionalidades.add(rs.getString("nacionalidad"));
+            }
+        } catch (SQLException exception) {
+            System.err.println(exception.getMessage());
+            return null;
+        }
+        return nacionalidades;
     }
 
     //----End métodos de lectura------------------------------------------------------------------------

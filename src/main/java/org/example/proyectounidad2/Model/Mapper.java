@@ -27,7 +27,7 @@ public class Mapper {
                 rs.getString("descripcion"));
     }
 
-    public static Movimiento mapMovimineto(ResultSet rs) throws SQLException {
+    public static Movimiento mapMovimiento(ResultSet rs) throws SQLException {
         return new Movimiento(rs.getInt("id"), rs.getString("nombre"),
                 rs.getDate("fecha_inicio").toLocalDate(), rs.getDate("fecha_fin").toLocalDate(),
                 rs.getString("descripcion"));

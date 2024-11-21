@@ -32,13 +32,13 @@ public class AdminController {
     private Button btn_buscarObra;
 
     @FXML
-    private ComboBox<String> cmb_categoria;
+    private ComboBox<Categoria> cmb_categoria;
 
     @FXML
     private ComboBox<Departamento> cmb_departamento;
 
     @FXML
-    private ComboBox<String> cmb_movimiento;
+    private ComboBox<Movimiento> cmb_movimiento;
 
     @FXML
     private ComboBox<String> cmb_nacionalidad;
@@ -159,8 +159,8 @@ public class AdminController {
         setupColumnWidths(tbl_obras);
 
         //Cargar datos en las columnas
-        ArrayList<Object> listaObras = dbConnector.getAllFromTable(Table.valueOf("OBRAS"));
-        ArrayList<Object> listaAutores = dbConnector.getAllFromTable(Table.valueOf("AUTORES"));
+        ArrayList<Obra> listaObras = dbConnector.getAllObras();
+        ArrayList<Autor> listaAutores = dbConnector.getAllAutores();
 
         cargarTablaAutores(listaAutores);
         cargarTablaObras(listaObras);
@@ -191,7 +191,7 @@ public class AdminController {
         }
     }
 
-    private void cargarTablaAutores(ArrayList<Object> listaAutores){
+    private void cargarTablaAutores(ArrayList<Autor> listaAutores){
 
         col_idAutor.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_nombreAutor.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -203,11 +203,11 @@ public class AdminController {
         col_nacionalidadAutor.setCellValueFactory(new PropertyValueFactory<>("nacionalidad"));
 
         listaAutores.forEach(autor->{
-            tbl_autores.getItems().add((Autor)autor);
+            tbl_autores.getItems().add(autor);
         });
 
     }
-    public void cargarTablaObras(ArrayList<Object> listaObras){
+    public void cargarTablaObras(ArrayList<Obra> listaObras){
         try {
             col_idObra.setCellValueFactory(new PropertyValueFactory<>("id"));
             col_tituloObra.setCellValueFactory(new PropertyValueFactory<>("titulo"));
@@ -239,41 +239,40 @@ public class AdminController {
             });
 
             listaObras.forEach(obra->{
-                tbl_obras.getItems().add((Obra)obra);
+                tbl_obras.getItems().add(obra);
             });
         }catch (Exception e){
             System.out.println("Error cargando datos obras: "+e);
         }
     }
     private void cargarCmbs(){
-
-        ObservableList<Departamento> departamentos = FXCollections.observableArrayList();
+        
+        cmb_categoria.getItems().clear();
+        cmb_categoria.getItems().add(null);
+        for (Categoria categoria : Categoria.values()) {
+            cmb_categoria.getItems().add(categoria);
+        }
+        
         cmb_departamento.getItems().clear();
-        ArrayList<Object> departamentos2 = dbConnector.getAllFromTable(Table.valueOf("DEPARTAMENTOS"));
-        for (Object departamento: departamentos2) {
-            Departamento helper = (Departamento) departamento;
-            departamentos.add(helper);
+        cmb_departamento.getItems().add(null);
+        ArrayList<Departamento> departamentos = dbConnector.getAllDepartamentos();
+        for (Departamento departamento : departamentos) {
+            cmb_departamento.getItems().add(departamento);
         }
-        cmb_departamento.setItems(departamentos);
 
-        ArrayList<Object> departamentos = dbConnector.getAllFromTable(Table.DEPARTAMENTOS);
-        ArrayList<Object> movimientos = dbConnector.getAllFromTable(Table.MOVIMIENTOS);
-        ArrayList<String> nacionalidades = dbConnector.getNacionalidades();//inventa metodo para conseguir nacionalidades
-        departamentos.forEach(departamento -> {
-            cmb_departamento.getItems().add(((Departamento)departamento).getNombre());
-
-        });
-        movimientos.forEach(movimiento ->{
-            cmb_movimiento.getItems().add(((Movimiento)movimiento).getNombre());
-        });
-        for (Categoria categoria :Categoria.values() ){
-            cmb_categoria.getItems().add(categoria.getValor());
+        cmb_movimiento.getItems().clear();
+        cmb_movimiento.getItems().add(null);
+        ArrayList<Movimiento> movimientos = dbConnector.getAllMovimientos();
+        for (Movimiento movimiento : movimientos) {
+            cmb_movimiento.getItems().add(movimiento);
         }
-        nacionalidades.forEach(nacionalidad->{
+
+        cmb_nacionalidad.getItems().clear();
+        cmb_nacionalidad.getItems().add(null);
+        ArrayList<String> nacionalidades = dbConnector.getAllNacionalidades();
+        for (String nacionalidad : nacionalidades) {
             cmb_nacionalidad.getItems().add(nacionalidad);
-        });
-
-        //cmb_nacionalidad.getItems().add();
+        }
     }
 
 }
