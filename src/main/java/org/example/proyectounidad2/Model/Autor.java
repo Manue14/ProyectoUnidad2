@@ -10,12 +10,12 @@ public class Autor {
     private LocalDate nacimiento;
     private LocalDate fallecimiento;
     private String nacionalidad;
-    private String foto;
+    private byte[] foto;
 
     public Autor(){}
 
     public Autor(int id, String nombre, String apellido1, String apellido2, LocalDate nacimiento,
-                 LocalDate fallecimiento, String nacionalidad, String foto) {
+                 LocalDate fallecimiento, String nacionalidad, byte[] foto) {
         this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
@@ -82,11 +82,11 @@ public class Autor {
         this.nacionalidad = nacionalidad;
     }
 
-    public String getFoto() {
+    public byte[] getFoto() {
         return foto;
     }
 
-    public void setFoto(String foto) {
+    public void setFoto(byte[] foto) {
         this.foto = foto;
     }
 
@@ -106,13 +106,12 @@ public class Autor {
                 "\nApellido2: " + this.apellido2 +
                 "\nNacimiento: " + this.nacimiento +
                 "\nFallecimiento: " + this.fallecimiento +
-                "\nNacionalidad: " + this.nacionalidad +
-                "\nFoto: " + this.foto;
+                "\nNacionalidad: " + this.nacionalidad;
     }
 
     //Sobrecarga de constructores
     public Autor(String nombre, String apellido1, String apellido2, LocalDate nacimiento,
-                 LocalDate fallecimiento, String nacionalidad, String foto) {
+                 LocalDate fallecimiento, String nacionalidad, byte[] foto) {
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -123,13 +122,10 @@ public class Autor {
     }
 
     public Autor(String nombre, String apellido1, String apellido2, LocalDate nacimiento, String nacionalidad) {
-        this.id = id;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.nacimiento = nacimiento;
-        this.fallecimiento = fallecimiento;
         this.nacionalidad = nacionalidad;
-        this.foto = foto;
     }
 }

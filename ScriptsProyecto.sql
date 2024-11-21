@@ -24,7 +24,7 @@ CREATE TABLE Autores (
     nacimiento DATE NOT NULL,
     fallecimiento DATE,
     nacionalidad VARCHAR(20) NOT NULL,
-    foto VARCHAR(255)
+    foto LONGBLOB
 );
 
 CREATE TABLE Autores_Movimientos (
@@ -60,20 +60,20 @@ VALUES
 
 INSERT INTO Autores (nombre, apellido1, apellido2, nacimiento, fallecimiento, nacionalidad, foto)
 VALUES 
-('Pablo', 'Ruiz', 'Picasso', '1881-10-25', '1973-04-08', 'Española', 'https://example.com/picasso.jpg'),
-('Leonardo', 'di Ser', 'Piero', '1452-04-15', '1519-05-02', 'Italiana', 'https://example.com/davinci.jpg'),
-('Michelangelo', 'di Lodovico', 'Buonarroti', '1475-03-06', '1564-02-18', 'Italiana', 'https://example.com/michelangelo.jpg');
+('Pablo', 'Ruiz', 'Picasso', '1881-10-25', '1973-04-08', 'Española', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/picasso.jpg')),
+('Leonardo', 'di Ser', 'Piero', '1452-04-15', '1519-05-02', 'Italiana', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/vinci.jpg')),
+('Michelangelo', 'di Lodovico', 'Buonarroti', '1475-03-06', '1564-02-18', 'Italiana', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/michelangelo.jpg'));
 
 INSERT INTO Autores (nombre, apellido1, nacimiento, fallecimiento, nacionalidad, foto)
 VALUES 
-('Vincent', 'van Gogh', '1853-03-30', '1890-07-29', 'Neerlandesa', 'https://example.com/vangogh.jpg'),
-('Claude', 'Monet', '1840-11-14', '1926-12-05', 'Francesa', 'https://example.com/monet.jpg'),
-('Frida', 'Kahlo', '1907-07-06', '1954-07-13', 'Mexicana', 'https://example.com/kahlo.jpg'),
-('Salvador', 'Dalí', '1904-05-11', '1989-01-23', 'Española', 'https://example.com/dali.jpg'),
-('Georgia', 'O\'Keeffe', '1887-11-15', '1986-03-06', 'Estadounidense', 'https://example.com/okeeffe.jpg'),
-('Andy', 'Warhol', '1928-08-06', '1987-02-22', 'Estadounidense', 'https://example.com/warhol.jpg'),
-('Henri', 'Matisse', '1869-12-31', '1954-11-03', 'Francesa', 'https://example.com/matisse.jpg'),
-('René', 'Magritte', '1898-11-21', '1967-08-15', 'Bélgica', 'https://example.com/magritte.jpg');
+('Vincent', 'van Gogh', '1853-03-30', '1890-07-29', 'Neerlandesa', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/gogh.jpg')),
+('Claude', 'Monet', '1840-11-14', '1926-12-05', 'Francesa', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/monet.jpg')),
+('Frida', 'Kahlo', '1907-07-06', '1954-07-13', 'Mexicana', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/kahlo.jpg')),
+('Salvador', 'Dalí', '1904-05-11', '1989-01-23', 'Española', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/dali.jpg')),
+('Georgia', 'O\'Keeffe', '1887-11-15', '1986-03-06', 'Estadounidense', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/keeffe.jpg')),
+('Andy', 'Warhol', '1928-08-06', '1987-02-22', 'Estadounidense', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/warhol.jpg')),
+('Henri', 'Matisse', '1869-12-31', '1954-11-03', 'Francesa', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/matisse.jpg')),
+('René', 'Magritte', '1898-11-21', '1967-08-15', 'Bélgica', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/magritte.jpg'));
 
 INSERT INTO Movimientos (nombre, fecha_inicio, fecha_fin, descripcion)
 VALUES
@@ -195,3 +195,5 @@ DELIMITER ;
 #DROP FUNCTION count_obras_by_autor_id;
 #DROP PROCEDURE del_autor_if_not_obras;
 #DROP TRIGGER del_autores_fk;
+
+select * from Autores;
