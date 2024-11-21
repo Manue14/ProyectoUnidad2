@@ -161,6 +161,37 @@ VALUES
  ('El hijo del hombre',116,89 ,'https://example.com/elhijodelhombre.jpg',TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
  y bombín de pie delante de un muro. Más allá se ve el mar y un cielo nublado.', 12, 2,5);
 
-#drop DATABASE Coleccion;
+DELIMITER $
+CREATE FUNCTION count_obras_by_autor_id(_id_autor INT) RETURNS INT DETERMINISTIC
+BEGIN
+	DECLARE num INT;
+	SELECT COUNT(*) INTO num
+    FROM Obras
+    WHERE id_autor = _id_autor;
+    RETURN num;
+END$
+DELIMITER ;
 
-SELECT * FROM Obras where id LIKE '1';
+DELIMITER $
+CREATE PROCEDURE del_autor_if_not_obras(in _id_autor INT)
+BEGIN
+	DECLARE obras_count INT;
+    SELECT count_obras_by_autor_id(_id_autor) INTO obras_count;
+    IF (obras_count = 0) THEN
+		DELETE FROM Autores WHERE id = _id_autor;
+	END IF;
+END$
+DELIMITER ;
+
+DELIMITER $
+CREATE TRIGGER del_autores_fk AFTER DELETE ON Autores
+FOR EACH ROW BEGIN
+	DELETE FROM Obras WHERE id_autor = OLD.id;
+    DELETE FROM Autores_Movimientos WHERE id_autor = OLD.id;
+END$
+DELIMITER ;
+
+#DROP DATABASE Coleccion;
+#DROP FUNCTION count_obras_by_autor_id;
+#DROP PROCEDURE del_autor_if_not_obras;
+#DROP TRIGGER del_autores_fk;
