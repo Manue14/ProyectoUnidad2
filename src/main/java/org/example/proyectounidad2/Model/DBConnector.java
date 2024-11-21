@@ -8,7 +8,7 @@ public class DBConnector {
     private Connection conn;
 
     public DBConnector() throws SQLException{
-        this.conn = DriverManager.getConnection(url, "root", "root");
+        this.conn = DriverManager.getConnection(url, "root", "");
     }
 
     public void close() {
@@ -57,14 +57,14 @@ public class DBConnector {
             ) {
                 this.conn.setAutoCommit(false);
 
-                if (checkIfIdExists(obra.getId_autor(), Table.AUTORES) != 1) {
+                if (checkIfIdExists(obra.getId_autor(), Table.AUTORES.getNombre()) != 1) {
                     throw new SQLException("El autor con id " + obra.getId_autor() + " no existe");
                 }
-                if (checkIfIdExists(obra.getId_departamento(), Table.DEPARTAMENTOS) != 1) {
+                if (checkIfIdExists(obra.getId_departamento(), Table.DEPARTAMENTOS.getNombre()) != 1) {
                     throw new SQLException("El departamento con id " + obra.getId_departamento() + " no existe");
                 }
                 if (obra.getId_movimiento() != 0 && //Si la obra no tiene un movimiento asignado el valor por defecto es 0 porque ese es el valor por defecto de un int no inicializado
-                        checkIfIdExists(obra.getId_movimiento(), Table.MOVIMIENTOS) != 1) {
+                        checkIfIdExists(obra.getId_movimiento(), Table.MOVIMIENTOS.getNombre()) != 1) {
                     throw new SQLException("El movimiento con id " + obra.getId_movimiento() + " no existe");
                 }
 
@@ -91,13 +91,21 @@ public class DBConnector {
 
     //----Métodos de lectura----------------------------------------------------------------------------
     public ArrayList<Object> getAllFromTable(Table table) {
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM ?");) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM "+table.getNombre())) {
             ArrayList<Object> list = new ArrayList<>();
 
-            ps.setString(1, table.getNombre());
+            //ps.setString(1, table.getNombre());
 
             ResultSet rs = ps.executeQuery();
+            System.out.println("Ejecutado select from "+table.getNombre());
             while (rs.next()) {
+                /*IMPRIME LOS DATOS DEL RESULT SET
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                    System.out.print(rs.getString(i) + "\t"); // Print each column value
+                }
+                System.out.println();
+                */
+                // Add data to the list based on the table type
                 if (table == Table.AUTORES) {
                     list.add(Mapper.mapAutor(rs));
                 }
@@ -121,17 +129,20 @@ public class DBConnector {
     }
 
     public Autor getAutorById(int id) {
-        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Autor WHERE id = ?")) {
-            if (checkIfIdExists(id, Table.AUTORES) == 0) {
+        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Autores WHERE id = ?")) {
+            if (checkIfIdExists(id, Table.AUTORES.getNombre()) == 0) {
                 throw new SQLException("El autor con id " + id + " no existe");
-            } else if (checkIfIdExists(id, Table.AUTORES) == -1) {
+            } else if (checkIfIdExists(id, Table.AUTORES.getNombre()) == -1) {
                 throw new SQLException("Error al conectar con la base de datos");
             }
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             rs.next();
+
+
             Autor autor = Mapper.mapAutor(rs);
+
             rs.close();
 
             return autor;
@@ -142,10 +153,10 @@ public class DBConnector {
     }
 
     public Departamento getDepartamentoById(int id) {
-        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Departamento WHERE id = ?")) {
-            if (checkIfIdExists(id, Table.DEPARTAMENTOS) == 0) {
+        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Departamentos WHERE id = ?")) {
+            if (checkIfIdExists(id, Table.DEPARTAMENTOS.getNombre()) == 0) {
                 throw new SQLException("El departamento con id " + id + " no existe");
-            } else if (checkIfIdExists(id, Table.DEPARTAMENTOS) == -1) {
+            } else if (checkIfIdExists(id, Table.DEPARTAMENTOS.getNombre()) == -1) {
                 throw new SQLException("Error al conectar con la base de datos");
             }
 
@@ -163,10 +174,10 @@ public class DBConnector {
     }
 
     public Movimiento getMovimientoById(int id) {
-        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Movimiento WHERE id = ?")) {
-            if (checkIfIdExists(id, Table.MOVIMIENTOS) == 0) {
+        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Movimientos WHERE id = ?")) {
+            if (checkIfIdExists(id, Table.MOVIMIENTOS.getNombre()) == 0) {
                 throw new SQLException("El movimiento con id " + id + " no existe");
-            } else if (checkIfIdExists(id, Table.MOVIMIENTOS) == -1) {
+            } else if (checkIfIdExists(id, Table.MOVIMIENTOS.getNombre()) == -1) {
                 throw new SQLException("Error al conectar con la base de datos");
             }
 
@@ -185,9 +196,9 @@ public class DBConnector {
 
     public Obra getObraById(int id) {
         try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Obra WHERE id = ?")) {
-            if (checkIfIdExists(id, Table.OBRAS) == 0) {
+            if (checkIfIdExists(id, Table.OBRAS.getNombre()) == 0) {
                 throw new SQLException("La obra con id " + id + " no existe");
-            } else if (checkIfIdExists(id, Table.OBRAS) == -1) {
+            } else if (checkIfIdExists(id, Table.OBRAS.getNombre()) == -1) {
                 throw new SQLException("Error al conectar con la base de datos");
             }
 
@@ -295,9 +306,9 @@ public class DBConnector {
                     + "WHERE id = ?");) {
                 this.conn.setAutoCommit(false);
 
-                if (checkIfIdExists(autor.getId(), Table.AUTORES) == 0) {
+                if (checkIfIdExists(autor.getId(), Table.AUTORES.getNombre()) == 0) {
                     throw new SQLException("El autor con id " + autor.getId() + " no existe");
-                } else if (checkIfIdExists(autor.getId(), Table.AUTORES) == -1) {
+                } else if (checkIfIdExists(autor.getId(), Table.AUTORES.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
 
@@ -331,27 +342,27 @@ public class DBConnector {
                     + "WHERE id = ?");) {
                 this.conn.setAutoCommit(false);
 
-                if (checkIfIdExists(obra.getId(), Table.OBRAS) == 0) {
+                if (checkIfIdExists(obra.getId(), Table.OBRAS.getNombre()) == 0) {
                     throw new SQLException("La obra con id " + obra.getId() + " no existe");
-                } else if (checkIfIdExists(obra.getId(), Table.OBRAS) == -1) {
+                } else if (checkIfIdExists(obra.getId(), Table.OBRAS.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
 
-                if (checkIfIdExists(obra.getId_autor(), Table.AUTORES) == 0) {
+                if (checkIfIdExists(obra.getId_autor(), Table.AUTORES.getNombre()) == 0) {
                     throw new SQLException("El autor con id " + obra.getId_autor() + " no existe");
-                } else if (checkIfIdExists(obra.getId_autor(), Table.AUTORES) == -1) {
+                } else if (checkIfIdExists(obra.getId_autor(), Table.AUTORES.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
 
-                if (checkIfIdExists(obra.getId_departamento(), Table.DEPARTAMENTOS) == 0) {
+                if (checkIfIdExists(obra.getId_departamento(), Table.DEPARTAMENTOS.getNombre()) == 0) {
                     throw new SQLException("El departamento con id " + obra.getId_departamento() + " no existe");
-                } else if (checkIfIdExists(obra.getId_departamento(), Table.DEPARTAMENTOS) == -1) {
+                } else if (checkIfIdExists(obra.getId_departamento(), Table.DEPARTAMENTOS.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
 
-                if (checkIfIdExists(obra.getId_movimiento(), Table.MOVIMIENTOS) == 0) {
+                if (checkIfIdExists(obra.getId_movimiento(), Table.MOVIMIENTOS.getNombre()) == 0) {
                     throw new SQLException("El movimiento con id " + obra.getId_movimiento() + " no existe");
-                } else if (checkIfIdExists(obra.getId_movimiento(), Table.MOVIMIENTOS) == -1) {
+                } else if (checkIfIdExists(obra.getId_movimiento(), Table.MOVIMIENTOS.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
 
@@ -386,9 +397,9 @@ public class DBConnector {
             );) {
                 this.conn.setAutoCommit(false);
                 
-                if (checkIfIdExists(id, Table.AUTORES) == 0) {
+                if (checkIfIdExists(id, Table.AUTORES.getNombre()) == 0) {
                     throw new SQLException("El autor con id " + id + " no existe");
-                } else if (checkIfIdExists(id, Table.AUTORES) == -1) {
+                } else if (checkIfIdExists(id, Table.AUTORES.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
                 
@@ -421,9 +432,9 @@ public class DBConnector {
                 ) {
                 this.conn.setAutoCommit(false);
                 
-                if (checkIfIdExists(obra.getId(), Table.OBRAS) == 0) {
+                if (checkIfIdExists(obra.getId(), Table.OBRAS.getNombre()) == 0) {
                     throw new SQLException("La obra con id " + obra.getId() + " no existe");
-                } else if (checkIfIdExists(obra.getId(), Table.OBRAS) == -1) {
+                } else if (checkIfIdExists(obra.getId(), Table.OBRAS.getNombre()) == -1) {
                     throw new SQLException("Error al conectar con la base de datos");
                 }
                 
@@ -457,10 +468,9 @@ public class DBConnector {
     //----End métodos de eliminación--------------------------------------------------------------------
 
     //----Métodos de comprobaciones---------------------------------------------------------------------
-    public int checkIfIdExists(int id, Table table) {
-        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM ? WHERE id = ?")){
-           ps.setString(1, table.getNombre());
-           ps.setInt(2, id);
+    public int checkIfIdExists(int id, String table) {
+        try (PreparedStatement ps = conn.prepareStatement("SELECT * FROM "+table+" WHERE id = ?")){
+           ps.setInt(1, id);
 
            ResultSet rs = ps.executeQuery();
             boolean exists = rs.next();

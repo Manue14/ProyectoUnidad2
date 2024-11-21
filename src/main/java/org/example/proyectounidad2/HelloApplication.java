@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.example.proyectounidad2.Controller.HomeController;
 import org.example.proyectounidad2.Model.DBConnector;
+import org.example.proyectounidad2.Model.Table;
 
 import java.io.IOException;
 import java.sql.SQLException;

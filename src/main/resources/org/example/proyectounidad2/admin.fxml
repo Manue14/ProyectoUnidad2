@@ -60,16 +60,16 @@
                         </HBox>
                         <TableView fx:id="tbl_obras" layoutX="124.0" layoutY="7.0" prefHeight="205.0" prefWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="ID" />
-                            <TableColumn prefWidth="75.0" text="Titulo" />
-                              <TableColumn prefWidth="75.0" text="Autor" />
-                              <TableColumn prefWidth="75.0" text="Fecha" />
-                              <TableColumn prefWidth="75.0" text="Medidas" />
-                              <TableColumn prefWidth="75.0" text="Medio" />
-                              <TableColumn prefWidth="75.0" text="Categoría" />
-                              <TableColumn prefWidth="75.0" text="Movimiento" />
-                              <TableColumn prefWidth="75.0" text="Departamento" />
-                              <TableColumn prefWidth="75.0" text="Popular" />
+                            <TableColumn fx:id="col_idObra" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="col_tituloObra" prefWidth="75.0" text="Titulo" />
+                              <TableColumn fx:id="col_autorObra" prefWidth="75.0" text="Autor" />
+                              <TableColumn fx:id="col_fechaObra" prefWidth="75.0" text="Fecha" />
+                              <TableColumn fx:id="col_medidasObra" prefWidth="75.0" text="Medidas" />
+                              <TableColumn fx:id="col_medioObra" prefWidth="75.0" text="Medio" />
+                              <TableColumn fx:id="col_categoriaObra" prefWidth="75.0" text="Categoría" />
+                              <TableColumn fx:id="col_movimientoObra" prefWidth="75.0" text="Movimiento" />
+                              <TableColumn fx:id="col_departamentoObra" prefWidth="75.0" text="Departamento" />
+                              <TableColumn fx:id="col_popularObra" prefWidth="75.0" text="Popular" />
                           </columns>
                            <contextMenu>
                               <ContextMenu>
@@ -101,14 +101,14 @@
                         </HBox>
                         <TableView fx:id="tbl_autores" prefHeight="432.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                            <columns>
-                              <TableColumn prefWidth="75.0" text="ID" />
-                              <TableColumn prefWidth="75.0" text="Nombre" />
-                              <TableColumn prefWidth="75.0" text="Apellido 1" />
-                              <TableColumn prefWidth="75.0" text="Apellido 2" />
-                              <TableColumn prefWidth="75.0" text="Fecha nacimiento" />
-                              <TableColumn prefWidth="75.0" text="Fecha muerte" />
-                              <TableColumn prefWidth="75.0" text="Nacionalidad" />
-                              <TableColumn prefWidth="75.0" text="Foto" />
+                              <TableColumn fx:id="col_idAutor" prefWidth="75.0" text="ID" />
+                              <TableColumn fx:id="col_nombreAutor" prefWidth="75.0" text="Nombre" />
+                              <TableColumn fx:id="col_apellido1Autor" prefWidth="75.0" text="Apellido 1" />
+                              <TableColumn fx:id="col_apellido2Autor" prefWidth="75.0" text="Apellido 2" />
+                              <TableColumn fx:id="col_nacimientoAutor" prefWidth="75.0" text="Fecha nacimiento" />
+                              <TableColumn fx:id="col_muerteAutor" prefWidth="75.0" text="Fecha muerte" />
+                              <TableColumn fx:id="col_nacionalidadAutor" prefWidth="75.0" text="Nacionalidad" />
+                              <TableColumn fx:id="col_fotoAutor" prefWidth="75.0" text="Foto" />
                            </columns>
                            <contextMenu>
                               <ContextMenu>
