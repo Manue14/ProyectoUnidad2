@@ -2,6 +2,7 @@ package org.example.proyectounidad2.Controller;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -31,16 +32,16 @@ public class AdminController {
     private Button btn_buscarObra;
 
     @FXML
-    private ComboBox<?> cmb_categoria;
+    private ComboBox<String> cmb_categoria;
 
     @FXML
     private ComboBox<Departamento> cmb_departamento;
 
     @FXML
-    private ComboBox<?> cmb_movimiento;
+    private ComboBox<String> cmb_movimiento;
 
     @FXML
-    private ComboBox<?> cmb_nacionalidad;
+    private ComboBox<String> cmb_nacionalidad;
 
     @FXML
     private TextField tf_apellido1;
@@ -132,6 +133,26 @@ public class AdminController {
 
     }
 
+    @FXML
+    void action_eliminarAutor(ActionEvent event) {
+
+    }
+
+    @FXML
+    void action_eliminarObra(ActionEvent event) {
+
+    }
+
+    @FXML
+    void action_modificarAutor(ActionEvent event) {
+
+    }
+
+    @FXML
+    void action_modificarObra(ActionEvent event) {
+
+    }
+
     public void initialize(){
         //Poner las columnas para que ocupen toda la tabla
         setupColumnWidths(tbl_autores);
@@ -144,7 +165,6 @@ public class AdminController {
         cargarTablaAutores(listaAutores);
         cargarTablaObras(listaObras);
         cargarCmbs();
-
 
         //System.out.println(listaObras.toString());
         //System.out.println(listaAutores.toString());
@@ -226,6 +246,7 @@ public class AdminController {
         }
     }
     private void cargarCmbs(){
+
         ObservableList<Departamento> departamentos = FXCollections.observableArrayList();
         cmb_departamento.getItems().clear();
         ArrayList<Object> departamentos2 = dbConnector.getAllFromTable(Table.valueOf("DEPARTAMENTOS"));
@@ -234,6 +255,25 @@ public class AdminController {
             departamentos.add(helper);
         }
         cmb_departamento.setItems(departamentos);
+
+        ArrayList<Object> departamentos = dbConnector.getAllFromTable(Table.DEPARTAMENTOS);
+        ArrayList<Object> movimientos = dbConnector.getAllFromTable(Table.MOVIMIENTOS);
+        ArrayList<String> nacionalidades = dbConnector.getNacionalidades();//inventa metodo para conseguir nacionalidades
+        departamentos.forEach(departamento -> {
+            cmb_departamento.getItems().add(((Departamento)departamento).getNombre());
+
+        });
+        movimientos.forEach(movimiento ->{
+            cmb_movimiento.getItems().add(((Movimiento)movimiento).getNombre());
+        });
+        for (Categoria categoria :Categoria.values() ){
+            cmb_categoria.getItems().add(categoria.getValor());
+        }
+        nacionalidades.forEach(nacionalidad->{
+            cmb_nacionalidad.getItems().add(nacionalidad);
+        });
+
+        //cmb_nacionalidad.getItems().add();
     }
 
 }
