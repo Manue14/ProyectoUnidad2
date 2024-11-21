@@ -12,6 +12,8 @@ import org.example.proyectounidad2.Model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
@@ -33,7 +35,7 @@ public class AdminController {
     private ComboBox<String> cmb_categoria;
 
     @FXML
-    private ComboBox<String> cmb_departamento;
+    private ComboBox<Departamento> cmb_departamento;
 
     @FXML
     private ComboBox<String> cmb_movimiento;
@@ -162,11 +164,7 @@ public class AdminController {
 
         cargarTablaAutores(listaAutores);
         cargarTablaObras(listaObras);
-
-        //Cargar combobox
-        Platform.runLater(() -> {
-            cargarCmbs();
-        });
+        cargarCmbs();
 
         //System.out.println(listaObras.toString());
         //System.out.println(listaAutores.toString());
@@ -248,6 +246,16 @@ public class AdminController {
         }
     }
     private void cargarCmbs(){
+
+        ObservableList<Departamento> departamentos = FXCollections.observableArrayList();
+        cmb_departamento.getItems().clear();
+        ArrayList<Object> departamentos2 = dbConnector.getAllFromTable(Table.valueOf("DEPARTAMENTOS"));
+        for (Object departamento: departamentos2) {
+            Departamento helper = (Departamento) departamento;
+            departamentos.add(helper);
+        }
+        cmb_departamento.setItems(departamentos);
+
         ArrayList<Object> departamentos = dbConnector.getAllFromTable(Table.DEPARTAMENTOS);
         ArrayList<Object> movimientos = dbConnector.getAllFromTable(Table.MOVIMIENTOS);
         ArrayList<String> nacionalidades = dbConnector.getNacionalidades();//inventa metodo para conseguir nacionalidades
@@ -266,7 +274,6 @@ public class AdminController {
         });
 
         //cmb_nacionalidad.getItems().add();
-
     }
 
 }

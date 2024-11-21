@@ -39,9 +39,7 @@ public class Departamento {
 
     @Override
     public String toString() {
-        return "Id: " + this.id +
-                "\nNombre: " + this.nombre +
-                "\nDescripcion: " + this.descripcion;
+        return this.nombre;
     }
 
     //Sobrecarga de constructores
