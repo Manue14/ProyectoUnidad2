@@ -11,6 +11,8 @@ import org.example.proyectounidad2.Model.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
@@ -32,7 +34,7 @@ public class AdminController {
     private ComboBox<?> cmb_categoria;
 
     @FXML
-    private ComboBox<?> cmb_departamento;
+    private ComboBox<Departamento> cmb_departamento;
 
     @FXML
     private ComboBox<?> cmb_movimiento;
@@ -141,7 +143,7 @@ public class AdminController {
 
         cargarTablaAutores(listaAutores);
         cargarTablaObras(listaObras);
-
+        cargarCmbs();
 
 
         //System.out.println(listaObras.toString());
@@ -224,7 +226,14 @@ public class AdminController {
         }
     }
     private void cargarCmbs(){
-
+        ObservableList<Departamento> departamentos = FXCollections.observableArrayList();
+        cmb_departamento.getItems().clear();
+        ArrayList<Object> departamentos2 = dbConnector.getAllFromTable(Table.valueOf("DEPARTAMENTOS"));
+        for (Object departamento: departamentos2) {
+            Departamento helper = (Departamento) departamento;
+            departamentos.add(helper);
+        }
+        cmb_departamento.setItems(departamentos);
     }
 
 }

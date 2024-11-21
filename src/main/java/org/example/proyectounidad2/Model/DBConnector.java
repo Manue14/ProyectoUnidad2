@@ -8,7 +8,7 @@ public class DBConnector {
     private Connection conn;
 
     public DBConnector() throws SQLException{
-        this.conn = DriverManager.getConnection(url, "root", "");
+        this.conn = DriverManager.getConnection(url, "manu", "abc123.");
     }
 
     public void close() {

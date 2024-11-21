@@ -14,12 +14,12 @@ public class Mapper {
         LocalDate fallecimiento = rs.getDate("fallecimiento")==null?null:rs.getDate("fallecimiento").toLocalDate();
         byte[] foto = rs.getBlob("foto")==null?null:rs.getBlob("foto").getBytes(1, (int) rs.getBlob("foto").length());
 
-        Autor aut=new Autor(rs.getInt("id"), rs.getString("nombre"),
+        Autor autor=new Autor(rs.getInt("id"), rs.getString("nombre"),
                 rs.getString("apellido1"), rs.getString("apellido2"),
                 nacimiento, fallecimiento,
                 rs.getString("nacionalidad"), foto);
 
-        return aut;
+        return autor;
     }
 
     public static Departamento mapDepartamento(ResultSet rs) throws SQLException {
@@ -56,13 +56,15 @@ public class Mapper {
     }
 
     public static void bindAutorCreateQuery(PreparedStatement ps, Autor autor) throws SQLException {
+        ByteArrayInputStream img = new ByteArrayInputStream(autor.getFoto());
+        
         ps.setString(1, autor.getNombre());
         ps.setString(2, autor.getApellido1());
         ps.setString(3, autor.getApellido2());
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
         ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
         ps.setString(6, autor.getNacionalidad());
-        ps.setBytes(7, autor.getFoto());
+        ps.setBinaryStream(7, img, img.available());
     }
     
     public static void bindObraUpdateQuery(PreparedStatement ps, Obra obra) throws SQLException {
