@@ -1,5 +1,6 @@
 package org.example.proyectounidad2.Controller;
 
+import java.io.ByteArrayInputStream;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -20,6 +21,8 @@ import java.util.Optional;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 import static org.example.proyectounidad2.HelloApplication.setRoot;
@@ -124,6 +127,9 @@ public class AdminController {
 
     @FXML
     private TableColumn<Obra, String> col_tituloObra;
+    
+    @FXML
+    private ImageView img_test;
 
     @FXML
     void buscarAutor(MouseEvent event) {
@@ -299,6 +305,12 @@ public class AdminController {
 
         listaAutores.forEach(autor->{
             tbl_autores.getItems().add(autor);
+            
+            /*Test cargar imagen*/
+            /*if (autor.getFoto() != null) {
+                img_test.setImage(new Image(new ByteArrayInputStream(autor.getFoto())));
+            }*/
+            
         });
 
     }
