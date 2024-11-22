@@ -1,5 +1,6 @@
 package org.example.proyectounidad2.Controller;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -52,10 +53,38 @@ public class ObraDialogController {
     private TextField tf_titulo;
 
     Obra obra;
+    boolean modo; //True->Añadir False->Modificar
 
     public void initialize(){
-
         cargarCmbs();
+
+        Platform.runLater(() -> {
+            if(!modo){
+                cargarDatosObra();
+            }
+        });
+
+    }
+
+    public void setObra(Obra obra){
+        this.obra=obra;
+
+    }
+    public void setModo(boolean bool){
+        this.modo=bool;
+    }
+    public void getObra(){
+        /*obra.setTitulo(tf_titulo.getText());
+        obra.setA(tf_autor.getText());
+        obra.set(tf_medidas.getText());
+        obra.set(tf_medio.getText());
+        obra.set(tf_fecha.getText());
+
+        cmb_categoria.setValue(obra.getCategoria());
+        cmb_movimiento.setValue(dbConnector.getMovimientoById(obra.getId_movimiento()));
+        cmb_departamento.setValue(dbConnector.getDepartamentoById(obra.getId_departamento()));
+
+        chk_popular.setSelected(obra.isPopular());*/
 
     }
     private void cargarCmbs(){
@@ -80,10 +109,7 @@ public class ObraDialogController {
             cmb_movimiento.getItems().add(movimiento);
         }
     }
-    public void setObra(Obra obra){
-        this.obra=obra;
 
-    }
 
     public void cargarDatosObra(){
         tf_titulo.setText(obra.getTitulo());

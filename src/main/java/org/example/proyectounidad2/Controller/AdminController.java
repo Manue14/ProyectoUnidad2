@@ -16,6 +16,8 @@ import org.example.proyectounidad2.Model.*;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Optional;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -140,16 +142,35 @@ public class AdminController {
 
     @FXML
     void mostrarAddObra(MouseEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader();
+
+        /*FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(getClass().getResource("obraDialog.fxml"));
-        DialogPane obraDialogPane =fxmlLoader.load();
+        DialogPane obraDialogPane =fxmlLoader.load();*/
 
 
     }
 
     @FXML
     void action_eliminarAutor(ActionEvent event) {
-
+        Autor selectedAutor = tbl_autores.getSelectionModel().getSelectedItem();
+        if (selectedAutor == null){
+            AlertMaker.showWarning("No autor seleccionado", "Por favor selecciona un autor que elminiar");
+        }
+        else{
+            if (AlertMaker.showConfirmation("Eliminar Autor","¿Seguro que desea eliminar este autor?")){
+                boolean resultado = dbConnector.deleteAutor(selectedAutor.getId());
+                if(resultado){
+                    AlertMaker.showInformation("Eliminacion Exitosa","Se ha eliminado el autor con exito");
+                    cargarTablaAutores(dbConnector.getAllAutores());
+                }
+                else {
+                    AlertMaker.showError("Error en la eliminacion","Algo ha salido mal al borrar el autor");
+                }
+            }
+            else{
+                AlertMaker.showInformation("Eliminacion cancelada","No se ha eliminado ningun autor");
+            }
+        }
     }
 
     @FXML
@@ -184,12 +205,47 @@ public class AdminController {
 
     @FXML
     void action_modificarObra(ActionEvent event) throws IOException {
-        /*FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("obraDialog.fxml"));
-        DialogPane obraDialogPane =fxmlLoader.load();
+        Obra selectedObra = tbl_obras.getSelectionModel().getSelectedItem();
+        System.out.println(selectedObra.toString());
+        if (selectedObra == null){
+            AlertMaker.showWarning("No obra seleccionada", "Por favor selecciona una obra para modificar primero");
+        }
 
-        ObraDialogController obraDlgController = fxmlLoader.getController();
-        obraDlgController.setObra(obra);*/
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.setLocation(getClass().getResource("/org/example/proyectounidad2/obraDialog.fxml"));
+        } catch (Exception e) {
+            System.out.println("Error setting location");
+        }
+
+
+        DialogPane obraDialogPane =fxmlLoader.load();
+        //pasar la obra al dialog
+        try {
+            ObraDialogController obraDlgController = fxmlLoader.getController();
+            if(obraDlgController==null){
+                System.out.println("No se encontro controlador");
+            }
+            obraDlgController.setObra(selectedObra);
+            obraDlgController.setModo(false);
+        }catch (Exception e){
+            System.out.println("Error poniendo obra");
+        }
+
+        //Mostrar dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(obraDialogPane);
+        dialog.setTitle("Modificar Obra");
+
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        if (clickedButton.get() == ButtonType.OK){
+            //ACCION MODIFICAR
+        }else {
+            AlertMaker.showInformation("Modificacion cancelada","No se ha modificado ninguna obra");
+
+        }
+
+
     }
 
     public void initialize(){

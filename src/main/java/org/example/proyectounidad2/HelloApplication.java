@@ -19,7 +19,6 @@ public class HelloApplication extends Application {
     private static Stage stage;
 
     public static DBConnector dbConnector;
-    public static int obraDialogMode;//0-> añadir obra 1->Modificar obra
 
     static {
         try {
