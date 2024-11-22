@@ -194,34 +194,34 @@ DELIMITER ;
 DELIMITER $
 CREATE PROCEDURE filter_obras(IN _titulo VARCHAR(100), IN _autor VARCHAR(255), IN _departamento_id INT, IN _movimiento_id INT, IN _categoria VARCHAR(50),
 								IN _popular BOOLEAN)
+
 BEGIN
 	SET @query = 'SELECT * FROM Obras WHERE 1=1';
     
 	IF _titulo IS NOT NULL AND _titulo <> "" THEN
-		SET @query = CONCAT(@query, ' AND WHERE titulo LIKE %', _titulo, '%');
+		SET @query = CONCAT(@query, ' AND titulo LIKE ''%', _titulo, '%''');
 	END IF;
     
     IF _autor IS NOT NULL AND _autor <> "" THEN
-		SELECT * FROM Autores; #To-do
         SET @query = CONCAT(@query,
-        ' AND WHERE autor_id IN (SELECT id FROM Autores WHERE CONCAT(nombre, apellido1, apellido2) LIKE %',
-        _autor, '%)');
+        ' AND id_autor IN (SELECT id FROM Autores WHERE CONCAT(nombre, apellido1, apellido2) LIKE ''%',
+        _autor, '%'')');
     END IF;
     
     IF _departamento_id IS NOT NULL AND _departamento_id <> 0 THEN
-		SET @query = CONCAT(@query, ' AND WHERE departamento_id = ', _departamento_id);
+		SET @query = CONCAT(@query, ' AND id_departamento = ', _departamento_id);
 	END IF;
     
     IF _movimiento_id IS NOT NULL AND _movimiento_id <> 0 THEN
-		SET query = CONCAT(query, ' AND WHERE movimiento_id = ', _departamento_id);
+		SET @query = CONCAT(@query, ' AND id_movimiento = ', _movimiento_id);
 	END IF;
     
     IF _categoria IS NOT NULL AND _categoria <> "" THEN
-		SET @query = CONCAT(@query, ' AND WHERE categoria = ', _categoria);
+		SET @query = CONCAT(@query, ' AND categoria = ''', _categoria, '''');
 	END IF;
     
     IF _popular IS NOT NULL THEN
-		SET @query = CONCAT(@query, ' AND WHERE popular = ', _popular);
+		SET @query = CONCAT(@query, ' AND popular = ', _popular);
 	END IF;
     
     PREPARE statement FROM @query;
@@ -235,6 +235,8 @@ DELIMITER ;
 #DROP FUNCTION count_obras_by_autor_id;
 #DROP PROCEDURE del_autor_if_not_obras;
 #DROP TRIGGER del_autores_fk;
-#DROP PROCEDURE filter_obras;
+DROP PROCEDURE filter_obras;
+
+CALL filter_obras('La', 'Ruiz', null, null, 'Lienzo', true);
 
 select * from Autores;
