@@ -2,8 +2,10 @@ package org.example.proyectounidad2.Controller;
 
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
@@ -138,7 +140,11 @@ public class AdminController {
 
     @FXML
     void mostrarAddObra(MouseEvent event) throws IOException {
-        HelloApplication.setRoot("obraDialog");
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("obraDialog.fxml"));
+        DialogPane obraDialogPane =fxmlLoader.load();
+
+
     }
 
     @FXML
@@ -148,6 +154,26 @@ public class AdminController {
 
     @FXML
     void action_eliminarObra(ActionEvent event) {
+        //GET selected item
+        Obra selectedObra = tbl_obras.getSelectionModel().getSelectedItem();
+        if (selectedObra == null){
+            AlertMaker.showWarning("No obra seleccionada", "Por favor selecciona una obra para elminiar primero");
+        }
+        else{
+            if (AlertMaker.showConfirmation("Eliminar Obra","¿Seguro que desea eliminar esta obra?")){
+                boolean resultado = dbConnector.deleteObra(selectedObra);
+                if(resultado){
+                    AlertMaker.showInformation("Eliminacion Exitosa","Se ha eliminado la obra con exito");
+                    cargarTablaObras(dbConnector.getAllObras());
+                }
+                else {
+                    AlertMaker.showError("Error en la eliminacion","Algo ha salido mal al borrar la obra");
+                }
+            }
+            else{
+                AlertMaker.showInformation("Eliminacion cancelada","No se ha eliminado ninguna obra");
+            }
+        }
 
     }
 
@@ -158,7 +184,12 @@ public class AdminController {
 
     @FXML
     void action_modificarObra(ActionEvent event) throws IOException {
-        HelloApplication.setRoot("obraDialog");
+        /*FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getClass().getResource("obraDialog.fxml"));
+        DialogPane obraDialogPane =fxmlLoader.load();
+
+        ObraDialogController obraDlgController = fxmlLoader.getController();
+        obraDlgController.setObra(obra);*/
     }
 
     public void initialize(){

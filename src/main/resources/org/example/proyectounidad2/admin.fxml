@@ -74,8 +74,8 @@
                            <contextMenu>
                               <ContextMenu>
                                 <items>
-                                    <MenuItem mnemonicParsing="false" text="Modificar" />
-                                    <MenuItem mnemonicParsing="false" text="Eliminar" />
+                                    <MenuItem mnemonicParsing="false" text="Modificar" onAction="#action_modificarObra" />
+                                    <MenuItem mnemonicParsing="false" text="Eliminar" onAction="#action_eliminarObra"/>
                                 </items>
                               </ContextMenu>
                            </contextMenu>
@@ -113,8 +113,8 @@
                            <contextMenu>
                               <ContextMenu>
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Modificar" />
-                                    <MenuItem mnemonicParsing="false" text="Eliminar" />
+                                    <MenuItem mnemonicParsing="false" text="Modificar" onAction="#action_modificarAutor"/>
+                                    <MenuItem mnemonicParsing="false" text="Eliminar" onAction="#action_eliminarAutor"/>
                                  </items>
                               </ContextMenu>
                            </contextMenu>
