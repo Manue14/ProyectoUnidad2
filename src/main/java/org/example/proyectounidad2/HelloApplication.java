@@ -19,6 +19,7 @@ public class HelloApplication extends Application {
     private static Stage stage;
 
     public static DBConnector dbConnector;
+    public static int obraDialogMode;//0-> añadir obra 1->Modificar obra
 
     static {
         try {
@@ -79,6 +80,9 @@ public class HelloApplication extends Application {
 
         } else if (fxml.equals("admin")) {
             stage.setMaximized(true);
+        } else if (fxml.equals("obraDialog")) {
+            stage.setWidth(613);
+            stage.setHeight(419);
         }
 
 

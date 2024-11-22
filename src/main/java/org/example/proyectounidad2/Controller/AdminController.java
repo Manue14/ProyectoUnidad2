@@ -8,14 +8,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import org.example.proyectounidad2.HelloApplication;
 import org.example.proyectounidad2.Model.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
+import static org.example.proyectounidad2.HelloApplication.setRoot;
 
 public class AdminController {
 
@@ -129,8 +132,13 @@ public class AdminController {
     }
 
     @FXML
-    void mostrarAddObra(KeyEvent event) {
+    void mostrarAddAutor(MouseEvent event) {
 
+    }
+
+    @FXML
+    void mostrarAddObra(MouseEvent event) throws IOException {
+        HelloApplication.setRoot("obraDialog");
     }
 
     @FXML
@@ -149,8 +157,8 @@ public class AdminController {
     }
 
     @FXML
-    void action_modificarObra(ActionEvent event) {
-
+    void action_modificarObra(ActionEvent event) throws IOException {
+        HelloApplication.setRoot("obraDialog");
     }
 
     public void initialize(){

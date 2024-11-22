@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonType?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
@@ -9,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
@@ -16,9 +18,9 @@
     <header>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="87.0" prefWidth="613.0">
          <children>
-            <Label layoutX="29.0" layoutY="18.0" prefHeight="87.0" prefWidth="613.0" text="TITULO" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Label fx:id="lbl_titulodlg" alignment="CENTER" layoutX="29.0" layoutY="18.0" prefHeight="87.0" prefWidth="613.0" text="Nueva Obra" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <font>
-                  <Font name="System Bold" size="30.0" />
+                  <Font name="System Bold" size="20.0" />
                </font>
             </Label>
          </children></AnchorPane>
@@ -42,23 +44,30 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ComboBox prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="cmb_movimiento" prefHeight="25.0" prefWidth="215.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
                   <Label prefHeight="17.0" prefWidth="49.0" text="Titulo" />
-                  <TextField GridPane.columnIndex="1" />
+                  <TextField fx:id="tf_titulo" GridPane.columnIndex="1" />
                   <Label prefHeight="17.0" prefWidth="49.0" text="Autor" GridPane.rowIndex="1" />
-                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="tf_autor" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label prefHeight="17.0" prefWidth="49.0" text="Fecha" GridPane.rowIndex="2" />
-                  <CheckBox mnemonicParsing="false" text="Popular" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                  <CheckBox fx:id="chk_popular" mnemonicParsing="false" text="Popular" GridPane.columnIndex="3" GridPane.rowIndex="4" />
                   <Label prefHeight="17.0" prefWidth="49.0" text="Medidas" GridPane.rowIndex="3" />
-                  <TextField prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <TextField fx:id="tf_medidas" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                   <Label prefHeight="17.0" prefWidth="82.0" text="Movimiento" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                   <Label prefHeight="17.0" prefWidth="80.0" text="Categoria" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                   <Label prefHeight="17.0" prefWidth="98.0" text="Departamento" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-                  <TextField prefWidth="149.0" GridPane.columnIndex="4" />
+                  <TextField fx:id="tf_medio" prefWidth="149.0" GridPane.columnIndex="4" />
                   <Label prefHeight="17.0" prefWidth="54.0" text="Medio" GridPane.columnIndex="3" />
-                  <TextField prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <ComboBox prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-                  <ComboBox prefWidth="150.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <TextField fx:id="tf_fecha" prefWidth="149.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cmb_categoria" prefHeight="25.0" prefWidth="252.0" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+                  <ComboBox fx:id="cmb_departamento" prefHeight="25.0" prefWidth="273.0" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+                  <Label prefHeight="17.0" prefWidth="49.0" text="Imagen" GridPane.rowIndex="4" />
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <children>
+                        <AnchorPane fx:id="ap_imagenHolder" prefHeight="44.0" prefWidth="86.0" />
+                        <Button fx:id="btn_subirArchivo" mnemonicParsing="false" prefHeight="25.0" prefWidth="108.0" text="Subir archivo" />
+                     </children>
+                  </HBox>
                </children>
             </GridPane>
          </children>
