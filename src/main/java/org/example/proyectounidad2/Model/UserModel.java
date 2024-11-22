@@ -8,7 +8,7 @@ public class UserModel {
 
     public UserModel() {
         try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuariosMuseo", "root", "");
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuariosMuseo", "root", "root");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -66,5 +66,7 @@ public class UserModel {
             System.out.println("Error al conectar con la base de datos al intentar crear el usuario.");
         }
     }
+
+
 
 }

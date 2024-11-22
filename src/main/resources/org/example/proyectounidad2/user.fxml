@@ -23,13 +23,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="User">
             <items>
-              <MenuItem mnemonicParsing="false" text="Cerrar sesión" />
-                  <MenuItem mnemonicParsing="false" text="Cerrar aplicación" />
+              <MenuItem mnemonicParsing="false" text="Cerrar sesión" onAction="#CerrarSesion" />
+                  <MenuItem mnemonicParsing="false" text="Cerrar aplicación" onAction="#CerrarPrograma"/>
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Herramientas">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Exportar JSON" />
+                  <MenuItem mnemonicParsing="false" text="Exportar JSON" onAction="#ExportarJson"/>
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">

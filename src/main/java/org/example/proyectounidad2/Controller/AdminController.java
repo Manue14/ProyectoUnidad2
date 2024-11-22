@@ -1,5 +1,7 @@
 package org.example.proyectounidad2.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -8,21 +10,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.proyectounidad2.HelloApplication;
 import org.example.proyectounidad2.Model.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
-import static org.example.proyectounidad2.HelloApplication.setRoot;
 
 public class AdminController {
 
@@ -287,6 +288,8 @@ public class AdminController {
     }
 
     private void cargarTablaAutores(ArrayList<Autor> listaAutores){
+        tbl_autores.getItems().clear();
+
 
         col_idAutor.setCellValueFactory(new PropertyValueFactory<>("id"));
         col_nombreAutor.setCellValueFactory(new PropertyValueFactory<>("nombre"));
@@ -304,6 +307,8 @@ public class AdminController {
     }
     public void cargarTablaObras(ArrayList<Obra> listaObras){
         try {
+            tbl_obras.getItems().clear();
+
             col_idObra.setCellValueFactory(new PropertyValueFactory<>("id"));
             col_tituloObra.setCellValueFactory(new PropertyValueFactory<>("titulo"));
             col_medidasObra.setCellValueFactory(cellData -> {
@@ -368,6 +373,20 @@ public class AdminController {
         for (String nacionalidad : nacionalidades) {
             cmb_nacionalidad.getItems().add(nacionalidad);
         }
+    }
+
+    public void CerrarSesion(ActionEvent actionEvent) throws IOException {
+
+        HelloApplication.setRoot("acceso");
+    }
+
+    public void CerrarPrograma(ActionEvent actionEvent) {
+        Platform.exit();
+
+    }
+
+    public void ExportarObras(MouseEvent event) {
+
     }
 
 }

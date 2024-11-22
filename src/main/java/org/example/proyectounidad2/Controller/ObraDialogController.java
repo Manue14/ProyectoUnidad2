@@ -55,25 +55,27 @@ public class ObraDialogController {
     Obra obra;
     boolean modo; //True->Añadir False->Modificar
 
-    public void initialize(){
+    public void initialize() {
         cargarCmbs();
 
         Platform.runLater(() -> {
-            if(!modo){
+            if (!modo) {
                 cargarDatosObra();
             }
         });
 
     }
 
-    public void setObra(Obra obra){
-        this.obra=obra;
+    public void setObra(Obra obra) {
+        this.obra = obra;
 
     }
-    public void setModo(boolean bool){
-        this.modo=bool;
+
+    public void setModo(boolean bool) {
+        this.modo = bool;
     }
-    public void getObra(){
+
+    public void getObra() {
         /*obra.setTitulo(tf_titulo.getText());
         obra.setA(tf_autor.getText());
         obra.set(tf_medidas.getText());
@@ -87,7 +89,8 @@ public class ObraDialogController {
         chk_popular.setSelected(obra.isPopular());*/
 
     }
-    private void cargarCmbs(){
+
+    private void cargarCmbs() {
 
         cmb_categoria.getItems().clear();
         cmb_categoria.getItems().add(null);
@@ -111,9 +114,9 @@ public class ObraDialogController {
     }
 
 
-    public void cargarDatosObra(){
+    public void cargarDatosObra() {
         tf_titulo.setText(obra.getTitulo());
-        tf_autor.setText(obra.getTitulo());
+        tf_autor.setText(obra.getTitulo()); //hacer combobox con nombre autores
         tf_medidas.setText(obra.getMedidas());
         tf_medio.setText(obra.getMedio());
         tf_fecha.setText(obra.getFecha());
@@ -130,5 +133,54 @@ public class ObraDialogController {
                         "-fx-background-position: right center;"
         );
     }
+
+    public void modificarObra() {
+        try {
+            System.out.println("----------------------");
+            String titulo = tf_autor.getText();
+            String autor = tf_autor.getText();
+            String medidas = tf_medidas.getText();
+            String medio = tf_medio.getText();
+            String fecha = tf_fecha.getText();
+
+            // Recoger datos de los ComboBoxes
+            Categoria categoria = (Categoria) cmb_categoria.getValue(); // Obtiene la selección como enum
+            Movimiento movimiento = (Movimiento) cmb_movimiento.getValue();
+            Departamento departamento = (Departamento) cmb_departamento.getValue();
+
+            // Recoger estado del CheckBox
+            boolean popular = chk_popular.isSelected();
+
+            // Recoger estilo o imagen desde el AnchorPane
+            String imagenEstilo = ap_imagenHolder.getStyle();
+            String imgPath = ""; // Extraer el path desde el estilo, si es necesario.
+            if (imagenEstilo != null && imagenEstilo.contains("url(")) {
+                int start = imagenEstilo.indexOf("url(") + 4;
+                int end = imagenEstilo.indexOf(")", start);
+                if (start > 0 && end > start) {
+                    imgPath = imagenEstilo.substring(start, end).replace("\"", "");
+                }
+            }
+
+            // Imprimir datos recogidos para verificar
+            System.out.println("Título: " + titulo);
+            System.out.println("Autor: " + autor);
+            System.out.println("Medidas: " + medidas);
+            System.out.println("Medio: " + medio);
+            System.out.println("Fecha: " + fecha);
+            System.out.println("Categoría: " + categoria);
+            System.out.println("Movimiento: " + (movimiento != null ? movimiento.getNombre() : "N/A"));
+            System.out.println("Departamento: " + (departamento != null ? departamento.getNombre() : "N/A"));
+            System.out.println("Popular: " + popular);
+            System.out.println("Imagen URL: " + imgPath);
+
+            // Aquí puedes usar los datos para actualizar la obra en la base de datos o realizar otras operaciones.
+        } catch (Exception e) {
+            System.out.println("Error modificando la obra: " + e.getMessage());
+        }
+
+
+    }
+
 
 }

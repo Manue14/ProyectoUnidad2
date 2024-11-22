@@ -67,15 +67,9 @@ public class HelloApplication extends Application {
         } else if (fxml.equals("acceso")) {
             stage.setWidth(500);
             stage.setHeight(320);
-        } else if (fxml.equals("home")) {
 
-            stage.setMaximized(true);
-            {
-
-            }
         } else if (fxml.equals("user")) {
-            stage.setWidth(600);
-            stage.setHeight(550);
+            stage.setMaximized(true);
 
         } else if (fxml.equals("admin")) {
             stage.setMaximized(true);

@@ -2,6 +2,7 @@ package org.example.proyectounidad2.Controller;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -13,6 +14,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import org.example.proyectounidad2.HelloApplication;
+
+import java.io.IOException;
 
 public class UserController {
 
@@ -123,4 +127,16 @@ public class UserController {
         });
     }
 
+    public void CerrarSesion(ActionEvent actionEvent) throws IOException {
+
+        HelloApplication.setRoot("acceso");
+    }
+
+    public void CerrarPrograma(ActionEvent actionEvent) {
+        Platform.exit();
+
+    }
+
+    public void ExportarJson(ActionEvent actionEvent) {
+    }
 }
