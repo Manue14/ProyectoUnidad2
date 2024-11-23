@@ -49,11 +49,11 @@ CREATE TABLE Obras (
     id_movimiento INT
 );
 
-ALTER TABLE Obras ADD FOREIGN KEY (id_departamento) REFERENCES Departamentos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE Obras ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE Obras ADD CONSTRAINT fk_obras_autor FOREIGN KEY (id_autor) REFERENCES Autores(id) ON DELETE cascade;
-ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE CASCADE;
-ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE CASCADE;
+ALTER TABLE Obras ADD CONSTRAINT fk_obras_departamento FOREIGN KEY (id_departamento) REFERENCES Departamentos(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE Obras ADD CONSTRAINT fk_obras_movimiento FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE Obras ADD CONSTRAINT fk_obras_autor FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE Autores_Movimientos ADD CONSTRAINT fk_a_m_autor FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE CASCADE ON DELETE NO ACTION;
+ALTER TABLE Autores_Movimientos ADD CONSTRAINT fk_a_m_movimiento FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE CASCADE ON DELETE NO ACTION;
 
 INSERT INTO Autores (id,nombre,nacimiento, nacionalidad)
 VALUES 
@@ -164,26 +164,13 @@ VALUES
 
 
 DELIMITER $$
-/*
 CREATE TRIGGER after_author_delete
-AFTER DELETE ON autores
+BEFORE DELETE ON Autores
 FOR EACH ROW
 BEGIN
-   
-
-    -- Asigna al autor "anónimo" todas las obras relacionadas
-    UPDATE obras
-    SET id_autor = 1
-    WHERE id_autor = OLD.id;
-     IF ROW_COUNT() = 0 THEN
-        -- Si no se afectaron filas, lanza una señal para indicar que no se hizo ningún cambio
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se afectaron filas en el UPDATE';
-    ELSE
-        -- Si se afectaron filas, puedes agregar otro mensaje para confirmar
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Se afectaron filas en el UPDATE';
-    END IF;
-END $$*/
-
+    DELETE FROM Obras WHERE id_autor = OLD.id;
+    DELETE FROM Autores_Movimientos WHERE id_autor = OLD.id;
+END $$
 DELIMITER ;
 
 
@@ -255,11 +242,14 @@ DELIMITER ;
 #DROP PROCEDURE del_autor_if_not_obras;
 #DROP TRIGGER del_autores_fk;
 #DROP PROCEDURE filter_obras;
+#drop trigger after_author_delete;
 
-CALL filter_obras('La', 'Ruiz', null, null, 'Lienzo', true);
+#select * from Obras;
+#select * from Autores where id = 2;
+#select * from Obras where id_autor = 2;
+#select * from Autores_Movimientos where id_autor = 2;
+#delete from Autores where id = 2;
+#select * from Autores_Movimientos;
+#select * from Autores;
 
-select * from Autores;
-
-select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/1.jpg'));
-select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/gogh.jpg'));
-select @@secure_file_priv;
+CALL filter_obras(null, 'Ruiz', null, null, 'Lienzo', true);
