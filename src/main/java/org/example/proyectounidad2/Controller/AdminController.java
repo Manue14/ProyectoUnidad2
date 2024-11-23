@@ -135,10 +135,6 @@ public class AdminController {
     @FXML
     private ImageView img_test;
 
-    @FXML
-    void buscarAutor(MouseEvent event) {
-
-    }
 
     @FXML
     void buscarObra(MouseEvent event) {
@@ -405,4 +401,28 @@ public class AdminController {
 
     }
 
+    public void buscarAutor(ActionEvent actionEvent) {
+
+        String nombre = tf_nombre.getText();
+        String apellido1 = tf_apellido1.getText();
+        String apellido2 = tf_apellido2.getText();
+        String nacionalidad = cmb_nacionalidad.getValue(); // Asumiendo que la nacionalidad es un ComboBox
+
+        // Crear un objeto con los campos a filtrar
+        QueryFieldsObjectAutor fields = new QueryFieldsObjectAutor();
+        fields.setNombre(nombre);
+        fields.setApellido1(apellido1);
+        fields.setApellido2(apellido2);
+        fields.setNacionalidad(nacionalidad);
+
+        // Llamar a la función de filtrado
+        ArrayList<Autor> autoresFiltrados = dbConnector.filterAutores(fields);
+
+        // Limpiar la tabla y cargar los resultados
+        cargarTablaAutores(autoresFiltrados);
+
+
+
+
+    }
 }

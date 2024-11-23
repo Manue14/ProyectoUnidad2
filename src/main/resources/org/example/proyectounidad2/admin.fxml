@@ -97,7 +97,7 @@
                               <TextField fx:id="tf_apellido1" promptText="Primer apellido" />
                               <TextField fx:id="tf_apellido2" promptText="Segundo apellido" />
                               <ComboBox fx:id="cmb_nacionalidad" prefWidth="150.0" promptText="Nacionalidad" />
-                              <Button fx:id="btn_buscarAutor" mnemonicParsing="false" onMouseClicked="#buscarAutor" text="Buscar" />
+                              <Button fx:id="btn_buscarAutor" onAction="#buscarAutor" mnemonicParsing="false"  text="Buscar" />
                            </children>
                         </HBox>
                         <TableView fx:id="tbl_autores" prefHeight="432.0" prefWidth="848.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">

@@ -314,28 +314,39 @@ public class DBConnector {
 
     public ArrayList<Autor> filterAutores(QueryFieldsObjectAutor fields) {
         ArrayList<Autor> autores = new ArrayList<>();
-        try (PreparedStatement ps = this.conn.prepareStatement(
-                "SELECT * FROM Autores WHERE nombre LIKE ? AND WHERE apellido1 LIKE ? "
-                        + "AND WHERE apellido2 LIKE ? AND WHERE nacionalidad LIKE ?"
-        );) {
-            ps.setString(1, "%");
-            ps.setString(2, "%");
-            ps.setString(3, "%");
-            ps.setString(4, "%");
-            
-            if(fields.getNombre() != null) {
-                ps.setString(1, "%" + fields.getNombre() + "%");
+        StringBuilder query = new StringBuilder("SELECT * FROM Autores WHERE 1=1 "); // Start with a valid condition
+
+        // Build the query dynamically based on the input fields
+        if (fields.getNombre() != null && !fields.getNombre().isEmpty()) {
+            query.append("AND nombre LIKE ? ");
+        }
+        if (fields.getApellido1() != null && !fields.getApellido1().isEmpty()) {
+            query.append("AND apellido1 LIKE ? ");
+        }
+        if (fields.getApellido2() != null && !fields.getApellido2().isEmpty()) {
+            query.append("AND apellido2 LIKE ? ");
+        }
+        if (fields.getNacionalidad() != null && !fields.getNacionalidad().isEmpty()) {
+            query.append("AND nacionalidad LIKE ? ");
+        }
+
+        try (PreparedStatement ps = this.conn.prepareStatement(query.toString())) {
+            int index = 1;
+
+            // Set the parameters dynamically based on which fields are not null
+            if (fields.getNombre() != null && !fields.getNombre().isEmpty()) {
+                ps.setString(index++, "%" + fields.getNombre() + "%");
             }
-            if(fields.getApellido1() != null) {
-                ps.setString(1, "%" + fields.getApellido1() + "%");
+            if (fields.getApellido1() != null && !fields.getApellido1().isEmpty()) {
+                ps.setString(index++, "%" + fields.getApellido1() + "%");
             }
-            if(fields.getApellido2() != null) {
-                ps.setString(1, "%" + fields.getApellido2() + "%");
+            if (fields.getApellido2() != null && !fields.getApellido2().isEmpty()) {
+                ps.setString(index++, "%" + fields.getApellido2() + "%");
             }
-            if(fields.getNacionalidad() != null) {
-                ps.setString(1, "%" + fields.getNacionalidad() + "%");
+            if (fields.getNacionalidad() != null && !fields.getNacionalidad().isEmpty()) {
+                ps.setString(index++, "%" + fields.getNacionalidad() + "%");
             }
-            
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 autores.add(Mapper.mapAutor(rs));
@@ -347,6 +358,7 @@ public class DBConnector {
         }
         return autores;
     }
+
 
     public ArrayList<Obra> filterObras(QueryFieldsObjectObra fields) {
         ArrayList<Obra> obras = new ArrayList<>();
