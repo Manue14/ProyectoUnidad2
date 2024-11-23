@@ -163,6 +163,7 @@ public class AdminController {
     @FXML
     void action_eliminarAutor(ActionEvent event) {
         Autor selectedAutor = tbl_autores.getSelectionModel().getSelectedItem();
+        System.out.println(selectedAutor);
         if (selectedAutor == null){
             AlertMaker.showWarning("No autor seleccionado", "Por favor selecciona un autor que elminiar");
         }

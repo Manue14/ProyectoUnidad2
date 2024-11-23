@@ -30,6 +30,7 @@ CREATE TABLE Autores (
 CREATE TABLE Autores_Movimientos (
 	id_autor INT NOT NULL,
     id_movimiento INT NOT NULL
+
 );
 
 CREATE TABLE Obras (
@@ -37,22 +38,22 @@ CREATE TABLE Obras (
     titulo VARCHAR(100) NOT NULL,
     alto FLOAT NOT NULL,
     ancho FLOAT NOT NULL,
-    imagen LONGBLOB NOT NULL,
+    imagen LONGBLOB,
     popular BOOLEAN NOT NULL,
     medio VARCHAR(50) NOT NULL,
     categoria ENUM('Lienzo', 'Papel', 'Tejido', 'Metal', 'Arcilla/Barro', 'Cerámica', 'Madera', 'Porcelana', 'Mármol', 'Mural'),
     fecha VARCHAR(21),
     descripcion varchar(150) NOT NULL,
-    id_autor INT NOT NULL,
+    id_autor INT ,
     id_departamento INT NOT NULL,
     id_movimiento INT
 );
 
 ALTER TABLE Obras ADD FOREIGN KEY (id_departamento) REFERENCES Departamentos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE Obras ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE Obras ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
+ALTER TABLE Obras ADD CONSTRAINT fk_obras_autor FOREIGN KEY (id_autor) REFERENCES Autores(id) ON DELETE SET NULL;
+ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE CASCADE;
+ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE CASCADE;
 
 INSERT INTO Autores (id,nombre,nacimiento, nacionalidad)
 VALUES 
@@ -161,6 +162,30 @@ VALUES
  ('El hijo del hombre',116,89 ,LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/23.jpg')),TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
  y bombín de pie delante de un muro. Más allá se ve el mar y un cielo nublado.', 12, 2,5);
 
+
+DELIMITER $$
+
+CREATE TRIGGER autor_anonimo_insertar
+BEFORE INSERT ON Obras
+FOR EACH ROW
+BEGIN
+    IF NEW.id_autor IS NULL THEN
+        SET NEW.id_autor = 1; -- Reemplaza NULL con el id del autor "anónimo".
+    END IF;
+END $$
+
+CREATE TRIGGER autor_anonimo_actualizar
+BEFORE UPDATE ON Obras
+FOR EACH ROW
+BEGIN
+    IF NEW.id_autor IS NULL THEN
+        SET NEW.id_autor = 1; -- Reemplaza NULL con el id del autor "anónimo".
+    END IF;
+END $$
+
+DELIMITER ;
+
+
 DELIMITER $
 CREATE FUNCTION count_obras_by_autor_id(_id_autor INT) RETURNS INT DETERMINISTIC
 BEGIN
@@ -241,6 +266,6 @@ CALL filter_obras('La', 'Ruiz', null, null, 'Lienzo', true);
 
 select * from Autores;
 
-#select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/1.jpg'));
-#select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/gogh.jpg'));
-#select @@secure_file_priv;
+select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/1.jpg'));
+select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/gogh.jpg'));
+select @@secure_file_priv;
