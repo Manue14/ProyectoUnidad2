@@ -124,6 +124,8 @@ public class ObraDialogController {
         cmb_categoria.setValue(obra.getCategoria());
         cmb_movimiento.setValue(dbConnector.getMovimientoById(obra.getId_movimiento()));
         cmb_departamento.setValue(dbConnector.getDepartamentoById(obra.getId_departamento()));
+        
+        System.out.println(dbConnector.getMovimientoById(obra.getId_movimiento()));
 
         chk_popular.setSelected(obra.isPopular());
         ap_imagenHolder.setStyle(

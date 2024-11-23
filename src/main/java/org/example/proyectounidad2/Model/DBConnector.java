@@ -8,7 +8,7 @@ public class DBConnector {
     private Connection conn;
 
     public DBConnector() throws SQLException{
-        this.conn = DriverManager.getConnection(url, "root", "root");
+        this.conn = DriverManager.getConnection(url, "manu", "abc123.");
     }
 
     public void close() {
@@ -362,60 +362,27 @@ public class DBConnector {
 
     public ArrayList<Obra> filterObras(QueryFieldsObjectObra fields) {
         ArrayList<Obra> obras = new ArrayList<>();
-        StringBuilder query = new StringBuilder("SELECT * FROM Obras WHERE 1=1 "); // Comienza con una condición válida
-
-        // Agregar filtros dinámicamente si se han proporcionado
-        if (fields.getTitulo() != null && !fields.getTitulo().isEmpty()) {
-            query.append("AND titulo LIKE ? ");
-        }
-        if (fields.getAutor_id() != 0) {  // Solo agregar filtro de autor si el ID no es 0
-            query.append("AND id_autor = ? ");
-        }
-        if (fields.getDepartamento_id() != 0) {
-            query.append("AND id_departamento = ? ");
-        }
-        if (fields.getMovimiento_id() != 0) {
-            query.append("AND id_movimiento = ? ");
-        }
-        if (fields.getCategoria() != null && fields.getCategoria().getValor() != null && !fields.getCategoria().getValor().isEmpty()) {
-            query.append("AND categoria LIKE ? ");
-        }
-        if (fields.getPopular() != null) {
-            query.append("AND popular = ? ");
-        }
-
-        try (PreparedStatement ps = this.conn.prepareStatement(query.toString())) {
-            int index = 1;
-
-            // Asignar parámetros según los filtros introducidos
-            if (fields.getTitulo() != null && !fields.getTitulo().isEmpty()) {
-                ps.setString(index++, "%" + fields.getTitulo() + "%");
-            }
-            if (fields.getAutor_id() != 0) {  // Solo asignar el parámetro si el ID del autor no es 0
-                ps.setInt(index++, fields.getAutor_id());
-            }
-            if (fields.getDepartamento_id() != 0) {
-                ps.setInt(index++, fields.getDepartamento_id());
-            }
-            if (fields.getMovimiento_id() != 0) {
-                ps.setInt(index++, fields.getMovimiento_id());
-            }
-            if (fields.getCategoria() != null && fields.getCategoria().getValor() != null && !fields.getCategoria().getValor().isEmpty()) {
-                ps.setString(index++, "%" + fields.getCategoria().getValor() + "%");  // Usamos el valor del enum
-            }
-            if (fields.getPopular() != null) {
-                ps.setBoolean(index++, fields.getPopular());
-            }
-            System.out.println(ps);
-            ResultSet rs = ps.executeQuery();
+        
+        try (CallableStatement cs = this.conn.prepareCall(
+                "{CALL filter_obras(?,?,?,?,?,?)}"
+        );) {
+            cs.setString(1, fields.getTitulo());
+            cs.setString(2, fields.getAutor_nombre());
+            cs.setInt(3, fields.getDepartamento_id());
+            cs.setInt(4, fields.getMovimiento_id());
+            cs.setString(5, fields.getCategoria());
+            cs.setBoolean(6, fields.getPopular());
+            
+            ResultSet rs = cs.executeQuery();
             while (rs.next()) {
-                obras.add(Mapper.mapObra(rs)); // Mapear la obra desde el ResultSet
+                obras.add(Mapper.mapObra(rs));
             }
             rs.close();
         } catch (SQLException exception) {
-            System.err.println(exception.getMessage());
+            System.out.println("Error al filtrar obras: " + exception.getMessage());
             return null;
         }
+        
         return obras;
     }
 

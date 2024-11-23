@@ -8,7 +8,7 @@ public class UserModel {
 
     public UserModel() {
         try {
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuariosMuseo", "root", "root");
+            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/usuariosMuseo", "manu", "abc123.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
