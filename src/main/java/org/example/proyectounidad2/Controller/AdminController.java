@@ -423,34 +423,34 @@ public class AdminController {
     }
 
     public void buscarObra(ActionEvent actionEvent) {
+        QueryFieldsObjectObra fields = new QueryFieldsObjectObra();
         String titulo = tf_titulo.getText();
         String autor = tf_autor.getText();
-
-        // Obtención del ID del autor solo si se ha introducido un nombre
-        int autorId = 0;  // Por defecto, no buscar por autor
+        Departamento departamentoSeleccionado = cmb_departamento.getValue();
+        Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
+        Categoria categoriaSeleccionada = cmb_categoria.getValue();
+        
+        if (titulo != null && !titulo.isEmpty()) {
+            fields.setTitulo(titulo);
+        }
+        
         if (autor != null && !autor.isEmpty()) {
-            autorId = obtenerIdAutor(autor);  // Solo obtener el ID si hay un nombre
+            fields.setAutor_nombre(autor);
+        }
+        
+        if (departamentoSeleccionado != null) {
+            fields.setDepartamento_id(departamentoSeleccionado.getId());
         }
 
-        Departamento departamentoSeleccionado = cmb_departamento.getValue();
-        int departamentoId = (departamentoSeleccionado != null) ? departamentoSeleccionado.getId() : 0;
+        if (movimientoSeleccionado != null) {
+            fields.setMovimiento_id(movimientoSeleccionado.getId());
+        }
 
-        Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
-        int movimientoId = (movimientoSeleccionado != null) ? movimientoSeleccionado.getId() : 0;
-
-        Categoria categoriaSeleccionada = cmb_categoria.getValue();
-        String categoriaValor = (categoriaSeleccionada != null) ? categoriaSeleccionada.getValor() : "";
-
-        Boolean popular = chk_popular.isSelected();
-
-        // Crear un objeto con los campos a filtrar
-        QueryFieldsObjectObra fields = new QueryFieldsObjectObra();
-        fields.setTitulo(titulo);
-        fields.setAutor_id(autorId);  // Si autorId es 0, no lo usaremos en la consulta
-        fields.setDepartamento_id(departamentoId);
-        fields.setMovimiento_id(movimientoId);
-        fields.setCategoria(categoriaSeleccionada);
-        fields.setPopular(popular);
+        if (categoriaSeleccionada != null) {
+            fields.setCategoria(categoriaSeleccionada.getValor());
+        }
+        
+        fields.setPopular(chk_popular.isSelected());
 
         // Llamar a la función de filtrado
         ArrayList<Obra> obrasFiltradas = dbConnector.filterObras(fields);

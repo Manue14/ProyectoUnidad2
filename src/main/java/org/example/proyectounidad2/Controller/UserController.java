@@ -17,6 +17,16 @@ import javafx.scene.text.Text;
 import org.example.proyectounidad2.HelloApplication;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.scene.control.cell.PropertyValueFactory;
+import static org.example.proyectounidad2.HelloApplication.dbConnector;
+import org.example.proyectounidad2.Model.Autor;
+import org.example.proyectounidad2.Model.Categoria;
+import org.example.proyectounidad2.Model.Departamento;
+import org.example.proyectounidad2.Model.Movimiento;
+import org.example.proyectounidad2.Model.Obra;
+import org.example.proyectounidad2.Model.QueryFieldsObjectObra;
 
 public class UserController {
 
@@ -27,13 +37,13 @@ public class UserController {
     private CheckBox chk_popular;
 
     @FXML
-    private ComboBox<?> cmb_categoria;
+    private ComboBox<Categoria> cmb_categoria;
 
     @FXML
-    private ComboBox<?> cmb_departamento;
+    private ComboBox<Departamento> cmb_departamento;
 
     @FXML
-    private ComboBox<?> cmb_movimiento;
+    private ComboBox<Movimiento> cmb_movimiento;
 
     @FXML
     private ImageView img_imagenObra;
@@ -70,8 +80,41 @@ public class UserController {
 
 
     @FXML
-    void buscarObra(MouseEvent event) {
+    public void buscarObra(MouseEvent event) {
+        QueryFieldsObjectObra fields = new QueryFieldsObjectObra();
+        String titulo = tf_titulo.getText();
+        String autor = tf_autor.getText();
+        Departamento departamentoSeleccionado = cmb_departamento.getValue();
+        Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
+        Categoria categoriaSeleccionada = cmb_categoria.getValue();
+        
+        if (titulo != null && !titulo.isEmpty()) {
+            fields.setTitulo(titulo);
+        }
+        
+        if (autor != null && !autor.isEmpty()) {
+            fields.setAutor_nombre(autor);
+        }
+        
+        if (departamentoSeleccionado != null) {
+            fields.setDepartamento_id(departamentoSeleccionado.getId());
+        }
 
+        if (movimientoSeleccionado != null) {
+            fields.setMovimiento_id(movimientoSeleccionado.getId());
+        }
+
+        if (categoriaSeleccionada != null) {
+            fields.setCategoria(categoriaSeleccionada.getValor());
+        }
+        
+        fields.setPopular(chk_popular.isSelected());
+
+        // Llamar a la función de filtrado
+        ArrayList<Obra> obrasFiltradas = dbConnector.filterObras(fields);
+
+        // Limpiar la tabla y cargar los resultados
+        /*cargarTablaObras(obrasFiltradas);*/
     }
 
     @FXML
