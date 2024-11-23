@@ -163,8 +163,6 @@ public class ObraDialogController {
         cmb_departamento.setValue(dbConnector.getDepartamentoById(obra.getId_departamento()));
         cmb_autor.setValue(dbConnector.getAutorById(obra.getId_autor()));
 
-        System.out.println(dbConnector.getDepartamentoById(obra.getId_departamento()).toString());
-
         chk_popular.setSelected(obra.isPopular());
         ap_imagenHolder.setBackground(
                 new Background(

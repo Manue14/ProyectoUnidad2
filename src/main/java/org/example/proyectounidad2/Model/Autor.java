@@ -101,6 +101,9 @@ public class Autor {
 
     @Override
     public String toString() {
+        return this.nombre + " " + this.apellido1 + " " + this.apellido2;
+    }
+    public String getAllInfo() {
         return "Id: " + this.id +
                 "\nNombre: " + this.nombre +
                 "\nApellido1: " + this.apellido1 +

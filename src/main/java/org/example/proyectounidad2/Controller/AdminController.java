@@ -202,8 +202,48 @@ public class AdminController {
     }
 
     @FXML
-    void action_modificarAutor(ActionEvent event) {
+    void action_modificarAutor(ActionEvent event) throws IOException {
+        Autor selectedAutor = tbl_autores.getSelectionModel().getSelectedItem();
+        System.out.println("Autor deleccionado: " + selectedAutor.toString());
 
+        if (selectedAutor == null) {
+            AlertMaker.showWarning("No autor seleccionado", "Por favor seleccione un autor para modificar");
+        }
+
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.setLocation(getClass().getResource("org/example/proyectounidad2/autorDialog.fxml"));
+            System.out.println("Location: " + fxmlLoader.getLocation());
+        } catch (Exception e) {
+            System.out.println("Error setting location");
+        }
+
+
+        DialogPane autorDialogPane = fxmlLoader.load();
+        //pasar la obra al dialog
+        ObraDialogController autorDlgController = fxmlLoader.getController();
+        try {
+            if (autorDlgController == null) {
+                System.out.println("No se encontro controlador");
+            }
+            //autorDlgController.setAutor(selectedAutor);
+            autorDlgController.setModo(false);
+        } catch (Exception e) {
+            System.out.println("Error poniendo autor");
+        }
+
+        //Mostrar dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(autorDialogPane);
+        dialog.setTitle("Modificar Autor");
+
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        if (clickedButton.get() == ButtonType.OK) {
+            //autorDlgController.modificarObra();
+        } else {
+            AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ningun autor");
+
+        }
     }
 
     @FXML
@@ -243,12 +283,11 @@ public class AdminController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
             obraDlgController.modificarObra();
+            //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ninguna obra");
 
         }
-
-
     }
 
     public void initialize() {
