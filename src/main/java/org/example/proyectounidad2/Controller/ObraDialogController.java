@@ -1,5 +1,6 @@
 package org.example.proyectounidad2.Controller;
 
+import java.io.ByteArrayInputStream;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,6 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import org.example.proyectounidad2.Model.*;
 
 import java.util.ArrayList;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
@@ -128,12 +135,19 @@ public class ObraDialogController {
         System.out.println(dbConnector.getMovimientoById(obra.getId_movimiento()));
 
         chk_popular.setSelected(obra.isPopular());
-        ap_imagenHolder.setStyle(
-                "-fx-background-image: url(" + obra.getImg() + ");" +
+        ap_imagenHolder.setBackground(
+                new Background(
+                        new BackgroundImage(
+                                new Image(new ByteArrayInputStream(obra.getImg())),
+                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
+                        )
+                )
+        );
+        /*ap_imagenHolder.setStyle(
                         "-fx-background-size: contain;" +
                         "-fx-background-repeat: no-repeat;" +
                         "-fx-background-position: right center;"
-        );
+        );*/
     }
 
     public void modificarObra() {
