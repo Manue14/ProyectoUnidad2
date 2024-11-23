@@ -74,10 +74,10 @@ public class Mapper {
         ps.setString(1, obra.getTitulo());
         ps.setFloat(2, obra.getAlto());
         ps.setFloat(3, obra.getAncho());
-        ps.setBinaryStream(4, img, img.available());
+        ps.setBytes(4, obra.getImg());
         ps.setBoolean(5, obra.isPopular());
         ps.setString(6, obra.getMedio());
-        ps.setObject(7, obra.getCategoria().getValor());
+        ps.setString(7, obra.getCategoria().getValor());
         ps.setString(8, obra.getFecha());
         ps.setString(9, obra.getDescripcion());
         ps.setInt(10, obra.getId_autor());

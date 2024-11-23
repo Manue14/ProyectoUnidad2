@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 import org.example.proyectounidad2.Model.*;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -27,7 +29,7 @@ import javafx.scene.layout.BackgroundSize;
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
 public class ObraDialogController {
-
+    
     @FXML
     private AnchorPane ap_imagenHolder;
 
@@ -63,23 +65,32 @@ public class ObraDialogController {
 
     @FXML
     private TextField tf_titulo;
+    
+    @FXML
+    FileChooser fileChooser=new FileChooser();
+    
+    Obra obra;
+    private byte[] currentImage;
+    boolean modo; //True->Añadir False->Modificar
+    
     @FXML
     void subirArchivo(MouseEvent event) {
-        File selectedFile= fileChooser.showOpenDialog(new Stage());
-        if (selectedFile !=null){
-            Image imagenSeleccionada = new Image(selectedFile.getPath());
-            //Hacer algo con la imagen seleccionada
-        }
-
+        try {
+            File selectedFile= fileChooser.showOpenDialog(new Stage());
+            if (selectedFile !=null){
+                Image imagenSeleccionada = new Image(selectedFile.toURI().toString());
+                this.currentImage = Files.readAllBytes(selectedFile.toPath());
+                setAnchorPaneBackground(imagenSeleccionada);
+            }
+        } catch (IOException exception) {
+            System.out.println("Error al convertir la imagen seleccionada a un array de bytes: " + exception.getMessage());
+        } 
     }
-
-    FileChooser fileChooser=new FileChooser();
-    Obra obra;
-    boolean modo; //True->Añadir False->Modificar
 
     public void initialize() {
         cargarCmbs();
-        fileChooser.setInitialDirectory(new File("C:\\"));
+        /*fileChooser.setInitialDirectory(new File("C:\\"));*/
+        fileChooser.setInitialDirectory(new File("/home/manu"));
         fileChooser.setTitle("Cargar imagen");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".jpg","*.jpg"),
                 new FileChooser.ExtensionFilter(".png","*.png"),new FileChooser.ExtensionFilter("All images","*.jpg","*.png"));
@@ -164,14 +175,16 @@ public class ObraDialogController {
         cmb_autor.setValue(dbConnector.getAutorById(obra.getId_autor()));
 
         chk_popular.setSelected(obra.isPopular());
-        ap_imagenHolder.setBackground(
+        setAnchorPaneBackground(new Image(new ByteArrayInputStream(obra.getImg())));
+        this.currentImage = obra.getImg();
+        /*ap_imagenHolder.setBackground(
                 new Background(
                         new BackgroundImage(
                                 new Image(new ByteArrayInputStream(obra.getImg())),
                                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
                         )
                 )
-        );
+        );*/
         /*ap_imagenHolder.setStyle(
                         "-fx-background-size: contain;" +
                         "-fx-background-repeat: no-repeat;" +
@@ -199,17 +212,7 @@ public class ObraDialogController {
             // Recoger estado del CheckBox
             obra.setPopular(chk_popular.isSelected());
 
-            //ESTO podemos hacerlo cuando se suba una imagen nueva
-            // Recoger estilo o imagen desde el AnchorPane
-            /*String imagenEstilo = ap_imagenHolder.getStyle();
-            String imgPath = ""; // Extraer el path desde el estilo, si es necesario.
-            if (imagenEstilo != null && imagenEstilo.contains("url(")) {
-                int start = imagenEstilo.indexOf("url(") + 4;
-                int end = imagenEstilo.indexOf(")", start);
-                if (start > 0 && end > start) {
-                    imgPath = imagenEstilo.substring(start, end).replace("\"", "");
-                }
-            }*/
+            obra.setImg(this.currentImage);
 
             //Hay que cambiarlo para que los consulte en la obra
             // Imprimir datos recogidos para verificar
@@ -225,11 +228,25 @@ public class ObraDialogController {
             System.out.println("Imagen URL: " + imgPath);*/
 
             // Aquí puedes usar los datos para actualizar la obra en la base de datos o realizar otras operaciones.
+            if (dbConnector.updateObra(obra) == true) {
+                System.out.println("*****--------OBRA ACTUALIZADA CON ÉXITO----------------************");
+            }
         } catch (Exception e) {
             System.out.println("Error modificando la obra: " + e.getMessage());
         }
 
 
+    }
+    
+    public void setAnchorPaneBackground(Image img) {
+        ap_imagenHolder.setBackground(
+                new Background(
+                        new BackgroundImage(
+                                img,
+                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
+                        )
+                )
+        );
     }
 
 

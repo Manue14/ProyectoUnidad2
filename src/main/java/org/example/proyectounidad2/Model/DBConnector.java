@@ -8,7 +8,7 @@ public class DBConnector {
     private Connection conn;
 
     public DBConnector() throws SQLException{
-        this.conn = DriverManager.getConnection(url, "manu", "abc123.");
+        this.conn = DriverManager.getConnection(url, "root", "root");
     }
 
     public void close() {
@@ -473,9 +473,8 @@ public class DBConnector {
     public boolean updateObra(Obra obra) {
         try {
             try (PreparedStatement ps = this.conn.prepareStatement("UPDATE Obras "
-                    + "SET (titulo, alto, ancho, imagen, popular, medio, categoria, "
-                    + "fecha, descripcion, id_autor, id_departamento, id_movimiento) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "
+                    + "SET titulo = ?, alto = ?, ancho = ?, imagen = ?, popular = ?, medio = ?, categoria = ?, "
+                    + "fecha = ?, descripcion = ?, id_autor = ?, id_departamento = ?, id_movimiento = ? "
                     + "WHERE id = ?");) {
                 this.conn.setAutoCommit(false);
 
@@ -504,7 +503,7 @@ public class DBConnector {
                 }
 
                 Mapper.bindObraUpdateQuery(ps, obra);
-
+         
                 int affectedRows = ps.executeUpdate();
                 if (affectedRows == 1) {
                     this.conn.commit();
@@ -514,7 +513,7 @@ public class DBConnector {
                 }
 
             } catch (SQLException exception) {
-                System.err.println(exception.getMessage());
+                System.err.println("Error al actualizar la obra: " + exception.getMessage());
                 this.conn.rollback();
             } finally {
                 this.conn.setAutoCommit(true);
@@ -623,5 +622,4 @@ public class DBConnector {
         }
     }
     //----End métodos de comprobaciones-----------------------------------------------------------------
-
 }
