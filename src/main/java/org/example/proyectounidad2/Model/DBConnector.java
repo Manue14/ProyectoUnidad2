@@ -362,40 +362,54 @@ public class DBConnector {
 
     public ArrayList<Obra> filterObras(QueryFieldsObjectObra fields) {
         ArrayList<Obra> obras = new ArrayList<>();
-        try (PreparedStatement ps = this.conn.prepareStatement(
-                "SELECT * FROM Obras WHERE titulo LIKE ? AND WHERE autor_id LIKE ? " +
-                        "AND WHERE departamento_id LIKE ? AND WHERE movimiento_id LIKE ? " +
-                        "AND WHERE categoria like ? AND WHERE popular LIKE ?");
-        ) {
-            ps.setString(1, "%");
-            ps.setString(2, "%");
-            ps.setString(3, "%");
-            ps.setString(4, "%");
-            ps.setString(5, "%");
-            ps.setString(6, "%");
+        StringBuilder query = new StringBuilder("SELECT * FROM Obras WHERE 1=1 "); // Comienza con una condición válida
 
-            if(fields.getTitulo() != null) {
-                ps.setString(1, "%" + fields.getTitulo() + "%");
-            }
-            if(fields.getAutor_id() != 0) {
-                ps.setString(2, Integer.toString(fields.getAutor_id()));
-            }
-            if(fields.getDepartamento_id() != 0) {
-                ps.setString(3, Integer.toString(fields.getDepartamento_id()));
-            }
-            if(fields.getMovimiento_id() != 0) {
-                ps.setString(4, Integer.toString(fields.getMovimiento_id()));
-            }
-            if(fields.getCategoria() != null) {
-                ps.setString(5, fields.getCategoria().getValor());
-            }
-            if(fields.getPopular() != null) {
-                ps.setString(6, Boolean.toString(fields.getPopular()));
-            }
+        // Agregar filtros dinámicamente si se han proporcionado
+        if (fields.getTitulo() != null && !fields.getTitulo().isEmpty()) {
+            query.append("AND titulo LIKE ? ");
+        }
+        if (fields.getAutor_id() != 0) {  // Solo agregar filtro de autor si el ID no es 0
+            query.append("AND id_autor = ? ");
+        }
+        if (fields.getDepartamento_id() != 0) {
+            query.append("AND id_departamento = ? ");
+        }
+        if (fields.getMovimiento_id() != 0) {
+            query.append("AND id_movimiento = ? ");
+        }
+        if (fields.getCategoria() != null && fields.getCategoria().getValor() != null && !fields.getCategoria().getValor().isEmpty()) {
+            query.append("AND categoria LIKE ? ");
+        }
+        if (fields.getPopular() != null) {
+            query.append("AND popular = ? ");
+        }
 
+        try (PreparedStatement ps = this.conn.prepareStatement(query.toString())) {
+            int index = 1;
+
+            // Asignar parámetros según los filtros introducidos
+            if (fields.getTitulo() != null && !fields.getTitulo().isEmpty()) {
+                ps.setString(index++, "%" + fields.getTitulo() + "%");
+            }
+            if (fields.getAutor_id() != 0) {  // Solo asignar el parámetro si el ID del autor no es 0
+                ps.setInt(index++, fields.getAutor_id());
+            }
+            if (fields.getDepartamento_id() != 0) {
+                ps.setInt(index++, fields.getDepartamento_id());
+            }
+            if (fields.getMovimiento_id() != 0) {
+                ps.setInt(index++, fields.getMovimiento_id());
+            }
+            if (fields.getCategoria() != null && fields.getCategoria().getValor() != null && !fields.getCategoria().getValor().isEmpty()) {
+                ps.setString(index++, "%" + fields.getCategoria().getValor() + "%");  // Usamos el valor del enum
+            }
+            if (fields.getPopular() != null) {
+                ps.setBoolean(index++, fields.getPopular());
+            }
+            System.out.println(ps);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                obras.add(Mapper.mapObra(rs));
+                obras.add(Mapper.mapObra(rs)); // Mapear la obra desde el ResultSet
             }
             rs.close();
         } catch (SQLException exception) {
@@ -404,7 +418,35 @@ public class DBConnector {
         }
         return obras;
     }
-    
+
+
+
+
+
+    public int obtenerIdAutorPorNombre(String nombreAutor) {
+        int autorId = 0;  // Valor por defecto si no se encuentra el autor
+
+        // Realizar la consulta para obtener el ID del autor basado en su nombre
+        try {
+            String sql = "SELECT id FROM Autores WHERE nombre LIKE ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setString(1, "%" + nombreAutor + "%");  // Búsqueda parcial por nombre
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    autorId = rs.getInt("id");  // Obtener el ID
+                }
+            }
+        } catch (SQLException exception) {
+            System.err.println("Error al obtener el ID del autor: " + exception.getMessage());
+        }
+
+        return autorId;
+    }
+
+
+
+
     public ArrayList<String> getAllNacionalidades() {
         ArrayList<String> nacionalidades = new ArrayList<>();
         

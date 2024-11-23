@@ -6,6 +6,7 @@ module org.example.proyectounidad2 {
     requires org.kordamp.bootstrapfx.core;
     requires com.fasterxml.jackson.databind;
     requires java.sql;
+    requires java.desktop;
 
     opens org.example.proyectounidad2 to javafx.fxml;
     opens org.example.proyectounidad2.Model to javafx.base;

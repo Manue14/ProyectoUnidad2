@@ -2,7 +2,9 @@ package org.example.proyectounidad2.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+
 import java.io.ByteArrayInputStream;
+
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -28,6 +30,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import javax.swing.*;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
@@ -56,6 +60,9 @@ public class AdminController {
 
     @FXML
     private ComboBox<String> cmb_nacionalidad;
+
+    @FXML
+    private CheckBox chk_popular;
 
     @FXML
     private TextField tf_apellido1;
@@ -131,15 +138,10 @@ public class AdminController {
 
     @FXML
     private TableColumn<Obra, String> col_tituloObra;
-    
+
     @FXML
     private ImageView img_test;
 
-
-    @FXML
-    void buscarObra(MouseEvent event) {
-
-    }
 
     @FXML
     void mostrarAddAutor(MouseEvent event) {
@@ -160,22 +162,19 @@ public class AdminController {
     void action_eliminarAutor(ActionEvent event) {
         Autor selectedAutor = tbl_autores.getSelectionModel().getSelectedItem();
         System.out.println(selectedAutor);
-        if (selectedAutor == null){
+        if (selectedAutor == null) {
             AlertMaker.showWarning("No autor seleccionado", "Por favor selecciona un autor que elminiar");
-        }
-        else{
-            if (AlertMaker.showConfirmation("Eliminar Autor","¿Seguro que desea eliminar este autor?")){
+        } else {
+            if (AlertMaker.showConfirmation("Eliminar Autor", "¿Seguro que desea eliminar este autor?")) {
                 boolean resultado = dbConnector.deleteAutor(selectedAutor.getId());
-                if(resultado){
-                    AlertMaker.showInformation("Eliminacion Exitosa","Se ha eliminado el autor con exito");
+                if (resultado) {
+                    AlertMaker.showInformation("Eliminacion Exitosa", "Se ha eliminado el autor con exito");
                     cargarTablaAutores(dbConnector.getAllAutores());
+                } else {
+                    AlertMaker.showError("Error en la eliminacion", "Algo ha salido mal al borrar el autor");
                 }
-                else {
-                    AlertMaker.showError("Error en la eliminacion","Algo ha salido mal al borrar el autor");
-                }
-            }
-            else{
-                AlertMaker.showInformation("Eliminacion cancelada","No se ha eliminado ningun autor");
+            } else {
+                AlertMaker.showInformation("Eliminacion cancelada", "No se ha eliminado ningun autor");
             }
         }
     }
@@ -184,22 +183,19 @@ public class AdminController {
     void action_eliminarObra(ActionEvent event) {
         //GET selected item
         Obra selectedObra = tbl_obras.getSelectionModel().getSelectedItem();
-        if (selectedObra == null){
+        if (selectedObra == null) {
             AlertMaker.showWarning("No obra seleccionada", "Por favor selecciona una obra para elminiar primero");
-        }
-        else{
-            if (AlertMaker.showConfirmation("Eliminar Obra","¿Seguro que desea eliminar esta obra?")){
+        } else {
+            if (AlertMaker.showConfirmation("Eliminar Obra", "¿Seguro que desea eliminar esta obra?")) {
                 boolean resultado = dbConnector.deleteObra(selectedObra);
-                if(resultado){
-                    AlertMaker.showInformation("Eliminacion Exitosa","Se ha eliminado la obra con exito");
+                if (resultado) {
+                    AlertMaker.showInformation("Eliminacion Exitosa", "Se ha eliminado la obra con exito");
                     cargarTablaObras(dbConnector.getAllObras());
+                } else {
+                    AlertMaker.showError("Error en la eliminacion", "Algo ha salido mal al borrar la obra");
                 }
-                else {
-                    AlertMaker.showError("Error en la eliminacion","Algo ha salido mal al borrar la obra");
-                }
-            }
-            else{
-                AlertMaker.showInformation("Eliminacion cancelada","No se ha eliminado ninguna obra");
+            } else {
+                AlertMaker.showInformation("Eliminacion cancelada", "No se ha eliminado ninguna obra");
             }
         }
 
@@ -214,7 +210,7 @@ public class AdminController {
     void action_modificarObra(ActionEvent event) throws IOException {
         Obra selectedObra = tbl_obras.getSelectionModel().getSelectedItem();
         System.out.println(selectedObra.toString());
-        if (selectedObra == null){
+        if (selectedObra == null) {
             AlertMaker.showWarning("No obra seleccionada", "Por favor selecciona una obra para modificar primero");
         }
 
@@ -226,16 +222,16 @@ public class AdminController {
         }
 
 
-        DialogPane obraDialogPane =fxmlLoader.load();
+        DialogPane obraDialogPane = fxmlLoader.load();
         //pasar la obra al dialog
         try {
             ObraDialogController obraDlgController = fxmlLoader.getController();
-            if(obraDlgController==null){
+            if (obraDlgController == null) {
                 System.out.println("No se encontro controlador");
             }
             obraDlgController.setObra(selectedObra);
             obraDlgController.setModo(false);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Error poniendo obra");
         }
 
@@ -245,17 +241,17 @@ public class AdminController {
         dialog.setTitle("Modificar Obra");
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
-        if (clickedButton.get() == ButtonType.OK){
+        if (clickedButton.get() == ButtonType.OK) {
             //ACCION MODIFICAR
-        }else {
-            AlertMaker.showInformation("Modificacion cancelada","No se ha modificado ninguna obra");
+        } else {
+            AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ninguna obra");
 
         }
 
 
     }
 
-    public void initialize(){
+    public void initialize() {
         //Poner las columnas para que ocupen toda la tabla
         setupColumnWidths(tbl_autores);
         setupColumnWidths(tbl_obras);
@@ -293,7 +289,7 @@ public class AdminController {
         }
     }
 
-    private void cargarTablaAutores(ArrayList<Autor> listaAutores){
+    private void cargarTablaAutores(ArrayList<Autor> listaAutores) {
         tbl_autores.getItems().clear();
 
 
@@ -306,18 +302,19 @@ public class AdminController {
         col_nacimientoAutor.setCellValueFactory(new PropertyValueFactory<>("nacimiento"));
         col_nacionalidadAutor.setCellValueFactory(new PropertyValueFactory<>("nacionalidad"));
 
-        listaAutores.forEach(autor->{
+        listaAutores.forEach(autor -> {
             tbl_autores.getItems().add(autor);
-            
+
             /*Test cargar imagen*/
             /*if (autor.getFoto() != null) {
                 img_test.setImage(new Image(new ByteArrayInputStream(autor.getFoto())));
             }*/
-            
+
         });
 
     }
-    public void cargarTablaObras(ArrayList<Obra> listaObras){
+
+    public void cargarTablaObras(ArrayList<Obra> listaObras) {
         try {
             tbl_obras.getItems().clear();
 
@@ -333,38 +330,39 @@ public class AdminController {
             col_fechaObra.setCellValueFactory(new PropertyValueFactory<>("fecha"));
             col_autorObra.setCellValueFactory(cellData -> {
                 Obra obra = cellData.getValue();
-                Autor autor= dbConnector.getAutorById(obra.getId_autor());
+                Autor autor = dbConnector.getAutorById(obra.getId_autor());
 
                 return new ReadOnlyStringWrapper(autor.getNombre() + " " + autor.getApellido1());
             });
             col_departamentoObra.setCellValueFactory(cellData -> {
                 Obra obra = cellData.getValue();
-                Departamento departamento= dbConnector.getDepartamentoById(obra.getId_departamento());
+                Departamento departamento = dbConnector.getDepartamentoById(obra.getId_departamento());
 
                 return new ReadOnlyStringWrapper(departamento.getNombre());
             });
             col_movimientoObra.setCellValueFactory(cellData -> {
                 Obra obra = cellData.getValue();
-                Movimiento movimiento= dbConnector.getMovimientoById(obra.getId_movimiento());
+                Movimiento movimiento = dbConnector.getMovimientoById(obra.getId_movimiento());
 
                 return new ReadOnlyStringWrapper(movimiento.getNombre());
             });
 
-            listaObras.forEach(obra->{
+            listaObras.forEach(obra -> {
                 tbl_obras.getItems().add(obra);
             });
-        }catch (Exception e){
-            System.out.println("Error cargando datos obras: "+e);
+        } catch (Exception e) {
+            System.out.println("Error cargando datos obras: " + e);
         }
     }
-    private void cargarCmbs(){
-        
+
+    private void cargarCmbs() {
+
         cmb_categoria.getItems().clear();
         cmb_categoria.getItems().add(null);
         for (Categoria categoria : Categoria.values()) {
             cmb_categoria.getItems().add(categoria);
         }
-        
+
         cmb_departamento.getItems().clear();
         cmb_departamento.getItems().add(null);
         ArrayList<Departamento> departamentos = dbConnector.getAllDepartamentos();
@@ -422,7 +420,49 @@ public class AdminController {
         cargarTablaAutores(autoresFiltrados);
 
 
-
-
     }
+
+    public void buscarObra(ActionEvent actionEvent) {
+        String titulo = tf_titulo.getText();
+        String autor = tf_autor.getText();
+
+        // Obtención del ID del autor solo si se ha introducido un nombre
+        int autorId = 0;  // Por defecto, no buscar por autor
+        if (autor != null && !autor.isEmpty()) {
+            autorId = obtenerIdAutor(autor);  // Solo obtener el ID si hay un nombre
+        }
+
+        Departamento departamentoSeleccionado = cmb_departamento.getValue();
+        int departamentoId = (departamentoSeleccionado != null) ? departamentoSeleccionado.getId() : 0;
+
+        Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
+        int movimientoId = (movimientoSeleccionado != null) ? movimientoSeleccionado.getId() : 0;
+
+        Categoria categoriaSeleccionada = cmb_categoria.getValue();
+        String categoriaValor = (categoriaSeleccionada != null) ? categoriaSeleccionada.getValor() : "";
+
+        Boolean popular = chk_popular.isSelected();
+
+        // Crear un objeto con los campos a filtrar
+        QueryFieldsObjectObra fields = new QueryFieldsObjectObra();
+        fields.setTitulo(titulo);
+        fields.setAutor_id(autorId);  // Si autorId es 0, no lo usaremos en la consulta
+        fields.setDepartamento_id(departamentoId);
+        fields.setMovimiento_id(movimientoId);
+        fields.setCategoria(categoriaSeleccionada);
+        fields.setPopular(popular);
+
+        // Llamar a la función de filtrado
+        ArrayList<Obra> obrasFiltradas = dbConnector.filterObras(fields);
+
+        // Limpiar la tabla y cargar los resultados
+        cargarTablaObras(obrasFiltradas);
+    }
+
+
+    public int obtenerIdAutor(String nombreAutor) {
+        return dbConnector.obtenerIdAutorPorNombre(nombreAutor);
+    }
+
+
 }
