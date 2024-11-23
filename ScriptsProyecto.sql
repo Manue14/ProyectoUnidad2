@@ -44,14 +44,14 @@ CREATE TABLE Obras (
     categoria ENUM('Lienzo', 'Papel', 'Tejido', 'Metal', 'Arcilla/Barro', 'Cerámica', 'Madera', 'Porcelana', 'Mármol', 'Mural'),
     fecha VARCHAR(21),
     descripcion varchar(150) NOT NULL,
-    id_autor INT ,
+    id_autor INT not null default 1,
     id_departamento INT NOT NULL,
     id_movimiento INT
 );
 
 ALTER TABLE Obras ADD FOREIGN KEY (id_departamento) REFERENCES Departamentos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
 ALTER TABLE Obras ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE NO ACTION;
-ALTER TABLE Obras ADD CONSTRAINT fk_obras_autor FOREIGN KEY (id_autor) REFERENCES Autores(id) ON DELETE SET NULL;
+ALTER TABLE Obras ADD CONSTRAINT fk_obras_autor FOREIGN KEY (id_autor) REFERENCES Autores(id) ON DELETE cascade;
 ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_autor) REFERENCES Autores(id) ON UPDATE NO ACTION ON DELETE CASCADE;
 ALTER TABLE Autores_Movimientos ADD FOREIGN KEY (id_movimiento) REFERENCES Movimientos(id) ON UPDATE NO ACTION ON DELETE CASCADE;
 
@@ -164,24 +164,25 @@ VALUES
 
 
 DELIMITER $$
-
-CREATE TRIGGER autor_anonimo_insertar
-BEFORE INSERT ON Obras
+/*
+CREATE TRIGGER after_author_delete
+AFTER DELETE ON autores
 FOR EACH ROW
 BEGIN
-    IF NEW.id_autor IS NULL THEN
-        SET NEW.id_autor = 1; -- Reemplaza NULL con el id del autor "anónimo".
-    END IF;
-END $$
+   
 
-CREATE TRIGGER autor_anonimo_actualizar
-BEFORE UPDATE ON Obras
-FOR EACH ROW
-BEGIN
-    IF NEW.id_autor IS NULL THEN
-        SET NEW.id_autor = 1; -- Reemplaza NULL con el id del autor "anónimo".
+    -- Asigna al autor "anónimo" todas las obras relacionadas
+    UPDATE obras
+    SET id_autor = 1
+    WHERE id_autor = OLD.id;
+     IF ROW_COUNT() = 0 THEN
+        -- Si no se afectaron filas, lanza una señal para indicar que no se hizo ningún cambio
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'No se afectaron filas en el UPDATE';
+    ELSE
+        -- Si se afectaron filas, puedes agregar otro mensaje para confirmar
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Se afectaron filas en el UPDATE';
     END IF;
-END $$
+END $$*/
 
 DELIMITER ;
 
@@ -208,13 +209,6 @@ BEGIN
 END$
 DELIMITER ;
 
-DELIMITER $
-CREATE TRIGGER del_autores_fk AFTER DELETE ON Autores
-FOR EACH ROW BEGIN
-	DELETE FROM Obras WHERE id_autor = OLD.id;
-    DELETE FROM Autores_Movimientos WHERE id_autor = OLD.id;
-END$
-DELIMITER ;
 
 DELIMITER $
 CREATE PROCEDURE filter_obras(IN _titulo VARCHAR(100), IN _autor VARCHAR(255), IN _departamento_id INT, IN _movimiento_id INT, IN _categoria VARCHAR(50),
