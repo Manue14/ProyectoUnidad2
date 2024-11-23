@@ -144,18 +144,78 @@ public class AdminController {
 
 
     @FXML
-    void mostrarAddAutor(MouseEvent event) {
+    void mostrarAddAutor(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.setLocation(getClass().getResource("/org/example/proyectounidad2/autorDialog.fxml"));
+        } catch (Exception e) {
+            System.out.println("Error setting location");
+        }
 
+
+        DialogPane autorDialogPane = fxmlLoader.load();
+        //pasar la obra al dialog
+        AutorDialogController autorDlgController = fxmlLoader.getController();
+        try {
+            if (autorDlgController == null) {
+                System.out.println("No se encontro controlador");
+            }
+            autorDlgController.setModo(true);
+        } catch (Exception e) {
+            System.out.println("Error cargando modo del dlg");
+        }
+
+        //Mostrar dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(autorDialogPane);
+        dialog.setTitle("Añadir Autor");
+
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        if (clickedButton.get() == ButtonType.OK) {
+            autorDlgController.modificarAutor();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
+            //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
+        } else {
+            AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
+
+        }
     }
 
     @FXML
     void mostrarAddObra(MouseEvent event) throws IOException {
 
-        /*FXMLLoader fxmlLoader = new FXMLLoader();
-        fxmlLoader.setLocation(getClass().getResource("obraDialog.fxml"));
-        DialogPane obraDialogPane =fxmlLoader.load();*/
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.setLocation(getClass().getResource("/org/example/proyectounidad2/obraDialog.fxml"));
+        } catch (Exception e) {
+            System.out.println("Error setting location");
+        }
 
 
+        DialogPane obraDialogPane = fxmlLoader.load();
+        //pasar la obra al dialog
+        ObraDialogController obraDlgController = fxmlLoader.getController();
+        try {
+            if (obraDlgController == null) {
+                System.out.println("No se encontro controlador");
+            }
+            obraDlgController.setModo(true);
+        } catch (Exception e) {
+            System.out.println("Error cargando modo del dlg");
+        }
+
+        //Mostrar dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setDialogPane(obraDialogPane);
+        dialog.setTitle("Añadir Obra");
+
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        if (clickedButton.get() == ButtonType.OK) {
+            obraDlgController.modificarObra();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
+            //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
+        } else {
+            AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
+
+        }
     }
 
     @FXML
@@ -204,15 +264,16 @@ public class AdminController {
     @FXML
     void action_modificarAutor(ActionEvent event) throws IOException {
         Autor selectedAutor = tbl_autores.getSelectionModel().getSelectedItem();
-        System.out.println("Autor deleccionado: " + selectedAutor.toString());
 
         if (selectedAutor == null) {
             AlertMaker.showWarning("No autor seleccionado", "Por favor seleccione un autor para modificar");
+            return;
         }
+        //System.out.println("Autor deleccionado: " + selectedAutor.toString());
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
-            fxmlLoader.setLocation(getClass().getResource("org/example/proyectounidad2/autorDialog.fxml"));
+            fxmlLoader.setLocation(getClass().getResource("/org/example/proyectounidad2/autorDialog.fxml"));
             System.out.println("Location: " + fxmlLoader.getLocation());
         } catch (Exception e) {
             System.out.println("Error setting location");
@@ -221,12 +282,12 @@ public class AdminController {
 
         DialogPane autorDialogPane = fxmlLoader.load();
         //pasar la obra al dialog
-        ObraDialogController autorDlgController = fxmlLoader.getController();
+        AutorDialogController autorDlgController = fxmlLoader.getController();
         try {
             if (autorDlgController == null) {
                 System.out.println("No se encontro controlador");
             }
-            //autorDlgController.setAutor(selectedAutor);
+            autorDlgController.setAutor(selectedAutor);
             autorDlgController.setModo(false);
         } catch (Exception e) {
             System.out.println("Error poniendo autor");
@@ -239,7 +300,7 @@ public class AdminController {
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
-            //autorDlgController.modificarObra();
+            autorDlgController.modificarAutor();
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ningun autor");
 
@@ -249,10 +310,12 @@ public class AdminController {
     @FXML
     void action_modificarObra(ActionEvent event) throws IOException {
         Obra selectedObra = tbl_obras.getSelectionModel().getSelectedItem();
-        System.out.println(selectedObra.toString());
         if (selectedObra == null) {
             AlertMaker.showWarning("No obra seleccionada", "Por favor selecciona una obra para modificar primero");
+            return;
         }
+
+        //System.out.println("Obra seleccionada: " + selectedObra.toString());
 
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
@@ -333,6 +396,7 @@ public class AdminController {
 
 
         col_idAutor.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_idAutor.setStyle("-fx-alignment: CENTER;");
         col_nombreAutor.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         col_apellido1Autor.setCellValueFactory(new PropertyValueFactory<>("apellido1"));
         col_apellido2Autor.setCellValueFactory(new PropertyValueFactory<>("apellido2"));
@@ -358,6 +422,7 @@ public class AdminController {
             tbl_obras.getItems().clear();
 
             col_idObra.setCellValueFactory(new PropertyValueFactory<>("id"));
+            col_idObra.setStyle("-fx-alignment: CENTER;");
             col_tituloObra.setCellValueFactory(new PropertyValueFactory<>("titulo"));
             col_medidasObra.setCellValueFactory(cellData -> {
                 Obra obra = cellData.getValue();

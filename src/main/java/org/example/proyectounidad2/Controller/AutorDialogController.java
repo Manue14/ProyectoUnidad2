@@ -70,7 +70,7 @@ public class AutorDialogController {
         Platform.runLater(() -> {
             if (!modo) {
                 lbl_titulodlg.setText("Modificar autor");
-                //cargarDatosAutor();
+                cargarDatosAutor();
             }{
                 lbl_titulodlg.setText("Añadir autor");
 
@@ -90,21 +90,24 @@ public class AutorDialogController {
 
     public void cargarDatosAutor() {
         tf_nombre.setText(autor.getNombre());
-        tf_apellido1.setText(autor.getApellido1());
-        tf_apellido2.setText(autor.getApellido2());
+        tf_apellido1.setText(autor.getApellido1()==null?" ":autor.getApellido1());
+        tf_apellido2.setText(autor.getApellido2()==null?" ":autor.getApellido2());
         tf_nacionalidad.setText(autor.getNacionalidad());
 
         dp_nacimiento.setValue(autor.getNacimiento());
         dp_fallecimiento.setValue(autor.getFallecimiento());
 
-        ap_imagenHolder.setBackground(
-                new Background(
-                        new BackgroundImage(
-                                new Image(new ByteArrayInputStream(autor.getFoto())),
-                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
-                        )
-                )
-        );
+        if(autor.getFoto()!=null){
+            ap_imagenHolder.setBackground(
+                    new Background(
+                            new BackgroundImage(
+                                    new Image(new ByteArrayInputStream(autor.getFoto())),
+                                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
+                            )
+                    )
+            );
+        }
+
         /*ap_imagenHolder.setStyle(
                         "-fx-background-size: contain;" +
                         "-fx-background-repeat: no-repeat;" +
