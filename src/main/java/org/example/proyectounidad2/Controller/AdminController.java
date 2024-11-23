@@ -224,8 +224,8 @@ public class AdminController {
 
         DialogPane obraDialogPane = fxmlLoader.load();
         //pasar la obra al dialog
+        ObraDialogController obraDlgController = fxmlLoader.getController();
         try {
-            ObraDialogController obraDlgController = fxmlLoader.getController();
             if (obraDlgController == null) {
                 System.out.println("No se encontro controlador");
             }
@@ -242,7 +242,7 @@ public class AdminController {
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
-            //ACCION MODIFICAR
+            obraDlgController.modificarObra();
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ninguna obra");
 

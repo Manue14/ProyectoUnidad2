@@ -7,9 +7,14 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.proyectounidad2.Model.*;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
@@ -35,10 +40,10 @@ public class ObraDialogController {
     private ComboBox<Movimiento> cmb_movimiento;
 
     @FXML
-    private Label lbl_titulodlg;
+    private ComboBox<Autor> cmb_autor;
 
     @FXML
-    private TextField tf_autor;
+    private Label lbl_titulodlg;
 
     @FXML
     private TextField tf_fecha;
@@ -51,16 +56,35 @@ public class ObraDialogController {
 
     @FXML
     private TextField tf_titulo;
+    @FXML
+    void subirArchivo(MouseEvent event) {
+        File selectedFile= fileChooser.showOpenDialog(new Stage());
+        if (selectedFile !=null){
+            Image imagenSeleccionada = new Image(selectedFile.getPath());
+            //Hacer algo con la imagen seleccionada
+        }
 
+    }
+
+    FileChooser fileChooser=new FileChooser();
     Obra obra;
     boolean modo; //True->Añadir False->Modificar
 
     public void initialize() {
         cargarCmbs();
+        fileChooser.setInitialDirectory(new File("C:\\"));
+        fileChooser.setTitle("Cargar imagen");
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".jpg","*.jpg"),
+                new FileChooser.ExtensionFilter(".png","*.png"),new FileChooser.ExtensionFilter("All images","*.jpg","*.png"));
+
 
         Platform.runLater(() -> {
             if (!modo) {
+                lbl_titulodlg.setText("Modificar obra");
                 cargarDatosObra();
+            }{
+                lbl_titulodlg.setText("Añadir obra");
+
             }
         });
 
@@ -111,12 +135,18 @@ public class ObraDialogController {
         for (Movimiento movimiento : movimientos) {
             cmb_movimiento.getItems().add(movimiento);
         }
+
+        cmb_autor.getItems().clear();
+        ArrayList<Autor> autores = dbConnector.getAllAutores();
+        for (Autor autor : autores){
+            cmb_autor.getItems().add(autor);
+        }
+
     }
 
 
     public void cargarDatosObra() {
         tf_titulo.setText(obra.getTitulo());
-        tf_autor.setText(obra.getTitulo()); //hacer combobox con nombre autores
         tf_medidas.setText(obra.getMedidas());
         tf_medio.setText(obra.getMedio());
         tf_fecha.setText(obra.getFecha());
@@ -124,6 +154,9 @@ public class ObraDialogController {
         cmb_categoria.setValue(obra.getCategoria());
         cmb_movimiento.setValue(dbConnector.getMovimientoById(obra.getId_movimiento()));
         cmb_departamento.setValue(dbConnector.getDepartamentoById(obra.getId_departamento()));
+        cmb_autor.setValue(dbConnector.getAutorById(obra.getId_autor()));
+
+        System.out.println(dbConnector.getDepartamentoById(obra.getId_departamento()).toString());
 
         chk_popular.setSelected(obra.isPopular());
         ap_imagenHolder.setStyle(
@@ -136,23 +169,27 @@ public class ObraDialogController {
 
     public void modificarObra() {
         try {
-            System.out.println("----------------------");
-            String titulo = tf_autor.getText();
-            String autor = tf_autor.getText();
-            String medidas = tf_medidas.getText();
-            String medio = tf_medio.getText();
-            String fecha = tf_fecha.getText();
+            System.out.println("-------MODIFICANDO OBRA---------------");
+            obra.setTitulo(tf_titulo.getText());
+            String[] parts = tf_medidas.getText().split("x");//Dividiendo medidas en alto y ancho
+            obra.setAlto(Float.parseFloat(parts[0]));
+            obra.setAncho(Float.parseFloat(parts[1]));
+
+            obra.setMedio(tf_medio.getText());
+            obra.setFecha(tf_fecha.getText());
 
             // Recoger datos de los ComboBoxes
-            Categoria categoria = (Categoria) cmb_categoria.getValue(); // Obtiene la selección como enum
-            Movimiento movimiento = (Movimiento) cmb_movimiento.getValue();
-            Departamento departamento = (Departamento) cmb_departamento.getValue();
+            obra.setCategoria(cmb_categoria.getValue()); // Obtiene la selección como enum
+            obra.setId_movimiento(cmb_movimiento.getValue().getId());
+            obra.setId_departamento(cmb_departamento.getValue().getId());
+            obra.setId_autor(cmb_autor.getValue().getId());
 
             // Recoger estado del CheckBox
-            boolean popular = chk_popular.isSelected();
+            obra.setPopular(chk_popular.isSelected());
 
+            //ESTO podemos hacerlo cuando se suba una imagen nueva
             // Recoger estilo o imagen desde el AnchorPane
-            String imagenEstilo = ap_imagenHolder.getStyle();
+            /*String imagenEstilo = ap_imagenHolder.getStyle();
             String imgPath = ""; // Extraer el path desde el estilo, si es necesario.
             if (imagenEstilo != null && imagenEstilo.contains("url(")) {
                 int start = imagenEstilo.indexOf("url(") + 4;
@@ -160,10 +197,11 @@ public class ObraDialogController {
                 if (start > 0 && end > start) {
                     imgPath = imagenEstilo.substring(start, end).replace("\"", "");
                 }
-            }
+            }*/
 
+            //Hay que cambiarlo para que los consulte en la obra
             // Imprimir datos recogidos para verificar
-            System.out.println("Título: " + titulo);
+            /*System.out.println("Título: " + titulo);
             System.out.println("Autor: " + autor);
             System.out.println("Medidas: " + medidas);
             System.out.println("Medio: " + medio);
@@ -172,7 +210,7 @@ public class ObraDialogController {
             System.out.println("Movimiento: " + (movimiento != null ? movimiento.getNombre() : "N/A"));
             System.out.println("Departamento: " + (departamento != null ? departamento.getNombre() : "N/A"));
             System.out.println("Popular: " + popular);
-            System.out.println("Imagen URL: " + imgPath);
+            System.out.println("Imagen URL: " + imgPath);*/
 
             // Aquí puedes usar los datos para actualizar la obra en la base de datos o realizar otras operaciones.
         } catch (Exception e) {

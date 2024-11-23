@@ -1,6 +1,7 @@
 package org.example.proyectounidad2.Model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Autor {
     private int id;
@@ -127,5 +128,18 @@ public class Autor {
         this.apellido2 = apellido2;
         this.nacimiento = nacimiento;
         this.nacionalidad = nacionalidad;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true; // Same reference
+        if (obj == null || getClass() != obj.getClass()) return false; // Null or type mismatch
+        Autor other = (Autor) obj;
+        return id == other.id; // Compare based on unique ID
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id); // Consistent with equals()
     }
 }
