@@ -313,9 +313,9 @@ public class AdminController {
             tbl_autores.getItems().add(autor);
             
             /*Test cargar imagen*/
-            /*if (autor.getFoto() != null) {
+            if (autor.getFoto() != null) {
                 img_test.setImage(new Image(new ByteArrayInputStream(autor.getFoto())));
-            }*/
+            }
             
         });
 

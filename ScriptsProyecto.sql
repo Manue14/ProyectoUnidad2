@@ -37,7 +37,7 @@ CREATE TABLE Obras (
     titulo VARCHAR(100) NOT NULL,
     alto FLOAT NOT NULL,
     ancho FLOAT NOT NULL,
-    imagen VARCHAR(255) NOT NULL,
+    imagen LONGBLOB NOT NULL,
     popular BOOLEAN NOT NULL,
     medio VARCHAR(50) NOT NULL,
     categoria ENUM('Lienzo', 'Papel', 'Tejido', 'Metal', 'Arcilla/Barro', 'Cerámica', 'Madera', 'Porcelana', 'Mármol', 'Mural'),
@@ -60,20 +60,20 @@ VALUES
 
 INSERT INTO Autores (nombre, apellido1, apellido2, nacimiento, fallecimiento, nacionalidad, foto)
 VALUES 
-('Pablo', 'Ruiz', 'Picasso', '1881-10-25', '1973-04-08', 'Española', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/picasso.jpg')),
-('Leonardo', 'di Ser', 'Piero', '1452-04-15', '1519-05-02', 'Italiana', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/vinci.jpg')),
-('Michelangelo', 'di Lodovico', 'Buonarroti', '1475-03-06', '1564-02-18', 'Italiana', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/michelangelo.jpg'));
+('Pablo', 'Ruiz', 'Picasso', '1881-10-25', '1973-04-08', 'Española', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/picasso.jpg'))),
+('Leonardo', 'di Ser', 'Piero', '1452-04-15', '1519-05-02', 'Italiana', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/vinci.jpeg'))),
+('Michelangelo', 'di Lodovico', 'Buonarroti', '1475-03-06', '1564-02-18', 'Italiana', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/michelangelo.jpg')));
 
 INSERT INTO Autores (nombre, apellido1, nacimiento, fallecimiento, nacionalidad, foto)
 VALUES 
-('Vincent', 'van Gogh', '1853-03-30', '1890-07-29', 'Neerlandesa', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/gogh.jpg')),
-('Claude', 'Monet', '1840-11-14', '1926-12-05', 'Francesa', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/monet.jpg')),
-('Frida', 'Kahlo', '1907-07-06', '1954-07-13', 'Mexicana', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/kahlo.jpg')),
-('Salvador', 'Dalí', '1904-05-11', '1989-01-23', 'Española', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/dali.jpg')),
-('Georgia', 'O\'Keeffe', '1887-11-15', '1986-03-06', 'Estadounidense', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/keeffe.jpg')),
-('Andy', 'Warhol', '1928-08-06', '1987-02-22', 'Estadounidense', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/warhol.jpg')),
-('Henri', 'Matisse', '1869-12-31', '1954-11-03', 'Francesa', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/matisse.jpg')),
-('René', 'Magritte', '1898-11-21', '1967-08-15', 'Bélgica', LOAD_FILE('/home/manu/NetBeansProjects/ProyectoUD2/imgs/magritte.jpg'));
+('Vincent', 'van Gogh', '1853-03-30', '1890-07-29', 'Neerlandesa', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/gogh.jpg'))),
+('Claude', 'Monet', '1840-11-14', '1926-12-05', 'Francesa', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/monet.jpg'))),
+('Frida', 'Kahlo', '1907-07-06', '1954-07-13', 'Mexicana', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/kahlo.jpg'))),
+('Salvador', 'Dalí', '1904-05-11', '1989-01-23', 'Española', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/dali.jpg'))),
+('Georgia', 'O\'Keeffe', '1887-11-15', '1986-03-06', 'Estadounidense', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/keeffe.jpg'))),
+('Andy', 'Warhol', '1928-08-06', '1987-02-22', 'Estadounidense', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/warhol.jpg'))),
+('Henri', 'Matisse', '1869-12-31', '1954-11-03', 'Francesa', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/matisse.jpg'))),
+('René', 'Magritte', '1898-11-21', '1967-08-15', 'Bélgica', LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/magritte.jpg')));
 
 INSERT INTO Movimientos (nombre, fecha_inicio, fecha_fin, descripcion)
 VALUES
@@ -119,46 +119,46 @@ VALUES
 INSERT INTO Obras (titulo, alto, ancho, imagen, popular, medio, categoria, fecha, descripcion, id_autor, id_departamento, id_movimiento)
 VALUES
 -- Obras de Pablo Picasso (Cubismo)
-('Guernica', 3.5, 7.8, 'https://example.com/guernica.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1937-01-01', 'Una de las obras más emblemáticas de Picasso que denuncia los horrores de la guerra.', 2, 2, 4),
-('Les Demoiselles d\'Avignon', 2.44, 2.34, 'https://example.com/demoiselles.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1907-01-01', 'Obra que marca el comienzo del cubismo, con figuras geométricas y una ruptura con la perspectiva tradicional.', 2, 2, 4),
-('El viejo guitarrista', 1.22, 0.88, 'https://example.com/oldguitarist.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1903-01-01', 'Obra del período azul, influenciada por el simbolismo y el realismo social, a pesar de su posterior asociación con el cubismo.', 2, 7, 2),
+('Guernica', 3.5, 7.8, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/1.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1937-01-01', 'Una de las obras más emblemáticas de Picasso que denuncia los horrores de la guerra.', 2, 2, 4),
+('Les Demoiselles d\'Avignon', 2.44, 2.34, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/2.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1907-01-01', 'Obra que marca el comienzo del cubismo, con figuras geométricas y una ruptura con la perspectiva tradicional.', 2, 2, 4),
+('El viejo guitarrista', 1.22, 0.88, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/3.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1903-01-01', 'Obra del período azul, influenciada por el simbolismo y el realismo social, a pesar de su posterior asociación con el cubismo.', 2, 7, 2),
 
 -- Obras de Leonardo da Vinci (Renacimiento)
-('La Mona Lisa', 0.77, 0.53, 'https://example.com/monalisa.jpg', TRUE, 'Óleo sobre madera', 'Lienzo', '1503-01-01', 'El retrato más famoso del Renacimiento, famosa por la misteriosa sonrisa de la modelo.', 3, 9, 1),
-('El Último Supper', 4.6, 8.8, 'https://example.com/lastsupper.jpg', TRUE, 'Tempera sobre yeso', 'Mural', '1495-01-01', 'Una de las representaciones más icónicas de la última cena de Jesucristo, con un fuerte enfoque en la emoción.', 3, 9, 1),
-('San Juan Bautista', 0.69, 0.57, 'https://example.com/johnbaptist.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1513-01-01', 'Obra que destaca la espiritualidad y la suavidad de las formas, características que serán adoptadas y amplificadas por el Barroco.', 3, 7, 2),
-('La Virgen de las rocas', 1.21, 1.60, 'https://example.com/virgindelrocas.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1486-01-01', 'Pese a sus orígenes renacentistas, la obra muestra una atmósfera de misterio y dramatismo, elementos que serán fundamentales en el Barroco.', 3, 9, 2),
+('La Mona Lisa', 0.77, 0.53, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/4.jpg')), TRUE, 'Óleo sobre madera', 'Lienzo', '1503-01-01', 'El retrato más famoso del Renacimiento, famosa por la misteriosa sonrisa de la modelo.', 3, 9, 1),
+('El Último Supper', 4.6, 8.8, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/5.jpg')), TRUE, 'Tempera sobre yeso', 'Mural', '1495-01-01', 'Una de las representaciones más icónicas de la última cena de Jesucristo, con un fuerte enfoque en la emoción.', 3, 9, 1),
+('San Juan Bautista', 0.69, 0.57, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/6.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1513-01-01', 'Obra que destaca la espiritualidad y la suavidad de las formas, características que serán adoptadas y amplificadas por el Barroco.', 3, 7, 2),
+('La Virgen de las rocas', 1.21, 1.60, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/7.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1486-01-01', 'Pese a sus orígenes renacentistas, la obra muestra una atmósfera de misterio y dramatismo, elementos que serán fundamentales en el Barroco.', 3, 9, 2),
 -- Obras de Michelangelo (Renacimiento)
-('David', 5.17, 2.00, 'https://example.com/david.jpg', TRUE, 'Mármol', 'Mármol', '1504-01-01', 'Escultura monumental de David, representando la belleza del cuerpo humano en el Renacimiento.', 4, 9, 1),
-('La Creación de Adán', 3.00, 5.00, 'https://example.com/creation.jpg', TRUE, 'Fresco', 'Mural', '1512-01-01', 'Parte de la decoración de la Capilla Sixtina, que muestra el momento en que Dios da vida a Adán.', 4, 9, 1),
+('David', 5.17, 2.00, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/8.jpg')), TRUE, 'Mármol', 'Mármol', '1504-01-01', 'Escultura monumental de David, representando la belleza del cuerpo humano en el Renacimiento.', 4, 9, 1),
+('La Creación de Adán', 3.00, 5.00, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/9.jpg')), TRUE, 'Fresco', 'Mural', '1512-01-01', 'Parte de la decoración de la Capilla Sixtina, que muestra el momento en que Dios da vida a Adán.', 4, 9, 1),
 
 -- Obras de Vincent van Gogh (Postimpresionismo)
-('La noche estrellada', 0.74, 0.92, 'https://example.com/starrynight.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1889-01-01', 'Una de las obras más reconocidas de Van Gogh, destacando el movimiento y la emoción de un cielo nocturno.', 5, 7, 3),
-('Los girasoles', 0.92, 0.73, 'https://example.com/sunflowers.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1888-01-01', 'Serie de pinturas de girasoles, famosas por su vibrante colorido y el uso de pinceladas rápidas.', 5, 7, 3),
+('La noche estrellada', 0.74, 0.92, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/10.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1889-01-01', 'Una de las obras más reconocidas de Van Gogh, destacando el movimiento y la emoción de un cielo nocturno.', 5, 7, 3),
+('Los girasoles', 0.92, 0.73, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/11.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1888-01-01', 'Serie de pinturas de girasoles, famosas por su vibrante colorido y el uso de pinceladas rápidas.', 5, 7, 3),
 
 -- Obras de Claude Monet (Impresionismo)
-('Impresión, sol naciente', 0.48, 0.63, 'https://example.com/impression.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1872-01-01', 'Obra que dio nombre al movimiento impresionista, capturando la luz y la atmósfera del puerto de Le Havre.', 6, 7, 3),
-('Nenúfares', 0.89, 0.99, 'https://example.com/nenufares.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1906-01-01', 'Serie que representa los nenúfares en su jardín de Giverny, capturando la luz y la reflexión en el agua.', 6, 7, 3),
+('Impresión, sol naciente', 0.48, 0.63, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/12.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1872-01-01', 'Obra que dio nombre al movimiento impresionista, capturando la luz y la atmósfera del puerto de Le Havre.', 6, 7, 3),
+('Nenúfares', 0.89, 0.99, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/13.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1906-01-01', 'Serie que representa los nenúfares en su jardín de Giverny, capturando la luz y la reflexión en el agua.', 6, 7, 3),
 
 -- Obras de Frida Kahlo (Surrealismo / Expresionismo)
-('Las dos Fridas', 1.74, 1.73, 'https://example.com/twopacas.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1939-01-01', 'Autorretrato dividido en dos personalidades, representando su dolor y su identidad.', 7, 7, 5),
-('La columna rota', 0.99, 0.79, 'https://example.com/brokencolumn.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1944-01-01', 'Una representación de su sufrimiento físico y emocional tras un accidente.', 7, 7, 5),
+('Las dos Fridas', 1.74, 1.73, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/14.jpeg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1939-01-01', 'Autorretrato dividido en dos personalidades, representando su dolor y su identidad.', 7, 7, 5),
+('La columna rota', 0.99, 0.79, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/15.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1944-01-01', 'Una representación de su sufrimiento físico y emocional tras un accidente.', 7, 7, 5),
 
 -- Obras de Salvador Dalí (Surrealismo)
-('La persistencia de la memoria', 0.24, 0.33, 'https://example.com/persistence.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1931-01-01', 'Famosa por sus relojes derretidos, una reflexión sobre el tiempo y la realidad distorsionada.', 8, 7, 5),
-('El gran masturbador', 0.75, 0.95, 'https://example.com/greatmasturbator.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1929-01-01', 'Obra surrealista que refleja el subconsciente y los deseos reprimidos.', 8, 7, 5),
+('La persistencia de la memoria', 0.24, 0.33, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/16.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1931-01-01', 'Famosa por sus relojes derretidos, una reflexión sobre el tiempo y la realidad distorsionada.', 8, 7, 5),
+('El gran masturbador', 0.75, 0.95, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/17.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1929-01-01', 'Obra surrealista que refleja el subconsciente y los deseos reprimidos.', 8, 7, 5),
 
 -- Obras de Georgia O'Keeffe (Arte Moderno)
-('Flor blanca', 0.61, 0.91, 'https://example.com/whiteflower.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1932-01-01', 'Obra que explora la belleza natural de las flores, con un enfoque en la forma y el color.', 9, 7, 8),
-('Cielo azul', 0.81, 1.03, 'https://example.com/blue-sky.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1936-01-01', 'Representación abstracta del cielo con una paleta de colores vibrantes y formas simplificadas.', 9, 7, 8),
+('Flor blanca', 0.61, 0.91, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/18.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1932-01-01', 'Obra que explora la belleza natural de las flores, con un enfoque en la forma y el color.', 9, 7, 8),
+('Cielo azul', 0.81, 1.03, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/19.png')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1936-01-01', 'Representación abstracta del cielo con una paleta de colores vibrantes y formas simplificadas.', 9, 7, 8),
 
 -- Obras de Henri Matisse (Fauvismo)
-('La danza', 1.72, 1.74, 'https://example.com/dance.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1909-01-01', 'Una obra representativa del Fauvismo, donde el color y la forma juegan un papel fundamental.', 10, 7, 6),
-('La alegría de vivir', 1.65, 1.98, 'https://example.com/joyoflife.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1905-01-01', 'Una obra vibrante que exalta la vitalidad y la exuberancia de la vida.', 10, 7, 6),
+('La danza', 1.72, 1.74, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/20.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1909-01-01', 'Una obra representativa del Fauvismo, donde el color y la forma juegan un papel fundamental.', 10, 7, 6),
+('La alegría de vivir', 1.65, 1.98, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/21.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1905-01-01', 'Una obra vibrante que exalta la vitalidad y la exuberancia de la vida.', 10, 7, 6),
 -- Obras de René Magritte
-('La clef des champs', 1.10, 1.30, 'https://example.com/laclefdeschamps.jpg', TRUE, 'Óleo sobre lienzo', 'Lienzo', '1936-01-01', 
+('La clef des champs', 1.10, 1.30, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/22.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1936-01-01', 
  'Obra surrealista de René Magritte que muestra una escena  en el campo que invita a la reflexion.', 12, 2,5),
- ('El hijo del hombre',116,89 ,'https://example.com/elhijodelhombre.jpg',TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
+ ('El hijo del hombre',116,89 ,LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/23.jpg')),TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
  y bombín de pie delante de un muro. Más allá se ve el mar y un cielo nublado.', 12, 2,5);
 
 DELIMITER $
@@ -235,8 +235,12 @@ DELIMITER ;
 #DROP FUNCTION count_obras_by_autor_id;
 #DROP PROCEDURE del_autor_if_not_obras;
 #DROP TRIGGER del_autores_fk;
-DROP PROCEDURE filter_obras;
+#DROP PROCEDURE filter_obras;
 
 CALL filter_obras('La', 'Ruiz', null, null, 'Lienzo', true);
 
 select * from Autores;
+
+#select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/1.jpg'));
+#select LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/gogh.jpg'));
+#select @@secure_file_priv;
