@@ -34,8 +34,9 @@ public class Mapper {
     }
 
     public static Obra mapObra(ResultSet rs) throws SQLException {
+        byte[] foto = rs.getBlob("imagen")==null?null:rs.getBlob("imagen").getBytes(1, (int) rs.getBlob("imagen").length());
         return new Obra(rs.getInt("id"), rs.getString("titulo"), rs.getFloat("alto"),
-                rs.getFloat("ancho"), rs.getString("imagen"), rs.getBoolean("popular"),
+                rs.getFloat("ancho"), foto, rs.getBoolean("popular"),
                 rs.getString("medio"),
                 Categoria.getByValor(rs.getObject("categoria").toString()), rs.getString("fecha"),
                 rs.getString("descripcion"), rs.getInt("id_autor"),
@@ -68,10 +69,12 @@ public class Mapper {
     }
     
     public static void bindObraUpdateQuery(PreparedStatement ps, Obra obra) throws SQLException {
+        ByteArrayInputStream img = new ByteArrayInputStream(obra.getImg());
+        
         ps.setString(1, obra.getTitulo());
         ps.setFloat(2, obra.getAlto());
         ps.setFloat(3, obra.getAncho());
-        ps.setString(4, obra.getImg());
+        ps.setBinaryStream(4, img, img.available());
         ps.setBoolean(5, obra.isPopular());
         ps.setString(6, obra.getMedio());
         ps.setObject(7, obra.getCategoria().getValor());
@@ -84,10 +87,12 @@ public class Mapper {
     }
 
     public static void bindObraCreateQuery(PreparedStatement ps, Obra obra) throws SQLException {
+        ByteArrayInputStream img = new ByteArrayInputStream(obra.getImg());
+        
         ps.setString(1, obra.getTitulo());
         ps.setFloat(2, obra.getAlto());
         ps.setFloat(3, obra.getAncho());
-        ps.setString(4, obra.getImg());
+        ps.setBinaryStream(4, img, img.available());
         ps.setBoolean(5, obra.isPopular());
         ps.setString(6, obra.getMedio());
         ps.setObject(7, obra.getCategoria().getValor());

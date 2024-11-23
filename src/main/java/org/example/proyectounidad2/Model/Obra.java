@@ -5,7 +5,7 @@ public class Obra {
     private String titulo;
     private float alto;
     private float ancho;
-    private String img;
+    private byte[] img;
     private boolean popular;
     private String medio;
     private Categoria categoria;
@@ -17,7 +17,7 @@ public class Obra {
 
     public Obra(){}
 
-    public Obra(int id, String titulo, float ancho, float alto, String img, boolean popular, String medio,
+    public Obra(int id, String titulo, float ancho, float alto, byte[] img, boolean popular, String medio,
                 Categoria categoria, String fecha, String descripcion, int id_autor, int id_departamento,
                 int id_movimiento) {
         this.id = id;
@@ -67,11 +67,11 @@ public class Obra {
         this.ancho = ancho;
     }
 
-    public String getImg() {
+    public byte[] getImg() {
         return img;
     }
 
-    public void setImg(String img) {
+    public void setImg(byte[] img) {
         this.img = img;
     }
 
@@ -161,7 +161,7 @@ public class Obra {
     }
 
     //Sobrecarga constructores
-    public Obra(String titulo, float ancho, float alto, String img, boolean popular, String medio,
+    public Obra(String titulo, float ancho, float alto, byte[] img, boolean popular, String medio,
                 Categoria categoria, String fecha, String descripcion, int id_autor, int id_departamento,
                 int id_movimiento) {
         this.titulo = titulo;
@@ -178,7 +178,7 @@ public class Obra {
         this.id_movimiento = id_movimiento;
     }
 
-    public Obra(int id, String titulo, float ancho, float alto, String img, boolean popular, String medio,
+    public Obra(int id, String titulo, float ancho, float alto, byte[] img, boolean popular, String medio,
                 Categoria categoria, String fecha, String descripcion, int id_departamento, int id_movimiento) {
         this.id = id;
         this.titulo = titulo;
@@ -194,7 +194,7 @@ public class Obra {
         this.id_movimiento = id_movimiento;
     }
 
-    public Obra(String titulo, float ancho, float alto, String img, boolean popular, String medio,
+    public Obra(String titulo, float ancho, float alto, byte[] img, boolean popular, String medio,
                 Categoria categoria, String fecha, String descripcion, int id_departamento, int id_movimiento) {
         this.titulo = titulo;
         this.ancho = ancho;
