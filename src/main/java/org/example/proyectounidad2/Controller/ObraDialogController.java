@@ -88,7 +88,7 @@ public class ObraDialogController {
     public void initialize() {
         cargarCmbs();
         fileChooser.setInitialDirectory(new File("C:\\"));
-        //fileChooser.setInitialDirectory(new File("/home/manu"));
+        //fileChooser.setInitialDirectory(new File("/home/manu/Descargas"));
         fileChooser.setTitle("Cargar imagen");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".jpg", "*.jpg"),
                 new FileChooser.ExtensionFilter(".png", "*.png"), new FileChooser.ExtensionFilter("All images", "*.jpg", "*.png"));

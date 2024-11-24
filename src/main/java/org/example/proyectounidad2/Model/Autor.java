@@ -135,14 +135,14 @@ public class Autor {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true; // Same reference
-        if (obj == null || getClass() != obj.getClass()) return false; // Null or type mismatch
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
         Autor other = (Autor) obj;
-        return id == other.id; // Compare based on unique ID
+        return id == other.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id); // Consistent with equals()
+        return Objects.hash(id);
     }
 }
