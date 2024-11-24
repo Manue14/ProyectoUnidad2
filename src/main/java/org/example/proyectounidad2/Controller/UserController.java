@@ -180,7 +180,7 @@ public class UserController {
 
         // Actualizar los labels con la información de la obra
         lbl_tituloObra.setText(obra.getTitulo());
-        lbl_autorObra.setText(autor != null ? autor.getNombre() : "Autor no encontrado");
+        lbl_autorObra.setText(autor != null ? autor.getNombreCompleto() : "Autor no encontrado");
         lbl_fechaObra.setText(obra.getFecha());
         lbl_departamentoObra.setText(departamento != null ? departamento.getNombre() : "Departamento no encontrado");
         lbl_categoriaObra.setText(obra.getCategoria().getValor());
