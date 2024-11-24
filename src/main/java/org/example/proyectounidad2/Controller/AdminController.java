@@ -163,6 +163,7 @@ public class AdminController {
         if (clickedButton.get() == ButtonType.OK) {
             autorDlgController.createAutor();
             cargarTablaAutores(dbConnector.getAllAutores());
+            cargarCmbs();
         } else {
             AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
 
@@ -220,6 +221,7 @@ public class AdminController {
                     AlertMaker.showInformation("Eliminacion Exitosa", "Se ha eliminado el autor con exito");
                     cargarTablaAutores(dbConnector.getAllAutores());
                     cargarTablaObras(dbConnector.getAllObras());
+                    cargarCmbs();
                 } else {
                     AlertMaker.showError("Error en la eliminacion", "Algo ha salido mal al borrar el autor");
                 }
@@ -242,6 +244,7 @@ public class AdminController {
                     AlertMaker.showInformation("Eliminacion Exitosa", "Se ha eliminado la obra con exito");
                     cargarTablaObras(dbConnector.getAllObras());
                     cargarTablaAutores(dbConnector.getAllAutores());
+                    cargarCmbs();
                 } else {
                     AlertMaker.showError("Error en la eliminacion", "Algo ha salido mal al borrar la obra");
                 }
@@ -294,6 +297,7 @@ public class AdminController {
             autorDlgController.modificarAutor();
             cargarTablaAutores(dbConnector.getAllAutores());
             cargarTablaObras(dbConnector.getAllObras());
+            cargarCmbs();
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ningun autor");
 
