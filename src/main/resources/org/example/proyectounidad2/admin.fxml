@@ -34,7 +34,7 @@
           <Menu mnemonicParsing="false" text="Herramientas">
             <items>
               <MenuItem mnemonicParsing="false" text="Exportar obras JSON" onAction="#ExportarObras" />
-                  <MenuItem mnemonicParsing="false" text="Exportar autores JSON" />
+                  <MenuItem mnemonicParsing="false" text="Exportar autores JSON" onAction="#ExportarAutores" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
