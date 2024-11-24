@@ -44,13 +44,15 @@ public class Mapper {
     }
     
     public static void bindAutorUpdateQuery(PreparedStatement ps, Autor autor) throws SQLException {
-        ByteArrayInputStream img = new ByteArrayInputStream(autor.getFoto());
-        
         ps.setString(1, autor.getNombre());
         ps.setString(2, autor.getApellido1());
         ps.setString(3, autor.getApellido2());
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
-        ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
+        if (autor.getFallecimiento() != null) {
+            ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
+        } else {
+            ps.setDate(5, null);
+        }
         ps.setString(6, autor.getNacionalidad());
         ps.setBytes(7, autor.getFoto());
         ps.setInt(8, autor.getId());
@@ -61,7 +63,12 @@ public class Mapper {
         ps.setString(2, autor.getApellido1());
         ps.setString(3, autor.getApellido2());
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
-        ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
+        if (autor.getFallecimiento() != null) {
+            ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
+        } else {
+            ps.setDate(5, null);
+        }
+        
         ps.setString(6, autor.getNacionalidad());
         ps.setBytes(7, autor.getFoto());
     }
@@ -83,8 +90,6 @@ public class Mapper {
     }
 
     public static void bindObraCreateQuery(PreparedStatement ps, Obra obra) throws SQLException {
-        ByteArrayInputStream img = new ByteArrayInputStream(obra.getImg());
-        
         ps.setString(1, obra.getTitulo());
         ps.setFloat(2, obra.getAlto());
         ps.setFloat(3, obra.getAncho());
