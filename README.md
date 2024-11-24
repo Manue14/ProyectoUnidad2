@@ -2,9 +2,9 @@
 
 - [1. Introducción](#1-introducción)
 - [2. Manual técnico para desarrolladores](#2-Manual-técnico-para-desarrolladores)
--   [2.1. Modelo](##2-1-Modelo)
--   [2.2. Vista](##2-2-Vista)
--   [2.3. Controlador](##2-3-Controlador)
+  - [2.1. Modelo](##2-1-Modelo)
+  - [2.2. Vista](##2-2-Vista)
+  - [2.3. Controlador](##2-3-Controlador)
 - [3. Manual de usuario](#3-Manual-de-usuario)
   - [3.1. Administrador](###3-1-Administrador)
   - [3.2. Usuario](###3-2-Usuario)   
