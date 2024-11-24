@@ -6,6 +6,8 @@
 -   [2.2. Vista](##2.2_Vista)
 -   [2.3. Controlador](##2.3._Controlador)
 - [3. Manual de usuario](#3._Manual_de_usuario)
+  - [3.1. Administrador](###3.1_Administrador)
+  - [3.2. Usuario](###3.2_Usuario)   
 - [4. Reparto de las tareas](#4._Reparto_de_las_tareas)
 - [5. Extras realizados](#5._Extras_realizados)
 - [6. Propuestas de mejora](#6._Propuestas_de_mejora)
@@ -252,6 +254,56 @@ public static void showWarning(String titulo, String mensaje){
 
 # 3. Manual de usuario
 
+Al iniciar la aplicación lo primero que encontramos es la ventana de Log in, donde podremos acceder con las credenciales de administrador o crear unas nuevas credenciales de usuario.
+
+![1](https://github.com/user-attachments/assets/2758a29e-9203-4910-8b5f-60bb4c9b7ff1)
+
+Si decidimos crear un nuevo usuario necesitaremos introducir un nombre y la contraseña (dos veces por motivos de seguridad).
+
+![2](https://github.com/user-attachments/assets/9ae163b6-7b43-4c18-8c36-ba40537120ff)
+![1_1](https://github.com/user-attachments/assets/e9aef00a-3aa8-4b56-b2d7-f05ce8c72c7a)
+
+### 3.1. Administrador
+Nos centraremos primero en la vista de **Administrador**. Al logearse con este tipo de usuario podremos ver una vista de tabla con los campos más importantes de las obras y de los autores que estén registrados en la colección. 
+
+![4](https://github.com/user-attachments/assets/a9ce9e34-e47b-432a-b56a-3243025c0b1a)
+
+Esta tabla puede ser filtrada utilizando los parámetros de la parte superior, o ordenada ascendente o descendentemente en los headers de las columnas. 
+
+![10](https://github.com/user-attachments/assets/88498ff3-0996-451d-8ba3-2408f5d46074)
+![18](https://github.com/user-attachments/assets/dc270670-3def-4627-b7ed-1fe93ee241f5)
+
+La vista en tabla también permite la selección de un registro para su eliminación o modificación.
+
+![8](https://github.com/user-attachments/assets/a832dc12-39d9-4dd6-8ba0-84b585097082)
+![9](https://github.com/user-attachments/assets/be42d64d-e839-4b1c-baab-d8c3615fd335)
+![19](https://github.com/user-attachments/assets/517b6937-d177-4481-9359-cbf694dfeabb)
+
+Además podremos añadir nuevos elementos con el botón añadir, que al igual que la opción de modificar abrirá una ventana adicional con los campos que deberemos rellenar.
+
+![7](https://github.com/user-attachments/assets/fd9dd144-69a3-4863-9dae-1fdf2788b373)
+
+El cambio entre la tabla de obras y autores (así como sus filtros) puede realizarse mediante las pestañas de la parte superior izquierda.
+
+![13](https://github.com/user-attachments/assets/7e363efc-1ae3-43c0-8964-ef2599da9d2f)
+
+Por último encontramos la barra de menú, donde podremos encontrar opciones para cerrar sesión o salir del programa. En la sección de herramientas podremos exportar a formato JSON los datos de las tablas de obra o autor. Los datos exportados coinciden con los registros mostrados en la tabla, por lo que podremos usar los filtros de búsqueda para limitar las obras o autores que queremos exportar.
+
+![5](https://github.com/user-attachments/assets/a638a8d2-b2fb-4045-8778-2b85b3a308a0)
+![6](https://github.com/user-attachments/assets/bc4d051e-ec32-4d70-a0b9-60265e229dd4)
+
+### 3.2. Usuario 
+Registrarnos con el rol de usuario nos llevará a una ventana en la que podremos realizar consultas filtradas por distintos campos a la base de datos. El primer resultado que coincida con nuestros parámetros será mostrado en la parte inferior con sus datos más relevantes.
+
+![14](https://github.com/user-attachments/assets/41604c28-f0fd-4a15-9100-6df15d7feed3)
+![15](https://github.com/user-attachments/assets/7b53ee42-6bf9-4091-a148-fda8e52c0640)
+![17](https://github.com/user-attachments/assets/b6a43ea9-13ea-4989-aaf2-e77e2b59d041)
+
+La barra de menú nos permitirá cerrar sesión, cerrar la aplicación y exportar los datos de la obra que hayamos buscado.
+
+![16](https://github.com/user-attachments/assets/a63e4914-fc52-4b5e-8414-0f398337e47d)
+
+
 # 4. Explicación del reparto de las tareas entre ambos integrantes.
 
 #### Iago
@@ -260,6 +312,7 @@ public static void showWarning(String titulo, String mensaje){
 - Filtrado de obras y autores
 - Datos DB coleccion
 - Toolbar archivo
+- Escribir documentación
 
 
 #### Manuel
@@ -267,19 +320,23 @@ public static void showWarning(String titulo, String mensaje){
 - Filtrado de obras y autores
 - DB coleccion
 - Clases de los objetos Obra,autores...
+- Escribir documentación
 
 
 #### Samuel
 
 - Interfaces
 - Eliminar autores y obras
-- Conexión de vista y modelo a trvés de los controladores
+- Conexión de vista y modelo a través de los controladores
+- Exportación a JSON
+- Escribir documentación
 
 # 5. Extras realizados
 
 - **Login:** La aplicación cuenta con un sistema de login consultando a una DB con todos los usuarios, de ahí se coge su rol (admin o base) y se lleva al usuario a la ventana correspondiente. Además en el propio login puedes crear una cuenta en ese mismo momento
 
 # 6. Propuestas de mejora
+
 - Refactorización de código:
     - Superclase para las clases QueryFieldsObjectAutor y QueryFieldsObjectObras para evitar repetición de código.
     - Superclase para las clases ObraDialogController y AutorDialogController para evitar repetición de código.  
@@ -288,4 +345,5 @@ public static void showWarning(String titulo, String mensaje){
 - Crear una clase que se encargué de trabajar con las imágenes ya que puede llegar a ser un proceso bastante complejo o engorroso.
 - Paginación de obras en la vista de usuario no administrador.
 - Crear una pestaña para mostrar información más completa de obras y autores al clickar sobre sus registros en la tabla de resultados.
+  
 # 7. Conclusiones y opinión del trabajo realizado, dedicación temporal y cualificación estimada
