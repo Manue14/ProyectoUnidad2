@@ -1,17 +1,17 @@
 # Index
 
-- [1. Introducción](#1._introducción)
-- [2. Manual técnico para desarrolladores](#2._Manual_técnico_para_desarrolladores)
--   [2.1. Modelo](##2.1._Modelo)
--   [2.2. Vista](##2.2_Vista)
--   [2.3. Controlador](##2.3._Controlador)
-- [3. Manual de usuario](#3._Manual_de_usuario)
-  - [3.1. Administrador](###3.1_Administrador)
-  - [3.2. Usuario](###3.2_Usuario)   
-- [4. Reparto de las tareas](#4._Reparto_de_las_tareas)
-- [5. Extras realizados](#5._Extras_realizados)
-- [6. Propuestas de mejora](#6._Propuestas_de_mejora)
-- [7. Conclusiones y opinión del trabajo realizado, dedicación temporal y cualificación estimada](#7._Conclusiones_y_opinión_del_trabajo_realizado,_dedicación_temporal_y_cualificación_estimada)
+- [1. Introducción](#1.-introducción)
+- [2. Manual técnico para desarrolladores](#2.-Manual-técnico-para-desarrolladores)
+-   [2.1. Modelo](##2.1.-Modelo)
+-   [2.2. Vista](##2.2-Vista)
+-   [2.3. Controlador](##2.3.-Controlador)
+- [3. Manual de usuario](#3.-Manual-de-usuario)
+  - [3.1. Administrador](###3.1-Administrador)
+  - [3.2. Usuario](###3.2-Usuario)   
+- [4. Reparto de las tareas](#4.-Reparto-de-las-tareas)
+- [5. Extras realizados](#5.-Extras-realizados)
+- [6. Propuestas de mejora](#6.-Propuestas-de-mejora)
+- [7. Conclusiones y opinión del trabajo realizado, dedicación temporal y cualificación estimada](#7.-Conclusiones-y-opinión-del-trabajo-realizado,-dedicación-temporal-y-cualificación-estimada)
 
 # 1. Introducción
 
