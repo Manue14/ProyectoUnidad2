@@ -194,7 +194,7 @@ Las funciones del UserController son más limitadas con respecto a su contra par
 - Cerrar sesión
 - Cerrar programa
 
-### AlerMaker
+### AlertMaker
 Esta clase cuenta con metodos para crear y mostrar distintos tipos de alert, como los de Error, Informacion y Confirmación. Todos responden a esta estructura:
 
 ```Java
