@@ -298,6 +298,9 @@ public class AdminController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
             autorDlgController.modificarAutor();
+            ArrayList<Autor> listaAutores = dbConnector.getAllAutores();
+
+            cargarTablaAutores(listaAutores);
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ningun autor");
 
@@ -343,6 +346,9 @@ public class AdminController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
             obraDlgController.modificarObra();
+            ArrayList<Obra> listaObras = dbConnector.getAllObras();
+            cargarTablaObras(listaObras);
+
             //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ninguna obra");

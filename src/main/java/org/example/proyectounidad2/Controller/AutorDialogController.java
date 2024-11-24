@@ -141,9 +141,6 @@ public class AutorDialogController {
                 System.out.println("*****--------AUTOR ACTUALIZADA CON ÉXITO----------------************");
             }
 
-            // Imprimir datos recogidos para verificar
-            //autor.getAllInfo();
-
         } catch (Exception e) {
             System.out.println("Error modificando la obra: " + e.getMessage());
         }
