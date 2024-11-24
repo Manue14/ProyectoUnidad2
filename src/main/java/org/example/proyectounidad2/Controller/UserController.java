@@ -6,6 +6,7 @@ import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -80,6 +81,9 @@ public class UserController {
 
     @FXML
     private Label lbl_tituloObra;
+
+    @FXML
+    private Label lbl_sinimagen;
 
     @FXML
     private TextField tf_autor;
@@ -190,6 +194,7 @@ public class UserController {
 
         // Mostrar imagen si está disponible
         if (obra.getImg() != null) {
+            lbl_sinimagen.setVisible(false);
             String mimeType = "image/png";
 
             // Convert to Base64 and use it in a Data URL
@@ -210,9 +215,9 @@ public class UserController {
             ap_imgcontainer.getChildren().clear();
             ap_imgcontainer.getChildren().add(imageView);*/
         } else {
-            ap_imgcontainer.getChildren().clear();
-            Label noImage = new Label("Sin imagen");
-            ap_imgcontainer.getChildren().add(noImage);
+            //ap_imgcontainer.getChildren().clear();
+            lbl_sinimagen.setVisible(true);
+            ap_imgcontainer.setStyle(null);
         }
     }
 
@@ -229,6 +234,8 @@ public class UserController {
 
     public void initialize() {
         cargarCmbs();
+        lbl_sinimagen.setVisible(false);
+        containerDatos.setVisible(false);
         Platform.runLater(() -> {
 
             ap_imgcontainer.prefWidthProperty().bind(((Region) ap_imgcontainer.getParent()).widthProperty().multiply(0.5));

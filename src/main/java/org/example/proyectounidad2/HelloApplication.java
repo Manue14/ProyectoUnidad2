@@ -70,6 +70,8 @@ public class HelloApplication extends Application {
 
         } else if (fxml.equals("user")) {
             stage.setMaximized(true);
+            stage.setMinWidth(600);
+            stage.setMinHeight(500);
 
         } else if (fxml.equals("admin")) {
             stage.setMaximized(true);

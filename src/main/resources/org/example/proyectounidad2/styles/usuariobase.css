@@ -2,7 +2,6 @@
 .root {
     -fx-font-family: "Arial", sans-serif;
     -fx-base: #f0f0f0;
-    -fx-padding: 10px;
 }
 
 /* Título de la obra */
@@ -48,7 +47,6 @@
 
 /* Contenedor de Imagen */
 #ap_imgcontainer {
-    -fx-background-color: #bdc3c7;
     -fx-border-radius: 5px;
     -fx-padding: 10px;
 }
