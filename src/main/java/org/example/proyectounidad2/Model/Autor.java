@@ -1,5 +1,7 @@
 package org.example.proyectounidad2.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,6 +13,7 @@ public class Autor {
     private LocalDate nacimiento;
     private LocalDate fallecimiento;
     private String nacionalidad;
+    @JsonIgnore
     private byte[] foto;
 
     public Autor(){}

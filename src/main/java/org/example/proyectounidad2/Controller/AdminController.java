@@ -1,6 +1,10 @@
 package org.example.proyectounidad2.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import com.fasterxml.jackson.databind.SerializationFeature;
+
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -385,28 +389,31 @@ public class AdminController {
     }
     @FXML
     public void ExportarAutores(ActionEvent event) {
-        //Añadimos las extensiones disponibles
+        // Añadimos las extensiones disponibles
         fileChooser.getExtensionFilters().clear();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(".json", "*.json")
         );
 
-        ArrayList<Autor> allAutores = dbConnector.getAllAutores();
+        // Obtienes los autores visibles en la tabla
+        ObservableList<Autor> autoresTabla = tbl_autores.getItems();
 
         fileChooser.setInitialFileName("datos_autores");
         File file = fileChooser.showSaveDialog(new Stage());
-        if (file !=null){
+        if (file != null) {
+            // Crear el ObjectMapper y registrar el módulo para Java 8
             ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());  // Registrar el módulo para tipos de fecha y hora
+            mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Desactivar la serialización como timestamp
+
             try {
-                // writeValue pasa a JSON y luego guarda todo en el mismo paso
-                mapper.writeValue(file, allAutores);
-                System.out.println("Archivo JSON escrito con exito");
+                // Escribir el JSON con los autores filtrados de la tabla
+                mapper.writeValue(file, new ArrayList<>(autoresTabla));
+                System.out.println("Archivo JSON escrito con éxito");
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
-
         }
-
     }
 
     public void buscarAutor(ActionEvent actionEvent) {
