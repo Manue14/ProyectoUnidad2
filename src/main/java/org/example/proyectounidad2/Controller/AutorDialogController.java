@@ -16,6 +16,8 @@ import org.example.proyectounidad2.Model.Obra;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
@@ -48,21 +50,28 @@ public class AutorDialogController {
     @FXML
     private TextField tf_nombre;
 
-    @FXML
-    void subirArchivo(MouseEvent event) {
-        File selectedFile= fileChooser.showOpenDialog(new Stage());
-        if (selectedFile !=null){
-            Image imagenSeleccionada = new Image(selectedFile.getPath());
-            //Hacer algo con la imagen seleccionada
-        }
-    }
-
     FileChooser fileChooser=new FileChooser();
     Autor autor;
+    private byte[] currentImage;
     boolean modo; //True->Añadir False->Modificar
+    
+    @FXML
+    void subirArchivo(MouseEvent event) {
+        try {
+            File selectedFile= fileChooser.showOpenDialog(new Stage());
+            if (selectedFile !=null){
+                Image imagenSeleccionada = new Image(selectedFile.toURI().toString());
+                this.currentImage = Files.readAllBytes(selectedFile.toPath());
+                setAnchorPaneBackground(imagenSeleccionada);
+            }
+        } catch (IOException exception) {
+            System.out.println("Error al convertir la imagen seleccionada a un array de bytes: " + exception.getMessage());
+        } 
+    }
 
     public void initialize() {
         fileChooser.setInitialDirectory(new File("C:\\"));
+        //fileChooser.setInitialDirectory(new File("/home/manu"));
         fileChooser.setTitle("Cargar imagen");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".jpg","*.jpg"),
                 new FileChooser.ExtensionFilter(".png","*.png"),new FileChooser.ExtensionFilter("All images","*.jpg","*.png"));
@@ -125,15 +134,44 @@ public class AutorDialogController {
 
             autor.setNacimiento(dp_nacimiento.getValue());
             autor.setFallecimiento(dp_fallecimiento.getValue());
+            
+            autor.setFoto(this.currentImage);
+            
+            if (dbConnector.updateAutor(autor) == true) {
+                System.out.println("*****--------AUTOR ACTUALIZADA CON ÉXITO----------------************");
+            }
 
             // Imprimir datos recogidos para verificar
-            autor.getAllInfo();
+            //autor.getAllInfo();
 
         } catch (Exception e) {
             System.out.println("Error modificando la obra: " + e.getMessage());
         }
-
-
+    }
+    
+    public void createAutor() {
+            autor.setNombre(tf_nombre.getText());
+            autor.setApellido1(tf_apellido1.getText());
+            autor.setApellido2(tf_apellido2.getText());
+            autor.setNacionalidad(tf_nacionalidad.getText());
+            autor.setNacimiento(dp_nacimiento.getValue());
+            autor.setFallecimiento(dp_fallecimiento.getValue());
+            autor.setFoto(this.currentImage);
+            
+            if (dbConnector.createAutor(autor) != null) {
+                System.out.println("*****--------AUTOR CREADA CON ÉXITO----------------************");
+            }
+    }
+    
+    public void setAnchorPaneBackground(Image img) {
+        ap_imagenHolder.setBackground(
+                new Background(
+                        new BackgroundImage(
+                                img,
+                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
+                        )
+                )
+        );
     }
 
 }

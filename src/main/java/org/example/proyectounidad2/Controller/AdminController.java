@@ -139,9 +139,6 @@ public class AdminController {
     @FXML
     private TableColumn<Obra, String> col_tituloObra;
 
-    @FXML
-    private ImageView img_test;
-
 
     @FXML
     void mostrarAddAutor(MouseEvent event) throws IOException {
@@ -172,7 +169,7 @@ public class AdminController {
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
-            autorDlgController.modificarAutor();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
+            autorDlgController.createAutor();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
             //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
         } else {
             AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
@@ -210,7 +207,7 @@ public class AdminController {
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
-            obraDlgController.modificarObra();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
+            obraDlgController.createObra();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
             //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
         } else {
             AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");

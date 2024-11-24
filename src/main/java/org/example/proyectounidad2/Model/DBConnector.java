@@ -23,7 +23,7 @@ public class DBConnector {
     public Autor createAutor(Autor autor) {
         try {
             try (PreparedStatement ps = this.conn.prepareStatement(
-                    "INSERT INTO Autor (nombre, apellido1, apellido2, nacimiento, fallecimiento, nacionalidad, foto) "
+                    "INSERT INTO Autores (nombre, apellido1, apellido2, nacimiento, fallecimiento, nacionalidad, foto) "
                             + "VALUES (?, ?, ?, ?, ?, ?, ?)");
             ) {
                 this.conn.setAutoCommit(false);
@@ -51,8 +51,8 @@ public class DBConnector {
     public Obra createObra(Obra obra) {
         try {
             try (PreparedStatement ps = this.conn.prepareStatement(
-                    "INSERT INTO Obra (titulo, alto, ancho, imagen, popular, medio, categoria, fecha, descripcion, "
-                         +   "id_autor, id_departamento, id_movimineto) "
+                    "INSERT INTO Obras (titulo, alto, ancho, imagen, popular, medio, categoria, fecha, descripcion, "
+                         +   "id_autor, id_departamento, id_movimiento) "
                          +   "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             ) {
                 this.conn.setAutoCommit(false);
@@ -267,7 +267,7 @@ public class DBConnector {
     }
 
     public Obra getObraById(int id) {
-        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Obra WHERE id = ?")) {
+        try (PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM Obras WHERE id = ?")) {
             if (checkIfIdExists(id, Table.OBRAS.getNombre()) == 0) {
                 throw new SQLException("La obra con id " + id + " no existe");
             } else if (checkIfIdExists(id, Table.OBRAS.getNombre()) == -1) {
@@ -438,8 +438,7 @@ public class DBConnector {
     public boolean updateAutor(Autor autor) {
         try {
             try (PreparedStatement ps = this.conn.prepareStatement("UPDATE Autores "
-                    + "SET (nombre, apellido1, apellido2, nacimiento, fallecimiento, nacionalidad, foto) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?) "
+                    + "SET nombre = ?, apellido1 = ?, apellido2 = ?, nacimiento = ?, fallecimiento = ?, nacionalidad = ?, foto = ? "
                     + "WHERE id = ?");) {
                 this.conn.setAutoCommit(false);
 

@@ -89,8 +89,8 @@ public class ObraDialogController {
 
     public void initialize() {
         cargarCmbs();
-        /*fileChooser.setInitialDirectory(new File("C:\\"));*/
-        fileChooser.setInitialDirectory(new File("/home/manu"));
+        fileChooser.setInitialDirectory(new File("C:\\"));
+        //fileChooser.setInitialDirectory(new File("/home/manu"));
         fileChooser.setTitle("Cargar imagen");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".jpg","*.jpg"),
                 new FileChooser.ExtensionFilter(".png","*.png"),new FileChooser.ExtensionFilter("All images","*.jpg","*.png"));
@@ -234,8 +234,32 @@ public class ObraDialogController {
         } catch (Exception e) {
             System.out.println("Error modificando la obra: " + e.getMessage());
         }
-
-
+    }
+    
+    public void createObra() {
+        try {
+            Obra obra = new Obra();
+            
+            obra.setTitulo(tf_titulo.getText());
+            String[] parts = tf_medidas.getText().split("x");//Dividiendo medidas en alto y ancho
+            obra.setAlto(Float.parseFloat(parts[0]));
+            obra.setAncho(Float.parseFloat(parts[1]));
+            obra.setMedio(tf_medio.getText());
+            obra.setFecha(tf_fecha.getText());
+            obra.setCategoria(cmb_categoria.getValue());
+            obra.setId_movimiento(cmb_movimiento.getValue().getId());
+            obra.setId_departamento(cmb_departamento.getValue().getId());
+            obra.setId_autor(cmb_autor.getValue().getId());
+            obra.setPopular(chk_popular.isSelected());
+            obra.setImg(this.currentImage);
+            obra.setDescripcion("test");
+            
+            if (dbConnector.createObra(obra) != null) {
+                System.out.println("*****-----OBRA CREADA CON ÉXITO----------************É");
+            }
+        } catch (Exception exception) {
+            System.out.println("Error al crear una nueva obrea: " + exception.getMessage());
+        }
     }
     
     public void setAnchorPaneBackground(Image img) {

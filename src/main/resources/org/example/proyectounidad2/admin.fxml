@@ -125,6 +125,5 @@
                </content></Tab>
         </tabs>
       </TabPane>
-      <ImageView fx:id="img_test"/>
    </children>
 </AnchorPane>
