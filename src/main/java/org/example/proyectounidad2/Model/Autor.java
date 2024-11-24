@@ -95,7 +95,27 @@ public class Autor {
     }
 
     public String getNombreCompleto() {
-        return this.nombre + " " + this.apellido1 + " " + this.apellido2;
+        StringBuilder nombreCompleto = new StringBuilder();
+
+        if (this.nombre != null && !this.nombre.isEmpty()) {
+            nombreCompleto.append(this.nombre);
+        }
+
+        if (this.apellido1 != null && !this.apellido1.isEmpty()) {
+            if (nombreCompleto.length() > 0) {
+                nombreCompleto.append(" "); // Añade un espacio si ya hay texto previo
+            }
+            nombreCompleto.append(this.apellido1);
+        }
+
+        if (this.apellido2 != null && !this.apellido2.isEmpty()) {
+            if (nombreCompleto.length() > 0) {
+                nombreCompleto.append(" "); // Añade un espacio si ya hay texto previo
+            }
+            nombreCompleto.append(this.apellido2);
+        }
+
+        return nombreCompleto.toString();
     }
 
     public String getFechas() {
@@ -104,7 +124,27 @@ public class Autor {
 
     @Override
     public String toString() {
-        return this.nombre + " " + this.apellido1 + " " + this.apellido2;
+        StringBuilder nombreCompleto = new StringBuilder();
+
+        if (this.nombre != null && !this.nombre.isEmpty()) {
+            nombreCompleto.append(this.nombre);
+        }
+
+        if (this.apellido1 != null && !this.apellido1.isEmpty()) {
+            if (nombreCompleto.length() > 0) {
+                nombreCompleto.append(" "); // Añade un espacio si ya hay texto previo
+            }
+            nombreCompleto.append(this.apellido1);
+        }
+
+        if (this.apellido2 != null && !this.apellido2.isEmpty()) {
+            if (nombreCompleto.length() > 0) {
+                nombreCompleto.append(" "); // Añade un espacio si ya hay texto previo
+            }
+            nombreCompleto.append(this.apellido2);
+        }
+
+        return nombreCompleto.toString();
     }
     public String getAllInfo() {
         return "Id: " + this.id +
