@@ -301,6 +301,9 @@ public class AdminController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
             autorDlgController.modificarAutor();
+            ArrayList<Autor> listaAutores = dbConnector.getAllAutores();
+
+            cargarTablaAutores(listaAutores);
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ningun autor");
 

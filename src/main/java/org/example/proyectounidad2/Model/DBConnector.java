@@ -437,10 +437,9 @@ public class DBConnector {
     //----Métodos de actualización----------------------------------------------------------------------
     public boolean updateAutor(Autor autor) {
         try {
-            try (PreparedStatement ps = this.conn.prepareStatement("UPDATE Autores "
-                    + "SET (nombre, apellido1, apellido2, nacimiento, fallecimiento, nacionalidad, foto) "
-                    + "VALUES (?, ?, ?, ?, ?, ?, ?) "
-                    + "WHERE id = ?");) {
+            try (PreparedStatement ps = this.conn.prepareStatement("UPDATE Autores " +
+                    "SET nombre = ?, apellido1 = ?, apellido2 = ?, nacimiento = ?, fallecimiento = ?, nacionalidad = ?," +
+                    " foto = ? WHERE id = ?");) {
                 this.conn.setAutoCommit(false);
 
                 if (checkIfIdExists(autor.getId(), Table.AUTORES.getNombre()) == 0) {

@@ -128,6 +128,8 @@ public class AutorDialogController {
 
             // Imprimir datos recogidos para verificar
             autor.getAllInfo();
+            System.out.println(autor);
+            dbConnector.updateAutor(autor);
 
         } catch (Exception e) {
             System.out.println("Error modificando la obra: " + e.getMessage());

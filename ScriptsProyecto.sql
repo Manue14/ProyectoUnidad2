@@ -159,7 +159,7 @@ VALUES
 -- Obras de René Magritte
 ('La clef des champs', 1.10, 1.30, LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/22.jpg')), TRUE, 'Óleo sobre lienzo', 'Lienzo', '1936-01-01', 
  'Obra surrealista de René Magritte que muestra una escena  en el campo que invita a la reflexion.', 12, 2,5),
- ('El hijo del hombre',116,89 ,LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/23.jpg')),TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con abrigo, corbata roja 
+ ('El hijo del hombre',116,89 ,LOAD_FILE(CONCAT(@@secure_file_priv, 'imgs/Obras/23.jpg')),TRUE,'Óleo sobre lienzo','Lienzo',1964,'La pintura se compone de un hombre con rooabrigo, corbata roja 
  y bombín de pie delante de un muro. Más allá se ve el mar y un cielo nublado.', 12, 2,5);
 
 
