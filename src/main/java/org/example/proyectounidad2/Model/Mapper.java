@@ -52,25 +52,21 @@ public class Mapper {
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
         ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
         ps.setString(6, autor.getNacionalidad());
-        ps.setBinaryStream(7, img, img.available());
+        ps.setBytes(7, autor.getFoto());
         ps.setInt(8, autor.getId());
     }
 
     public static void bindAutorCreateQuery(PreparedStatement ps, Autor autor) throws SQLException {
-        ByteArrayInputStream img = new ByteArrayInputStream(autor.getFoto());
-        
         ps.setString(1, autor.getNombre());
         ps.setString(2, autor.getApellido1());
         ps.setString(3, autor.getApellido2());
         ps.setDate(4, Date.valueOf(autor.getNacimiento().toString()));
         ps.setDate(5, Date.valueOf(autor.getFallecimiento().toString()));
         ps.setString(6, autor.getNacionalidad());
-        ps.setBinaryStream(7, img, img.available());
+        ps.setBytes(7, autor.getFoto());
     }
     
     public static void bindObraUpdateQuery(PreparedStatement ps, Obra obra) throws SQLException {
-        ByteArrayInputStream img = new ByteArrayInputStream(obra.getImg());
-        
         ps.setString(1, obra.getTitulo());
         ps.setFloat(2, obra.getAlto());
         ps.setFloat(3, obra.getAncho());
@@ -92,7 +88,7 @@ public class Mapper {
         ps.setString(1, obra.getTitulo());
         ps.setFloat(2, obra.getAlto());
         ps.setFloat(3, obra.getAncho());
-        ps.setBinaryStream(4, img, img.available());
+        ps.setBytes(4, obra.getImg());
         ps.setBoolean(5, obra.isPopular());
         ps.setString(6, obra.getMedio());
         ps.setObject(7, obra.getCategoria().getValor());
