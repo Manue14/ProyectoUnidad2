@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
@@ -76,9 +77,20 @@ public class ObraDialogController {
         try {
             File selectedFile = fileChooser.showOpenDialog(new Stage());
             if (selectedFile != null) {
-                Image imagenSeleccionada = new Image(selectedFile.toURI().toString());
+                //Image imagenSeleccionada = new Image(selectedFile.toURI().toString());
                 this.currentImage = Files.readAllBytes(selectedFile.toPath());
-                setAnchorPaneBackground(imagenSeleccionada);
+
+                String mimeType = "image/png";
+                // Convert to Base64 and use it in a Data URL
+                String base64Image = Base64.getEncoder().encodeToString(this.currentImage);
+                String dataUrl = "data:" + mimeType + ";base64," + base64Image;
+                ap_imagenHolder.setStyle(
+                        "-fx-background-image: url('" + dataUrl + "');"+
+                                "-fx-background-size: contain;" +
+                                "-fx-background-repeat: no-repeat;" +
+                                "-fx-background-position: right center;"
+                );
+                //setAnchorPaneBackground(imagenSeleccionada);
             }
         } catch (IOException exception) {
             System.out.println("Error al convertir la imagen seleccionada a un array de bytes: " + exception.getMessage());
@@ -98,8 +110,7 @@ public class ObraDialogController {
             if (!modo) {
                 lbl_titulodlg.setText("Modificar obra");
                 cargarDatosObra();
-            }
-            {
+            }else {
                 lbl_titulodlg.setText("Añadir obra");
 
             }
@@ -175,8 +186,17 @@ public class ObraDialogController {
 
         chk_popular.setSelected(obra.isPopular());
         if (obra.getImg()!=null){
-            setAnchorPaneBackground(new Image(new ByteArrayInputStream(obra.getImg())));
-            this.currentImage = obra.getImg();
+            String mimeType = "image/png";
+            // Convert to Base64 and use it in a Data URL
+            String base64Image = Base64.getEncoder().encodeToString(obra.getImg());
+            String dataUrl = "data:" + mimeType + ";base64," + base64Image;
+            //<div style="background:url( data:image/jpeg;base64,@Convert.ToBase64String(electedOfficial.Picture) )"></div>
+            ap_imagenHolder.setStyle(
+                    "-fx-background-image: url('" + dataUrl + "');"+
+                            "-fx-background-size: contain;" +
+                            "-fx-background-repeat: no-repeat;" +
+                            "-fx-background-position: right center;"
+            );
         }
 
         /*ap_imagenHolder.setBackground(

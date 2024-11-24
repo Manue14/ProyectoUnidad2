@@ -26,6 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
+
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.cell.PropertyValueFactory;
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
@@ -188,13 +190,25 @@ public class UserController {
 
         // Mostrar imagen si está disponible
         if (obra.getImg() != null) {
-            Image image = new Image(new ByteArrayInputStream(obra.getImg()));
-            ImageView imageView = new ImageView(image);
+            String mimeType = "image/png";
+
+            // Convert to Base64 and use it in a Data URL
+            String base64Image = Base64.getEncoder().encodeToString(obra.getImg());
+            String dataUrl = "data:" + mimeType + ";base64," + base64Image;
+            
+            //<div style="background:url( data:image/jpeg;base64,@Convert.ToBase64String(electedOfficial.Picture) )"></div>
+            ap_imgcontainer.setStyle(
+                    "-fx-background-image: url('" + dataUrl + "');"+
+                    "-fx-background-size: contain;" +
+                            "-fx-background-repeat: no-repeat;" +
+                            "-fx-background-position: right center;"
+            );
+            /*ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
             imageView.setPreserveRatio(true);
             ap_imgcontainer.getChildren().clear();
-            ap_imgcontainer.getChildren().add(imageView);
+            ap_imgcontainer.getChildren().add(imageView);*/
         } else {
             ap_imgcontainer.getChildren().clear();
             Label noImage = new Label("Sin imagen");
