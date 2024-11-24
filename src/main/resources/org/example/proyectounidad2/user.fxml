@@ -23,13 +23,13 @@
         <menus>
           <Menu mnemonicParsing="false" text="User">
             <items>
-              <MenuItem mnemonicParsing="false" text="Cerrar sesión" onAction="#CerrarSesion" />
-                  <MenuItem mnemonicParsing="false" text="Cerrar aplicación" onAction="#CerrarPrograma"/>
+              <MenuItem mnemonicParsing="false" onAction="#CerrarSesion" text="Cerrar sesión" />
+                  <MenuItem mnemonicParsing="false" onAction="#CerrarPrograma" text="Cerrar aplicación" />
             </items>
           </Menu>
             <Menu mnemonicParsing="false" text="Herramientas">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Exportar JSON" onAction="#ExportarJson"/>
+                  <MenuItem mnemonicParsing="false" onAction="#ExportarJson" text="Exportar JSON" />
                </items>
             </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -54,9 +54,9 @@
             </FlowPane>
             <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Buscar" />
             <Separator prefWidth="200.0" />
-            <HBox alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="10.0" VBox.vgrow="SOMETIMES">
+            <HBox fx:id="containerDatos" alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="10.0" visible="false" VBox.vgrow="SOMETIMES">
                <children>
-                  <AnchorPane fx:id="ap_imgcontainer" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: red;">
+                  <AnchorPane fx:id="ap_imgcontainer" prefHeight="200.0" prefWidth="200.0">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>

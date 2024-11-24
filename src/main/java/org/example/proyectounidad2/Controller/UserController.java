@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import org.example.proyectounidad2.HelloApplication;
@@ -77,6 +78,9 @@ public class UserController {
 
     @FXML
     private Text txt_descrippcionObra;
+
+    @FXML
+    private HBox containerDatos;
 
 
     @FXML
