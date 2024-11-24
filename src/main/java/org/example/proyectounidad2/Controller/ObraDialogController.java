@@ -326,13 +326,13 @@ public class ObraDialogController {
 
     public void setAnchorPaneBackground(Image img) {
         ap_imagenHolder.setBackground(
-                new Background(
-                        new BackgroundImage(
-                                img,
-                                BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT
-                        )
-                )
-        );
+                    new Background(
+                            new BackgroundImage(
+                                    new Image(new ByteArrayInputStream(obra.getImg())),
+                                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, false, false)
+                            )
+                    )
+            );
     }
 
     private void clearErrorStyles() {
