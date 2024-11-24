@@ -209,6 +209,11 @@ public class AdminController {
         if (clickedButton.get() == ButtonType.OK) {
             obraDlgController.createObra();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
             //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
+
+
+            ArrayList<Obra> listaObras = dbConnector.getAllObras();
+            cargarTablaObras(listaObras);
+
         } else {
             AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
 
