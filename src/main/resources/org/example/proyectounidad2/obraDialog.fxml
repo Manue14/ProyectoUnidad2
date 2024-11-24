@@ -14,7 +14,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <DialogPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="419.0" prefWidth="613.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.ObraDialogController">
+    <stylesheets>
+        <URL value="@styles/añadir.css" />
+    </stylesheets>
     <header>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="87.0" prefWidth="613.0">
          <children>
