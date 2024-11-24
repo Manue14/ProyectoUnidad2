@@ -12,6 +12,30 @@ A mayores creamos una base de datos en la que almacenamos los usuarios, sus cont
 
 ![ERUser.png](imgs/ERUser.png)
 
+# 4. Explicación del reparto de las tareas entre ambos integrantes.
+
+#### Iago
+- Login
+- DB usuarios
+- Filtrado de obras y autores
+- Datos DB coleccion
+- Toolbar archivo
+
+
+#### Manuel
+- Filtrado de obras y autores
+- Filtrado de obras y autores
+- DB coleccion
+- Clases de los objetos Obra,autores...
+
+
+#### Samuel
+
+- Interfaces
+- Eliminar autores y obras
+
+
+
 
 # 5. Extras realizados
 
