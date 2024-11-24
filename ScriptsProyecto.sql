@@ -208,9 +208,9 @@ BEGIN
 		SET @query = CONCAT(@query, ' AND titulo LIKE ''%', _titulo, '%''');
 	END IF;
     
-    IF _autor IS NOT NULL AND _autor <> "" THEN
+IF _autor IS NOT NULL AND _autor <> "" THEN
         SET @query = CONCAT(@query,
-        ' AND id_autor IN (SELECT id FROM Autores WHERE CONCAT(nombre, apellido1, apellido2) LIKE ''%',
+        ' AND id_autor IN (SELECT id FROM Autores WHERE CONCAT(COALESCE(nombre, ''''), COALESCE(apellido1, ''''), COALESCE(apellido2, '''')) LIKE ''%',
         _autor, '%'')');
     END IF;
     

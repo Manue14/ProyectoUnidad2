@@ -374,6 +374,7 @@ public class DBConnector {
             cs.setBoolean(6, fields.getPopular());
             
             ResultSet rs = cs.executeQuery();
+            System.out.println(cs);
             while (rs.next()) {
                 obras.add(Mapper.mapObra(rs));
             }

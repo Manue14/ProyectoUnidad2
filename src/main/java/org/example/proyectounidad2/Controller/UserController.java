@@ -1,7 +1,9 @@
 package org.example.proyectounidad2.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -16,11 +18,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.proyectounidad2.HelloApplication;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
+
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.scene.control.cell.PropertyValueFactory;
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
@@ -32,6 +39,8 @@ import org.example.proyectounidad2.Model.Obra;
 import org.example.proyectounidad2.Model.QueryFieldsObjectObra;
 
 public class UserController {
+
+    Obra obrafiltrada;
 
     @FXML
     private Button btn_buscarObra;
@@ -133,8 +142,8 @@ public class UserController {
 
         if (!obrasFiltradas.isEmpty()) {
             // Cargar la primera obra como ejemplo
-            Obra obra = obrasFiltradas.get(0);
-            mostrarObra(obra);
+            obrafiltrada = obrasFiltradas.get(0);
+            mostrarObra(obrafiltrada);
         } else {
             AlertMaker.showInformation("Búsqueda", "No se encontraron obras con los filtros aplicados.");
         }
@@ -171,7 +180,7 @@ public class UserController {
 
         // Actualizar los labels con la información de la obra
         lbl_tituloObra.setText(obra.getTitulo());
-        lbl_autorObra.setText(autor != null ? autor.getNombre() : "Autor no encontrado");
+        lbl_autorObra.setText(autor != null ? autor.getNombreCompleto() : "Autor no encontrado");
         lbl_fechaObra.setText(obra.getFecha());
         lbl_departamentoObra.setText(departamento != null ? departamento.getNombre() : "Departamento no encontrado");
         lbl_categoriaObra.setText(obra.getCategoria().getValor());
@@ -181,13 +190,25 @@ public class UserController {
 
         // Mostrar imagen si está disponible
         if (obra.getImg() != null) {
-            Image image = new Image(new ByteArrayInputStream(obra.getImg()));
-            ImageView imageView = new ImageView(image);
+            String mimeType = "image/png";
+
+            // Convert to Base64 and use it in a Data URL
+            String base64Image = Base64.getEncoder().encodeToString(obra.getImg());
+            String dataUrl = "data:" + mimeType + ";base64," + base64Image;
+            
+            //<div style="background:url( data:image/jpeg;base64,@Convert.ToBase64String(electedOfficial.Picture) )"></div>
+            ap_imgcontainer.setStyle(
+                    "-fx-background-image: url('" + dataUrl + "');"+
+                    "-fx-background-size: contain;" +
+                            "-fx-background-repeat: no-repeat;" +
+                            "-fx-background-position: right center;"
+            );
+            /*ImageView imageView = new ImageView(image);
             imageView.setFitWidth(200);
             imageView.setFitHeight(200);
             imageView.setPreserveRatio(true);
             ap_imgcontainer.getChildren().clear();
-            ap_imgcontainer.getChildren().add(imageView);
+            ap_imgcontainer.getChildren().add(imageView);*/
         } else {
             ap_imgcontainer.getChildren().clear();
             Label noImage = new Label("Sin imagen");
@@ -203,6 +224,8 @@ public class UserController {
     }
     @FXML
     private AnchorPane ap_imgcontainer;
+
+    FileChooser fileChooser= new FileChooser();
 
     public void initialize() {
         cargarCmbs();
@@ -232,6 +255,24 @@ public class UserController {
 
     }
 
+    @FXML
     public void ExportarJson(ActionEvent actionEvent) {
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(".json", "*.json")
+        );
+
+        fileChooser.setInitialFileName("datos_obras");
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file != null) {
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                // Escribir el JSON con las obras filtradas de la tabla
+                mapper.writeValue(file, obrafiltrada);
+                System.out.println("Archivo JSON escrito con éxito");
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
     }
 }
