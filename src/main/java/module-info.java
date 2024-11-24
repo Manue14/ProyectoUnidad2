@@ -12,6 +12,8 @@ module org.example.proyectounidad2 {
     opens org.example.proyectounidad2.Model to javafx.base;
     exports org.example.proyectounidad2;
     exports org.example.proyectounidad2.Controller;
+    exports org.example.proyectounidad2.Model; // Allow Jackson to access this package
+
     opens org.example.proyectounidad2.Controller to javafx.fxml;
 
 }

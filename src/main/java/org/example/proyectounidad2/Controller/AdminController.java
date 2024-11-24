@@ -1,5 +1,6 @@
 package org.example.proyectounidad2.Controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -9,9 +10,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.proyectounidad2.HelloApplication;
 import org.example.proyectounidad2.Model.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +26,8 @@ import javafx.scene.image.ImageView;
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
 public class AdminController {
+
+    FileChooser fileChooser= new FileChooser();
 
     @FXML
     private Button btn_addAutores;
@@ -352,7 +358,55 @@ public class AdminController {
 
     }
 
-    public void ExportarObras(MouseEvent event) {
+    @FXML
+    public void ExportarObras(ActionEvent event) {
+        //Añadimos las extensiones disponibles
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(".json", "*.json")
+        );
+
+        ArrayList<Obra> allobras = dbConnector.getAllObras();
+
+        fileChooser.setInitialFileName("datos_obras");
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file !=null){
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                // writeValue pasa a JSON y luego guarda todo en el mismo paso
+                mapper.writeValue(file, allobras);
+                System.out.println("Archivo JSON escrito con exito");
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+
+        }
+
+    }
+
+    @FXML
+    public void ExportarAutores(ActionEvent event) {
+        //Añadimos las extensiones disponibles
+        fileChooser.getExtensionFilters().clear();
+        fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter(".json", "*.json")
+        );
+
+        ArrayList<Autor> allAutores = dbConnector.getAllAutores();
+
+        fileChooser.setInitialFileName("datos_autores");
+        File file = fileChooser.showSaveDialog(new Stage());
+        if (file !=null){
+            ObjectMapper mapper = new ObjectMapper();
+            try {
+                // writeValue pasa a JSON y luego guarda todo en el mismo paso
+                mapper.writeValue(file, allAutores);
+                System.out.println("Archivo JSON escrito con exito");
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+
+        }
 
     }
 
