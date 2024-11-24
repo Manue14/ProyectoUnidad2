@@ -2,9 +2,9 @@
 
 - [1. Introducción](#1._introducción)
 - [2. Manual técnico para desarrolladores](#2._Manual_técnico_para_desarrolladores)
--   [2.1. Modelo](##2.1._Modelo)
--   [2.2. Vista](##2.2_Vista)
--   [2.3. Controlador](##2.3._Controlador)
+  - [2.1. Modelo](##2.1._Modelo)
+  - [2.2. Vista](##2.2_Vista)
+  - [2.3. Controlador](##2.3._Controlador)
 - [3. Manual de usuario](#3._Manual_de_usuario)
 - [4. Reparto de las tareas](#4._Reparto_de_las_tareas)
 - [5. Extras realizados](#5._Extras_realizados)
