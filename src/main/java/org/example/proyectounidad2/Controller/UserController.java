@@ -9,6 +9,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +18,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import org.example.proyectounidad2.HelloApplication;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -91,7 +93,7 @@ public class UserController {
         Departamento departamentoSeleccionado = cmb_departamento.getValue();
         Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
         Categoria categoriaSeleccionada = cmb_categoria.getValue();
-        
+        System.out.println(titulo);
         if (titulo != null && !titulo.isEmpty()) {
             fields.setTitulo(titulo);
         }
@@ -113,13 +115,87 @@ public class UserController {
         }
         
         fields.setPopular(chk_popular.isSelected());
-
+        System.out.println(fields);
         // Llamar a la función de filtrado
         ArrayList<Obra> obrasFiltradas = dbConnector.filterObras(fields);
 
+        System.out.println(obrasFiltradas);
+
+        cargarObrasFiltradas(obrasFiltradas);
         // Limpiar la tabla y cargar los resultados
         /*cargarTablaObras(obrasFiltradas);*/
     }
+
+    @FXML
+    private void cargarObrasFiltradas(ArrayList<Obra> obrasFiltradas) {
+        // Asegurarte de que el contenedor sea visible
+        containerDatos.setVisible(!obrasFiltradas.isEmpty());
+
+        if (!obrasFiltradas.isEmpty()) {
+            // Cargar la primera obra como ejemplo
+            Obra obra = obrasFiltradas.get(0);
+            mostrarObra(obra);
+        } else {
+            AlertMaker.showInformation("Búsqueda", "No se encontraron obras con los filtros aplicados.");
+        }
+    }
+
+    private void cargarCmbs() {
+
+        cmb_categoria.getItems().clear();
+        cmb_categoria.getItems().add(null);
+        for (Categoria categoria : Categoria.values()) {
+            cmb_categoria.getItems().add(categoria);
+        }
+
+        cmb_departamento.getItems().clear();
+        cmb_departamento.getItems().add(null);
+        ArrayList<Departamento> departamentos = dbConnector.getAllDepartamentos();
+        for (Departamento departamento : departamentos) {
+            cmb_departamento.getItems().add(departamento);
+        }
+
+        cmb_movimiento.getItems().clear();
+        cmb_movimiento.getItems().add(null);
+        ArrayList<Movimiento> movimientos = dbConnector.getAllMovimientos();
+        for (Movimiento movimiento : movimientos) {
+            cmb_movimiento.getItems().add(movimiento);
+        }
+
+
+    }
+    @FXML
+    private void mostrarObra(Obra obra) {
+        Autor autor = dbConnector.getAutorById(obra.getId_autor());
+        Departamento departamento = dbConnector.getDepartamentoById(obra.getId_departamento());
+
+        // Actualizar los labels con la información de la obra
+        lbl_tituloObra.setText(obra.getTitulo());
+        lbl_autorObra.setText(autor != null ? autor.getNombre() : "Autor no encontrado");
+        lbl_fechaObra.setText(obra.getFecha());
+        lbl_departamentoObra.setText(departamento != null ? departamento.getNombre() : "Departamento no encontrado");
+        lbl_categoriaObra.setText(obra.getCategoria().getValor());
+        lbl_medioObra.setText(obra.getMedio());
+        lbl_dimensionesObra.setText(obra.getAlto() + "x" + obra.getAncho());
+        txt_descrippcionObra.setText(obra.getDescripcion());
+
+        // Mostrar imagen si está disponible
+        if (obra.getImg() != null) {
+            Image image = new Image(new ByteArrayInputStream(obra.getImg()));
+            ImageView imageView = new ImageView(image);
+            imageView.setFitWidth(200);
+            imageView.setFitHeight(200);
+            imageView.setPreserveRatio(true);
+            ap_imgcontainer.getChildren().clear();
+            ap_imgcontainer.getChildren().add(imageView);
+        } else {
+            ap_imgcontainer.getChildren().clear();
+            Label noImage = new Label("Sin imagen");
+            ap_imgcontainer.getChildren().add(noImage);
+        }
+    }
+
+
 
     @FXML
     void mostrarAutor(MouseEvent event) {
@@ -129,6 +205,7 @@ public class UserController {
     private AnchorPane ap_imgcontainer;
 
     public void initialize() {
+        cargarCmbs();
         Platform.runLater(() -> {
 
             ap_imgcontainer.prefWidthProperty().bind(((Region) ap_imgcontainer.getParent()).widthProperty().multiply(0.5));

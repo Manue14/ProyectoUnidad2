@@ -1,0 +1,60 @@
+/* Estilos generales */
+.root {
+    -fx-font-family: "Arial", sans-serif;
+    -fx-base: #f0f0f0;
+    -fx-padding: 10px;
+}
+
+/* Título de la obra */
+#lbl_tituloObra {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-underline: true;
+    -fx-alignment: center;
+    -fx-text-fill: #2c3e50;
+    -fx-padding: 0 0 10px 0; /* Espacio debajo del título */
+}
+
+/* Subtítulos (Autor, Fecha, etc.) */
+.label-subtitulo {
+    -fx-font-style: italic;
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Estilo de los Labels de datos */
+.label-dato {
+    -fx-font-size: 16px;
+    -fx-text-fill: #34495e;
+    -fx-padding: 0 0 5px 0;
+}
+
+/* Contenedor de cada sección */
+.hbox-section {
+    -fx-spacing: 10px;
+    -fx-alignment: center-left;
+}
+
+/* TextFlow (Descripción) */
+#descripcionObra {
+    -fx-font-size: 14px;
+    -fx-text-fill: #7f8c8d;
+    -fx-line-spacing: 1.5;
+    -fx-padding: 10px;
+    -fx-background-color: #ecf0f1;
+    -fx-border-radius: 5px;
+}
+
+/* Contenedor de Imagen */
+#ap_imgcontainer {
+    -fx-background-color: #bdc3c7;
+    -fx-border-radius: 5px;
+    -fx-padding: 10px;
+}
+
+#lbl_imagen {
+    -fx-text-fill: #34495e;
+    -fx-font-size: 16px;
+    -fx-padding: 10px;
+}

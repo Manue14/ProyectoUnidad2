@@ -17,87 +17,99 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
+<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="600.0" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.UserController">
-   <children>
-      <MenuBar layoutX="117.0" layoutY="32.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <menus>
-          <Menu mnemonicParsing="false" text="User">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#CerrarSesion" text="Cerrar sesión" />
-                  <MenuItem mnemonicParsing="false" onAction="#CerrarPrograma" text="Cerrar aplicación" />
-            </items>
-          </Menu>
-            <Menu mnemonicParsing="false" text="Herramientas">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#ExportarJson" text="Exportar JSON" />
-               </items>
-            </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-      <VBox alignment="TOP_CENTER" layoutY="39.20000076293945" maxHeight="1.7976931348623157E308" prefWidth="566.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="142.0" text="Colección" textAlignment="CENTER" />
-            <FlowPane alignment="CENTER" hgap="10.0" prefHeight="63.0" prefWidth="560.0" vgap="10.0">
-               <children>
-                  <TextField fx:id="tf_titulo" promptText="Titulo" />
-                  <TextField fx:id="tf_autor" promptText="Autor" />
-                  <ComboBox fx:id="cmb_departamento" prefWidth="150.0" promptText="Departamento" />
-                  <ComboBox fx:id="cmb_categoria" prefWidth="150.0" promptText="Categoría" />
-                  <ComboBox fx:id="cmb_movimiento" prefWidth="150.0" promptText="Movimiento" />
-                  <CheckBox fx:id="chk_popular" mnemonicParsing="false" text="Popular" />
-               </children>
-            </FlowPane>
-            <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Buscar" />
-            <Separator prefWidth="200.0" />
-            <HBox fx:id="containerDatos" alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="10.0" visible="false" VBox.vgrow="SOMETIMES">
-               <children>
-                  <AnchorPane fx:id="ap_imgcontainer" prefHeight="200.0" prefWidth="200.0">
-                     <HBox.margin>
-                        <Insets right="10.0" />
-                     </HBox.margin>
-                  </AnchorPane>
-                  <VBox alignment="CENTER" prefHeight="102.0" prefWidth="323.0" spacing="10.0" HBox.hgrow="ALWAYS">
-                     <children>
-                        <Label fx:id="lbl_tituloObra" text="Titulo" />
-                        <HBox prefHeight="5.0" prefWidth="323.0" spacing="20.0">
-                           <children>
-                              <Label fx:id="lbl_autorObra" onMouseClicked="#mostrarAutor" text="Autor" />
-                              <Label fx:id="lbl_fechaObra" text="fecha" />
-                           </children>
-                        </HBox>
-                        <TextFlow prefHeight="50.0" prefWidth="323.0">
-                           <children>
-                              <Text fx:id="txt_descrippcionObra" strokeType="OUTSIDE" strokeWidth="0.0" text="TextFlow is special layout designed to lay out rich text. It can be used to layout several Text nodes in a single text flow. The TextFlow uses the text and the font of each Text node inside of" />
-                           </children>
-                        </TextFlow>
-                        <HBox prefHeight="13.0" prefWidth="323.0" spacing="20.0">
-                           <children>
-                              <Label fx:id="lbl_departamentoObra" text="Departamento" />
-                              <Label fx:id="lbl_categoriaObra" text="Categoria" />
-                           </children>
-                        </HBox>
-                        <HBox prefHeight="1.0" prefWidth="323.0" spacing="20.0">
-                           <children>
-                              <Label fx:id="lbl_medioObra" text="medio" />
-                              <Label fx:id="lbl_dimensionesObra" text="dimensiones" />
-                           </children>
-                        </HBox>
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-      </VBox>
-   </children>
+    <stylesheets>
+        <URL value="@styles/usuariobase.css" />
+    </stylesheets>
+    <children>
+        <MenuBar layoutX="117.0" layoutY="32.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="User">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#CerrarSesion" text="Cerrar sesión" />
+                        <MenuItem mnemonicParsing="false" onAction="#CerrarPrograma" text="Cerrar aplicación" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Herramientas">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#ExportarJson" text="Exportar JSON" />
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <VBox alignment="TOP_CENTER" layoutY="39.20000076293945" maxHeight="1.7976931348623157E308" prefWidth="566.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="14.0" prefWidth="142.0" text="Colección" textAlignment="CENTER" />
+                <FlowPane alignment="CENTER" hgap="10.0" prefHeight="63.0" prefWidth="560.0" vgap="10.0">
+                    <children>
+                        <TextField fx:id="tf_titulo" promptText="Titulo" />
+                        <TextField fx:id="tf_autor" promptText="Autor" />
+                        <ComboBox fx:id="cmb_departamento" prefWidth="150.0" promptText="Departamento" />
+                        <ComboBox fx:id="cmb_categoria" prefWidth="150.0" promptText="Categoría" />
+                        <ComboBox fx:id="cmb_movimiento" prefWidth="150.0" promptText="Movimiento" />
+                        <CheckBox fx:id="chk_popular" mnemonicParsing="false" text="Popular" />
+                    </children>
+                </FlowPane>
+                <Button fx:id="btn_buscarObra" mnemonicParsing="false" onMouseClicked="#buscarObra" text="Buscar" />
+                <Separator prefWidth="200.0" />
+
+                <!-- Contenedor de Datos -->
+                <HBox fx:id="containerDatos" alignment="CENTER" prefHeight="281.0" prefWidth="560.0" spacing="10.0" visible="false" VBox.vgrow="SOMETIMES">
+                    <children>
+                        <!-- Contenedor de Imagen -->
+                        <AnchorPane fx:id="ap_imgcontainer" prefHeight="200.0" prefWidth="200.0">
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </AnchorPane>
+                        <VBox alignment="CENTER" prefHeight="102.0" prefWidth="323.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                            <!-- Título de la obra -->
+                            <Label fx:id="lbl_tituloObra" text="Titulo de la Obra" styleClass="titulo-obra"/>
+
+                            <!-- Información adicional -->
+                            <HBox prefHeight="5.0" prefWidth="323.0" spacing="20.0" styleClass="hbox-section">
+                                <children>
+                                    <Label fx:id="lbl_autorObra" onMouseClicked="#mostrarAutor" text="Autor" styleClass="label-subtitulo"/>
+                                    <Label fx:id="lbl_fechaObra" text="Fecha" styleClass="label-subtitulo"/>
+                                </children>
+                            </HBox>
+
+                            <!-- Descripción de la obra -->
+                            <TextFlow  prefHeight="50.0" fx:id="descripcionObra" prefWidth="323.0" styleClass="txt-descripcion">
+                                <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" fx:id="txt_descrippcionObra" text="Descripción detallada de la obra."/>
+                                </children>
+                            </TextFlow>
+
+                            <!-- Información de Categoría y Departamento -->
+                            <HBox prefHeight="13.0" prefWidth="323.0" spacing="20.0" styleClass="hbox-section">
+                                <children>
+                                    <Label fx:id="lbl_departamentoObra" text="Departamento" styleClass="label-subtitulo"/>
+                                    <Label fx:id="lbl_categoriaObra" text="Categoría" styleClass="label-subtitulo"/>
+                                </children>
+                            </HBox>
+
+                            <!-- Información adicional (Medio, Dimensiones) -->
+                            <HBox prefHeight="1.0" prefWidth="323.0" spacing="20.0" styleClass="hbox-section">
+                                <children>
+                                    <Label fx:id="lbl_medioObra" text="Medio" styleClass="label-subtitulo"/>
+                                    <Label fx:id="lbl_dimensionesObra" text="Dimensiones" styleClass="label-subtitulo"/>
+                                </children>
+                            </HBox>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </VBox>
+    </children>
 </AnchorPane>
+
