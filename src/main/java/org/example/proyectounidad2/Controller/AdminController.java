@@ -1,10 +1,5 @@
 package org.example.proyectounidad2.Controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
-
-import java.io.ByteArrayInputStream;
-
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
@@ -14,24 +9,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 import org.example.proyectounidad2.HelloApplication;
 import org.example.proyectounidad2.Model.*;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import javax.swing.*;
 
 import static org.example.proyectounidad2.HelloApplication.dbConnector;
 
