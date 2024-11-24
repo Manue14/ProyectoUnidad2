@@ -208,6 +208,12 @@ public static void showWarning(String titulo, String mensaje){
     }
 ```
 
+### Jar ejecutable
+
+Tal y como se pedía se realizo el jar ejecutable del proyecto utilizando Artifact en Intellij
+
+![img.png](img.png)
+
 
 # 3. Manual de usuario
 

@@ -24,4 +24,8 @@ INSERT INTO permisos (idPermiso, nombre) VALUES
 INSERT INTO users (nombre, contraseña, idPermiso) 
 VALUES ('admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', 1);
 
+
+INSERT INTO users (nombre, contraseña, idPermiso) 
+VALUES ('base', '0debe73f2f2d98ec32ceb8a529728e0a7c4868641c8042e136a598d7f3a8df94', 2);
+
 #admin123
