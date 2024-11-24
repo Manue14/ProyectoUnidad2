@@ -17,8 +17,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.image.*?>
 
+<?import java.net.URL?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="485.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyectounidad2.Controller.AdminController">
-   <children>
+    <stylesheets>
+        <URL value="@styles/admin.css" />
+    </stylesheets>
+    <children>
       <MenuBar layoutY="2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <menus>
           <Menu mnemonicParsing="false" text="Admin">
@@ -50,9 +54,9 @@
                            <children>
                               <Button fx:id="btn_addObras" mnemonicParsing="false" onMouseClicked="#mostrarAddObra" text="Añadir" />
                               <Separator orientation="VERTICAL" prefHeight="31.0" prefWidth="6.0" />
-                              <TextField fx:id="tf_autor" promptText="Autor" />
                               <TextField fx:id="tf_titulo" promptText="Titulo" />
-                              <ComboBox fx:id="cmb_departamento" prefWidth="150.0" promptText="Departamento" />
+                               <TextField fx:id="tf_autor" promptText="Autor" />
+                               <ComboBox fx:id="cmb_departamento" prefWidth="150.0" promptText="Departamento" />
                               <ComboBox fx:id="cmb_categoria" prefWidth="150.0" promptText="Categoria" />
                               <ComboBox fx:id="cmb_movimiento" prefWidth="150.0" promptText="Movimiento" />
                               <CheckBox fx:id="chk_popular"   mnemonicParsing="false" text="Popular" />

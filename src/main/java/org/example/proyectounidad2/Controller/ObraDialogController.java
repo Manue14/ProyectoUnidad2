@@ -175,8 +175,11 @@ public class ObraDialogController {
         cmb_autor.setValue(dbConnector.getAutorById(obra.getId_autor()));
 
         chk_popular.setSelected(obra.isPopular());
-        setAnchorPaneBackground(new Image(new ByteArrayInputStream(obra.getImg())));
-        this.currentImage = obra.getImg();
+        if (obra.getImg()!=null){
+            setAnchorPaneBackground(new Image(new ByteArrayInputStream(obra.getImg())));
+            this.currentImage = obra.getImg();
+        }
+
         /*ap_imagenHolder.setBackground(
                 new Background(
                         new BackgroundImage(

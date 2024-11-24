@@ -342,6 +342,80 @@ public class AdminController {
         }
     }
 
+    public void CerrarSesion(ActionEvent actionEvent) throws IOException {
+
+        HelloApplication.setRoot("acceso");
+    }
+
+    public void CerrarPrograma(ActionEvent actionEvent) {
+        Platform.exit();
+
+    }
+
+    public void ExportarObras(MouseEvent event) {
+
+    }
+
+    public void buscarAutor(ActionEvent actionEvent) {
+
+        String nombre = tf_nombre.getText();
+        String apellido1 = tf_apellido1.getText();
+        String apellido2 = tf_apellido2.getText();
+        String nacionalidad = cmb_nacionalidad.getValue(); // Asumiendo que la nacionalidad es un ComboBox
+
+        // Crear un objeto con los campos a filtrar
+        QueryFieldsObjectAutor fields = new QueryFieldsObjectAutor();
+        fields.setNombre(nombre);
+        fields.setApellido1(apellido1);
+        fields.setApellido2(apellido2);
+        fields.setNacionalidad(nacionalidad);
+
+        // Llamar a la función de filtrado
+        ArrayList<Autor> autoresFiltrados = dbConnector.filterAutores(fields);
+
+        // Limpiar la tabla y cargar los resultados
+        cargarTablaAutores(autoresFiltrados);
+
+
+    }
+
+    public void buscarObra(ActionEvent actionEvent) {
+        QueryFieldsObjectObra fields = new QueryFieldsObjectObra();
+        String titulo = tf_titulo.getText();
+        String autor = tf_autor.getText();
+        Departamento departamentoSeleccionado = cmb_departamento.getValue();
+        Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
+        Categoria categoriaSeleccionada = cmb_categoria.getValue();
+        
+        if (titulo != null && !titulo.isEmpty()) {
+            fields.setTitulo(titulo);
+        }
+        
+        if (autor != null && !autor.isEmpty()) {
+            fields.setAutor_nombre(autor);
+        }
+        
+        if (departamentoSeleccionado != null) {
+            fields.setDepartamento_id(departamentoSeleccionado.getId());
+        }
+
+        if (movimientoSeleccionado != null) {
+            fields.setMovimiento_id(movimientoSeleccionado.getId());
+        }
+
+        if (categoriaSeleccionada != null) {
+            fields.setCategoria(categoriaSeleccionada.getValor());
+        }
+        
+        fields.setPopular(chk_popular.isSelected());
+
+        // Llamar a la función de filtrado
+        ArrayList<Obra> obrasFiltradas = dbConnector.filterObras(fields);
+
+        // Limpiar la tabla y cargar los resultados
+        cargarTablaObras(obrasFiltradas);
+    }
+
     public void initialize() {
         //Poner las columnas para que ocupen toda la tabla
         setupColumnWidths(tbl_autores);
@@ -477,81 +551,6 @@ public class AdminController {
             cmb_nacionalidad.getItems().add(nacionalidad);
         }
     }
-
-    public void CerrarSesion(ActionEvent actionEvent) throws IOException {
-
-        HelloApplication.setRoot("acceso");
-    }
-
-    public void CerrarPrograma(ActionEvent actionEvent) {
-        Platform.exit();
-
-    }
-
-    public void ExportarObras(MouseEvent event) {
-
-    }
-
-    public void buscarAutor(ActionEvent actionEvent) {
-
-        String nombre = tf_nombre.getText();
-        String apellido1 = tf_apellido1.getText();
-        String apellido2 = tf_apellido2.getText();
-        String nacionalidad = cmb_nacionalidad.getValue(); // Asumiendo que la nacionalidad es un ComboBox
-
-        // Crear un objeto con los campos a filtrar
-        QueryFieldsObjectAutor fields = new QueryFieldsObjectAutor();
-        fields.setNombre(nombre);
-        fields.setApellido1(apellido1);
-        fields.setApellido2(apellido2);
-        fields.setNacionalidad(nacionalidad);
-
-        // Llamar a la función de filtrado
-        ArrayList<Autor> autoresFiltrados = dbConnector.filterAutores(fields);
-
-        // Limpiar la tabla y cargar los resultados
-        cargarTablaAutores(autoresFiltrados);
-
-
-    }
-
-    public void buscarObra(ActionEvent actionEvent) {
-        QueryFieldsObjectObra fields = new QueryFieldsObjectObra();
-        String titulo = tf_titulo.getText();
-        String autor = tf_autor.getText();
-        Departamento departamentoSeleccionado = cmb_departamento.getValue();
-        Movimiento movimientoSeleccionado = cmb_movimiento.getValue();
-        Categoria categoriaSeleccionada = cmb_categoria.getValue();
-        
-        if (titulo != null && !titulo.isEmpty()) {
-            fields.setTitulo(titulo);
-        }
-        
-        if (autor != null && !autor.isEmpty()) {
-            fields.setAutor_nombre(autor);
-        }
-        
-        if (departamentoSeleccionado != null) {
-            fields.setDepartamento_id(departamentoSeleccionado.getId());
-        }
-
-        if (movimientoSeleccionado != null) {
-            fields.setMovimiento_id(movimientoSeleccionado.getId());
-        }
-
-        if (categoriaSeleccionada != null) {
-            fields.setCategoria(categoriaSeleccionada.getValor());
-        }
-        
-        fields.setPopular(chk_popular.isSelected());
-
-        // Llamar a la función de filtrado
-        ArrayList<Obra> obrasFiltradas = dbConnector.filterObras(fields);
-
-        // Limpiar la tabla y cargar los resultados
-        cargarTablaObras(obrasFiltradas);
-    }
-
 
     public int obtenerIdAutor(String nombreAutor) {
         return dbConnector.obtenerIdAutorPorNombre(nombreAutor);

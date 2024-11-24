@@ -1,0 +1,70 @@
+/* General root styling */
+.root {
+    -fx-background-color: #F9F9F9;
+    -fx-font-family: "Arial", sans-serif;
+}
+
+/* VBox styling for alignment and spacing */
+.vbox {
+    -fx-alignment: center;
+    -fx-spacing: 20px;
+    -fx-padding: 20px; /* Center content visually */
+}
+
+/* Label styling */
+.label {
+    -fx-text-fill: #333; /* Dark grey for readability */
+}
+
+
+/* Button styling */
+.button {
+    -fx-background-color: #5AA9E6;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: #3C9AE2; /* Darker on hover */
+}
+
+.button:pressed {
+    -fx-background-color: #2086D5; /* Even darker when pressed */
+}
+
+
+/* Context menu styling */
+.context-menu {
+    -fx-background-color: white;
+    -fx-border-color: #D6D6D6;
+    -fx-border-radius: 5px;
+}
+
+/* ComboBox styling */
+.combo-box {
+    -fx-pref-width: 150px;
+    -fx-background-color: white;
+    -fx-border-radius: 5px;
+    -fx-border-color: #D6D6D6;
+}
+
+.combo-box:focused {
+    -fx-border-color: #5AA9E6;
+}
+
+/* CheckBox styling */
+.check-box {
+    -fx-text-fill: #333; /* Text color for better readability */
+}
+
+.tab-pane .tab {
+    -fx-background-color: #f9f9f9; /* Slightly darker for the active tab */
+}
+
+.tab-pane .tab:selected {
+    -fx-background-color: #3C9AE2; /* Slightly darker for the active tab */
+    -fx-text-fill: white !important;
+
+}
+
+
+
