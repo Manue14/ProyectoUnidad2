@@ -1,0 +1,47 @@
+[
+    {
+        "id": 2,
+        "titulo": "Les Demoiselles d'Avignon",
+        "alto": 2.34,
+        "ancho": 2.44,
+        "popular": true,
+        "medio": "Óleo sobre lienzo",
+        "categoria": "LIENZO",
+        "fecha": "1907-01-01",
+        "descripcion": "Obra que marca el comienzo del cubismo, con figuras geométricas y una ruptura con la perspectiva tradicional.",
+        "id_autor": 2,
+        "id_departamento": 2,
+        "id_movimiento": 4,
+        "medidas": "2.34x2.44"
+    },
+    {
+        "id": 3,
+        "titulo": "El viejo guitarrista",
+        "alto": 0.88,
+        "ancho": 1.22,
+        "popular": true,
+        "medio": "Óleo sobre lienzo",
+        "categoria": "LIENZO",
+        "fecha": "1903-01-01",
+        "descripcion": "Obra del período azul, influenciada por el simbolismo y el realismo social, a pesar de su posterior asociación con el cubismo.",
+        "id_autor": 2,
+        "id_departamento": 7,
+        "id_movimiento": 2,
+        "medidas": "0.88x1.22"
+    },
+    {
+        "id": 24,
+        "titulo": "prueba",
+        "alto": 98.0,
+        "ancho": 78.0,
+        "popular": true,
+        "medio": "papel",
+        "categoria": "PAPEL",
+        "fecha": "1987",
+        "descripcion": "test",
+        "id_autor": 2,
+        "id_departamento": 3,
+        "id_movimiento": 2,
+        "medidas": "98.0x78.0"
+    }
+]

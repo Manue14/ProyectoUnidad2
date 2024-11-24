@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyStringWrapper;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -360,30 +361,28 @@ public class AdminController {
 
     @FXML
     public void ExportarObras(ActionEvent event) {
-        //Añadimos las extensiones disponibles
+        // Añadimos las extensiones disponibles
         fileChooser.getExtensionFilters().clear();
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(".json", "*.json")
         );
 
-        ArrayList<Obra> allobras = dbConnector.getAllObras();
+        // Obtienes las obras visibles en la tabla
+        ObservableList<Obra> obrasTabla = tbl_obras.getItems();
 
         fileChooser.setInitialFileName("datos_obras");
         File file = fileChooser.showSaveDialog(new Stage());
-        if (file !=null){
+        if (file != null) {
             ObjectMapper mapper = new ObjectMapper();
             try {
-                // writeValue pasa a JSON y luego guarda todo en el mismo paso
-                mapper.writeValue(file, allobras);
-                System.out.println("Archivo JSON escrito con exito");
+                // Escribir el JSON con las obras filtradas de la tabla
+                mapper.writeValue(file, new ArrayList<>(obrasTabla));
+                System.out.println("Archivo JSON escrito con éxito");
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
-
         }
-
     }
-
     @FXML
     public void ExportarAutores(ActionEvent event) {
         //Añadimos las extensiones disponibles

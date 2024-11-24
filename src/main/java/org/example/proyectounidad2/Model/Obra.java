@@ -1,10 +1,13 @@
 package org.example.proyectounidad2.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class Obra {
     private int id;
     private String titulo;
     private float alto;
     private float ancho;
+    @JsonIgnore
     private byte[] img;
     private boolean popular;
     private String medio;
