@@ -71,7 +71,7 @@ public class AutorDialogController {
 
     public void initialize() {
         fileChooser.setInitialDirectory(new File("C:\\"));
-        //fileChooser.setInitialDirectory(new File("/home/manu"));
+        //fileChooser.setInitialDirectory(new File("/home/manu/Descargas"));
         fileChooser.setTitle("Cargar imagen");
         fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter(".jpg","*.jpg"),
                 new FileChooser.ExtensionFilter(".png","*.png"),new FileChooser.ExtensionFilter("All images","*.jpg","*.png"));
@@ -142,22 +142,24 @@ public class AutorDialogController {
             }
 
         } catch (Exception e) {
-            System.out.println("Error modificando la obra: " + e.getMessage());
+            System.out.println("Error modificando el autor: " + e.getMessage());
         }
     }
     
     public void createAutor() {
-            autor.setNombre(tf_nombre.getText());
-            autor.setApellido1(tf_apellido1.getText());
-            autor.setApellido2(tf_apellido2.getText());
-            autor.setNacionalidad(tf_nacionalidad.getText());
-            autor.setNacimiento(dp_nacimiento.getValue());
-            autor.setFallecimiento(dp_fallecimiento.getValue());
-            autor.setFoto(this.currentImage);
+        Autor autor = new Autor();
+        
+        autor.setNombre(tf_nombre.getText());
+        autor.setApellido1(tf_apellido1.getText());
+        autor.setApellido2(tf_apellido2.getText());
+        autor.setNacionalidad(tf_nacionalidad.getText());
+        autor.setNacimiento(dp_nacimiento.getValue());
+        autor.setFallecimiento(dp_fallecimiento.getValue());
+        autor.setFoto(this.currentImage);
             
-            if (dbConnector.createAutor(autor) != null) {
-                System.out.println("*****--------AUTOR CREADA CON ÉXITO----------------************");
-            }
+        if (dbConnector.createAutor(autor) != null) {
+            System.out.println("*****--------AUTOR CREADA CON ÉXITO----------------************");
+        }
     }
     
     public void setAnchorPaneBackground(Image img) {

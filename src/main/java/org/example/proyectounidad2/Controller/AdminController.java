@@ -155,8 +155,8 @@ public class AdminController {
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
-            autorDlgController.createAutor();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
-            //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
+            autorDlgController.createAutor();
+            cargarTablaAutores(dbConnector.getAllAutores());
         } else {
             AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
 
@@ -193,8 +193,8 @@ public class AdminController {
 
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
-            obraDlgController.createObra();//Modificar obra recoge los datos de los campos y los pone en el objeto obra
-            //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
+            obraDlgController.createObra();
+            cargarTablaObras(dbConnector.getAllObras());
         } else {
             AlertMaker.showInformation("Acion de añadir cancelada", "No se ha añadido ninguna obra");
 
@@ -213,6 +213,7 @@ public class AdminController {
                 if (resultado) {
                     AlertMaker.showInformation("Eliminacion Exitosa", "Se ha eliminado el autor con exito");
                     cargarTablaAutores(dbConnector.getAllAutores());
+                    cargarTablaObras(dbConnector.getAllObras());
                 } else {
                     AlertMaker.showError("Error en la eliminacion", "Algo ha salido mal al borrar el autor");
                 }
@@ -234,6 +235,7 @@ public class AdminController {
                 if (resultado) {
                     AlertMaker.showInformation("Eliminacion Exitosa", "Se ha eliminado la obra con exito");
                     cargarTablaObras(dbConnector.getAllObras());
+                    cargarTablaAutores(dbConnector.getAllAutores());
                 } else {
                     AlertMaker.showError("Error en la eliminacion", "Algo ha salido mal al borrar la obra");
                 }
@@ -284,9 +286,8 @@ public class AdminController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
             autorDlgController.modificarAutor();
-            ArrayList<Autor> listaAutores = dbConnector.getAllAutores();
-
-            cargarTablaAutores(listaAutores);
+            cargarTablaAutores(dbConnector.getAllAutores());
+            cargarTablaObras(dbConnector.getAllObras());
         } else {
             AlertMaker.showInformation("Modificacion cancelada", "No se ha modificado ningun autor");
 
@@ -332,8 +333,7 @@ public class AdminController {
         Optional<ButtonType> clickedButton = dialog.showAndWait();
         if (clickedButton.get() == ButtonType.OK) {
             obraDlgController.modificarObra();
-            ArrayList<Obra> listaObras = dbConnector.getAllObras();
-            cargarTablaObras(listaObras);
+            cargarTablaObras(dbConnector.getAllObras());
 
             //RECOGER ESA OBRA Y PASARSELA A LA BASE DE DATOS
         } else {
