@@ -25,7 +25,7 @@ A mayores creamos una base de datos en la que almacenamos los usuarios, sus cont
 
 # 2. Manual técnico para desarrolladores
 
-La aplicación utiliza dos bases de datos, una para los datos de la colección de arte y otra para la información de las cuentas. Los archivos para la creación de ambas se encuentran dentro del proyecto e incluyen la creación de las tablas necesarias, la inserción de los datos iniciales (entre los que destacar la cuenta de administrador, **usuario:admin contraseña:admin123**) y la creación de procediminetos almacenados para algunas de las consultas así como funciones y triggers para facilitar la administración de la base de datos.
+La aplicación utiliza dos bases de datos, una para los datos de la colección de arte y otra para la información de las cuentas. Los archivos para la creación de ambas se encuentran dentro del proyecto e incluyen la creación de las tablas necesarias, la inserción de los datos iniciales (entre los que destacar la cuenta de administrador, **usuario:admin contraseña:admin123** y la de usuario normal **usuario:base contraseña:base123** ) y la creación de procediminetos almacenados para algunas de las consultas así como funciones y triggers para facilitar la administración de la base de datos.
 
 La estructura del proyecto **sigue el patron Modelo-Vista-Controlador**, a continuación hablaremos de cada una de las partes.
 
@@ -313,6 +313,8 @@ La barra de menú nos permitirá cerrar sesión, cerrar la aplicación y exporta
 - Datos DB coleccion
 - Toolbar archivo
 - Escribir documentación
+- Archivo jar ejecutable
+- Exportación filtrada a JSON 
 
 
 #### Manuel
@@ -331,9 +333,13 @@ La barra de menú nos permitirá cerrar sesión, cerrar la aplicación y exporta
 - Exportación a JSON
 - Escribir documentación
 
+Esto es un breve repaso de cuales fueron quien hizo cada tarea principalmente, pero en la mayoria de casos todos hicimos algo de todo para poder comunicar cada parte del proyecto.
+
 # 5. Extras realizados
 
 - **Login:** La aplicación cuenta con un sistema de login consultando a una DB con todos los usuarios, de ahí se coge su rol (admin o base) y se lleva al usuario a la ventana correspondiente. Además en el propio login puedes crear una cuenta en ese mismo momento
+
+- **Control de errores:** Teniendo en cuenta los posibles errores de un usuario implementamos diferentes medidas para que su experiencia sea más comoda al usar la aplicación sin que esta le falle subitamente y sin aviso.
 
 # 6. Propuestas de mejora
 
@@ -347,3 +353,11 @@ La barra de menú nos permitirá cerrar sesión, cerrar la aplicación y exporta
 - Crear una pestaña para mostrar información más completa de obras y autores al clickar sobre sus registros en la tabla de resultados.
   
 # 7. Conclusiones y opinión del trabajo realizado, dedicación temporal y cualificación estimada
+
+Gracias a estar más acostumbrados a trabajar en equipo por el primer proyecto pudimos empezar a avanzar más rapido y sin pisarnos entre nosotros, además de ya estar más familiarizados con javafx. Aún así tuvimos varias complicaciones como tratar con imágenes. 
+
+Calculamos que empleamos unas 15 horas de trabajo en llevar a cabo estre proyeto.
+
+Finalmente, estamos satisfechos con como quedo nuestro proyecyo y creemos que merece una nota orbitando el 8.
+
+
