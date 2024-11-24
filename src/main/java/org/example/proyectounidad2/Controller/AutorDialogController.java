@@ -135,6 +135,7 @@ public class AutorDialogController {
                     new Background(
                             new BackgroundImage(
                                     new Image(new ByteArrayInputStream(autor.getFoto())),
+
                                     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT , BackgroundPosition.CENTER, BackgroundSize.DEFAULT
                             )
                     )
